@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerBot — Project Ideas</title>
+<style>
+:root{
+  --dark:#17231f;--text:#5d6b65;--muted:#89948f;--mint:#69c7a3;
+  --mint-dark:#438e70;--lavender:#9182e8;--cream:#fbfcf9;--white:#fff;
+  --border:rgba(35,55,45,.09);--shadow:0 25px 70px rgba(40,60,50,.08)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--dark);background:
+radial-gradient(circle at 8% 12%,rgba(105,199,163,.13),transparent 28%),
+radial-gradient(circle at 92% 18%,rgba(145,130,232,.12),transparent 30%),var(--cream);min-height:100vh}
+a{text-decoration:none;color:inherit}
+header{height:78px;background:rgba(255,255,255,.95);border-bottom:1px solid var(--border);
+display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px}
+.logo img{width:42px;height:42px;object-fit:contain;border-radius:12px}
+nav{display:flex;align-items:center;gap:24px;color:var(--text);font-size:14px;font-weight:600}
+nav a:hover{color:var(--mint-dark)}
+.agent-btn{padding:11px 17px;border-radius:24px;color:#fff;background:linear-gradient(135deg,var(--mint),var(--lavender))}
+.container{width:min(1160px,calc(100% - 36px));margin:auto}
+.hero{text-align:center;padding:72px 20px 45px}
+.eyebrow{display:inline-block;padding:9px 16px;border-radius:30px;background:rgba(105,199,163,.14);
+color:var(--mint-dark);font-size:12px;font-weight:800;letter-spacing:1.8px;margin-bottom:20px}
+h1{font-size:clamp(38px,5vw,62px);line-height:1.08;letter-spacing:-2px;margin-bottom:18px}
+h1 span{background:linear-gradient(135deg,var(--mint-dark),var(--lavender));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:720px;margin:auto;color:var(--text);font-size:17px;line-height:1.7}
+.career-summary{margin:5px auto 42px;padding:22px 28px;max-width:850px;background:#fff;border:1px solid var(--border);
+border-radius:22px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;gap:20px}
+.career-summary small{display:block;color:var(--muted);margin-bottom:5px}
+.career-summary strong{font-size:24px}.skill-match{text-align:right}.skill-match strong{color:var(--mint-dark)}
+.section-title{display:flex;align-items:end;justify-content:space-between;margin-bottom:22px}
+.section-title h2{font-size:30px}.section-title p{color:var(--text);font-size:14px;margin-top:5px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.filter-btn{border:1px solid var(--border);background:#fff;color:var(--text);padding:10px 17px;border-radius:25px;cursor:pointer;font-weight:700}
+.filter-btn.active,.filter-btn:hover{background:linear-gradient(135deg,var(--mint),var(--lavender));color:#fff;border-color:transparent}
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.project-card{background:#fff;border:1px solid var(--border);border-radius:25px;padding:27px;box-shadow:0 18px 50px rgba(40,60,50,.06);
+display:flex;flex-direction:column;min-height:360px;transition:.25s}
+.project-card:hover{transform:translateY(-5px);box-shadow:0 25px 60px rgba(40,60,50,.11)}
+.project-icon{width:58px;height:58px;display:flex;align-items:center;justify-content:center;border-radius:17px;
+background:linear-gradient(135deg,#e4f8f0,#eeeaff);font-size:27px;margin-bottom:20px}
+.level{display:inline-block;width:max-content;padding:6px 10px;border-radius:20px;background:#f0f4f1;color:var(--mint-dark);
+font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px}
+.project-card h3{font-size:22px;margin-bottom:10px}.project-card p{color:var(--text);line-height:1.65;font-size:14px;margin-bottom:18px}
+.skills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px}.skills span{padding:7px 10px;background:#f7f9f7;
+border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:11px;font-weight:700}
+.project-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:auto;padding-top:14px;border-top:1px solid var(--border)}
+.start-btn{display:block;width:100%;text-align:center;margin-top:18px;padding:13px 18px;border-radius:13px;color:#fff;font-weight:800;
+background:linear-gradient(135deg,var(--mint),var(--lavender));transition:.2s}
+.start-btn:hover{box-shadow:0 10px 25px rgba(105,199,163,.2)}
+.empty{display:none;text-align:center;padding:50px 20px;background:#fff;border:1px solid var(--border);border-radius:24px;color:var(--text)}
+.bottom-card{margin:55px 0 75px;padding:32px;border-radius:25px;background:linear-gradient(135deg,rgba(105,199,163,.14),rgba(145,130,232,.13));
+border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.bottom-card h2{margin-bottom:8px}.bottom-card p{color:var(--text);line-height:1.6}.back-btn{white-space:nowrap;padding:13px 19px;background:#fff;border:1px solid var(--border);border-radius:13px;font-weight:800;color:var(--mint-dark)}
+@media(max-width:900px){.projects{grid-template-columns:repeat(2,1fr)}nav a:not(.agent-btn){display:none}}
+@media(max-width:620px){header{padding:0 18px}.hero{padding-top:48px}.career-summary{flex-direction:column;align-items:flex-start}
+.skill-match{text-align:left}.projects{grid-template-columns:1fr}.bottom-card{flex-direction:column;align-items:flex-start}}
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+<script>
+/* CareerBot authenticated-page guard */
+(async function () {
+    try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error || !data.session) {
+            const next = encodeURIComponent(window.location.pathname.split("/").pop() + window.location.search);
+            window.location.replace("login.html?next=" + next);
+        }
+    } catch (error) {
+        console.error("CareerBot session check failed:", error);
+        window.location.replace("login.html");
+    }
+})();
+</script>
+
+    <script src="script.js"></script>
+
+</head>
+<body>
+
+
+<header>
+<a href="index.html" class="logo">
+<img src="CareerBot Growth Mascot Logo(1).png" alt="CareerBot Logo"><span>CareerBot</span>
+</a>
+<nav>
+<a href="index.html">Home</a>
+<a href="assessment-form.html">Assessment</a>
+<a href="recommendations.html">Recommendations</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="agent.html" class="agent-btn">✨ Ask CareerBot</a>
+</nav>
+</header>
+
+<main class="container">
+<section class="hero">
+<div class="eyebrow">BUILD YOUR EXPERIENCE</div>
+<h1>Project Ideas for <span id="careerName">Your Career</span></h1>
+<p>Build practical projects that strengthen your skills, improve your portfolio, and prepare you for real-world opportunities.</p>
+</section>
+
+<section class="career-summary">
+<div><small>Your Selected Career</small><strong id="careerSummary">Your Career</strong></div>
+<div class="skill-match"><small>Current Skill Match</small><strong id="skillMatch">—</strong></div>
+</section>
+
+<section>
+<div class="section-title"><div><h2>Recommended Projects</h2><p>Projects selected for your career path.</p></div></div>
+<div class="filters">
+<button class="filter-btn active" data-level="all">All Projects</button>
+<button class="filter-btn" data-level="beginner">Beginner</button>
+<button class="filter-btn" data-level="intermediate">Intermediate</button>
+<button class="filter-btn" data-level="advanced">Advanced</button>
+</div>
+<div class="projects" id="projectsContainer"></div>
+<div class="empty" id="emptyState">No projects are available for this level yet.</div>
+</section>
+
+<section class="bottom-card">
+<div><h2>Ready to build?</h2><p>Choose a project and start working through your personalized project workspace.</p></div>
+<a href="learning-guide.html" id="learningGuideLink" class="back-btn">← Back to Learning Guide</a>
+</section>
+</main>
+
+<script>
+const params=new URLSearchParams(location.search);
+const selectedCareer=params.get("career")||localStorage.getItem("careerbotSelectedCareer")||"";
+if(selectedCareer) localStorage.setItem("careerbotSelectedCareer",selectedCareer);
+
+document.addEventListener("DOMContentLoaded", () => {
+  const careerTitle=window.CareerBotIntegration?.careerTitleForSlug(selectedCareer)||"Your Career";
+  const careerName=document.getElementById("careerName");
+  const careerSummary=document.getElementById("careerSummary");
+  const skillMatch=document.getElementById("skillMatch");
+  const learningGuideLink=document.getElementById("learningGuideLink");
+  const emptyState=document.getElementById("emptyState");
+  if(careerName) careerName.textContent=careerTitle;
+  if(careerSummary) careerSummary.textContent=selectedCareer?careerTitle:"No career selected";
+  if(skillMatch) skillMatch.textContent="—";
+  if(learningGuideLink) learningGuideLink.href="learning-guide.html?career="+encodeURIComponent(selectedCareer);
+  if(emptyState) emptyState.textContent="Loading projects…";
+});
+</script>
+</body>
+</html>

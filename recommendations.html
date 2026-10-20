@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CareerBot — Recommendations</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =====================================================
+           ROOT
+        ===================================================== */
+
+        :root {
+            --dark: #17231f;
+            --text: #5d6b65;
+            --muted: #89948f;
+
+            --mint: #69c7a3;
+            --mint-dark: #438e70;
+
+            --lavender: #9182e8;
+            --blue: #79b7df;
+
+            --cream: #fbfcf9;
+            --white: #ffffff;
+
+            --border: rgba(35, 55, 45, .09);
+
+            --shadow:
+                0 25px 70px rgba(40, 60, 50, .08);
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 10% 0%,
+                    rgba(105, 199, 163, .13),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(145, 130, 232, .13),
+                    transparent 30%
+                ),
+                var(--cream);
+
+            color: var(--dark);
+
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .page {
+            width: 100%;
+            min-height: 100vh;
+
+            padding: 55px 24px 80px;
+        }
+
+        .container {
+            width: min(1100px, 100%);
+
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            text-align: center;
+
+            margin-bottom: 42px;
+        }
+
+
+        /* Diamond / sparkle */
+
+        .hero-icon {
+            width: 68px;
+            height: 68px;
+
+            margin: 0 auto 16px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(105, 199, 163, .14),
+                    rgba(145, 130, 232, .14)
+                );
+
+            box-shadow:
+                0 12px 35px rgba(70, 100, 90, .07);
+
+            color: var(--mint-dark);
+
+            font-size: 30px;
+
+            line-height: 1;
+        }
+
+
+        .hero-label {
+            display: block;
+
+            margin-bottom: 16px;
+
+            color: #168b72;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+        }
+
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 64px);
+
+            line-height: 1.05;
+
+            font-weight: 900;
+
+            letter-spacing: -2.7px;
+
+            margin-bottom: 18px;
+
+            color: var(--dark);
+        }
+
+
+        .hero h1 span {
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--mint-dark),
+                    #55a997,
+                    var(--lavender)
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+
+        .hero-description {
+            max-width: 710px;
+
+            margin: 0 auto;
+
+            color: #58716b;
+
+            font-size: 15px;
+
+            line-height: 1.75;
+        }
+
+
+        /* =====================================================
+           MAIN RECOMMENDATION CARD
+        ===================================================== */
+
+        .recommendation-card {
+            position: relative;
+
+            width: 100%;
+
+            min-height: 300px;
+
+            padding: 32px 38px;
+
+            background: var(--white);
+
+            border: 1px solid var(--border);
+
+            border-radius: 28px;
+
+            box-shadow: var(--shadow);
+
+            overflow: hidden;
+
+            margin-bottom: 48px;
+        }
+
+
+        /* Decorative circle */
+
+        .card-decoration {
+            position: absolute;
+
+            width: 175px;
+            height: 175px;
+
+            right: -22px;
+            top: -62px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(105, 199, 163, .10);
+
+            pointer-events: none;
+        }
+
+
+        .card-decoration::after {
+            content: "";
+
+            position: absolute;
+
+            width: 92px;
+            height: 92px;
+
+            right: 36px;
+            top: 46px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(145, 130, 232, .08);
+        }
+
+
+        /* =====================================================
+           TOP LABEL
+        ===================================================== */
+
+        .top-match-label {
+            position: relative;
+
+            z-index: 2;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 8px 14px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(105, 199, 163, .15);
+
+            color: #21866d;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: .7px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 24px;
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .recommendation-content {
+            position: relative;
+
+            z-index: 2;
+
+            display: grid;
+
+            grid-template-columns:
+                82px
+                minmax(0, 1fr)
+                150px;
+
+            align-items: start;
+
+            gap: 28px;
+        }
+
+
+        /* =====================================================
+           CAREER ICON
+        ===================================================== */
+
+        .career-icon {
+            width: 80px;
+            height: 80px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(105, 199, 163, .18),
+                    rgba(145, 130, 232, .16)
+                );
+
+            font-size: 38px;
+
+            box-shadow:
+                0 12px 30px rgba(80, 100, 90, .07);
+        }
+
+
+        /* =====================================================
+           CAREER INFORMATION
+        ===================================================== */
+
+        .career-info {
+            min-width: 0;
+        }
+
+        .career-info h2 {
+            font-size: 31px;
+
+            line-height: 1.15;
+
+            font-weight: 800;
+
+            letter-spacing: -.9px;
+
+            margin-bottom: 8px;
+
+            color: #0d1512;
+        }
+
+
+        .career-description {
+            color: #5d6b65;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            max-width: 680px;
+
+            margin-bottom: 14px;
+        }
+
+
+        /* =====================================================
+           TAGS
+        ===================================================== */
+
+        .career-tags {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+        }
+
+
+        .career-tag {
+            display: inline-flex;
+
+            align-items: center;
+
+            padding: 7px 12px;
+
+            border-radius: 999px;
+
+            border: 1px solid rgba(67, 142, 112, .13);
+
+            background:
+                rgba(105, 199, 163, .07);
+
+            color: #316e5b;
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           MATCH CIRCLE
+        ===================================================== */
+
+        .match-wrapper {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            padding-top: 2px;
+        }
+
+
+        .match-circle {
+            width: 128px;
+            height: 128px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(105, 199, 163, .12),
+                    rgba(145, 130, 232, .14)
+                );
+
+            border: 8px solid #f9fbfa;
+
+            box-shadow:
+                0 12px 35px rgba(55, 80, 70, .09);
+
+            outline:
+                1px solid rgba(70, 100, 90, .08);
+        }
+
+
+        .match-number {
+            font-size: 34px;
+
+            line-height: 1;
+
+            font-weight: 900;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--mint-dark),
+                    var(--lavender)
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+
+        .match-text {
+            margin-top: 7px;
+
+            color: #71817b;
+
+            font-size: 10px;
+
+            font-weight: 500;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .card-actions {
+            position: relative;
+
+            z-index: 3;
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-left: 110px;
+
+            margin-top: 18px;
+        }
+
+
+        .primary-btn,
+        .secondary-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 42px;
+
+            padding: 0 17px;
+
+            border-radius: 10px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease,
+                background .2s ease;
+        }
+
+
+        .primary-btn {
+            background: #10a879;
+
+            color: white;
+
+            box-shadow:
+                0 10px 22px
+                rgba(16, 168, 121, .18);
+        }
+
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 28px
+                rgba(16, 168, 121, .25);
+        }
+
+
+        .secondary-btn {
+            background: #edf5f2;
+
+            color: #257764;
+        }
+
+
+        .secondary-btn:hover {
+            transform: translateY(-2px);
+
+            background: #e3f0eb;
+        }
+
+
+        /* =====================================================
+           OTHER CAREER PATHS
+        ===================================================== */
+
+        .other-section {
+            margin-top: 5px;
+        }
+
+
+        .section-heading {
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .section-heading h3 {
+            font-size: 24px;
+
+            font-weight: 800;
+
+            letter-spacing: -.6px;
+        }
+
+
+        .section-heading p {
+            color: #82918b;
+
+            font-size: 12px;
+        }
+
+
+        .career-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 18px;
+        }
+
+
+        .career-card {
+            position: relative;
+
+            padding: 23px;
+
+            background:
+                rgba(255, 255, 255, .90);
+
+            border: 1px solid var(--border);
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 15px 45px
+                rgba(40, 60, 50, .055);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+
+        .career-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 20px 50px
+                rgba(40, 60, 50, .10);
+        }
+
+
+        .small-icon {
+            width: 50px;
+            height: 50px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(105, 199, 163, .14),
+                    rgba(145, 130, 232, .13)
+                );
+
+            font-size: 24px;
+
+            margin-bottom: 16px;
+        }
+
+
+        .career-card h4 {
+            font-size: 17px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+
+            color: #17231f;
+        }
+
+
+        .career-card p {
+            color: #71817b;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            margin-bottom: 16px;
+        }
+
+
+        .career-link {
+            color: #3b9677;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition: color .2s ease;
+        }
+
+
+        .career-link:hover {
+            color: var(--lavender);
+        }
+
+
+        /* =====================================================
+           BOTTOM
+        ===================================================== */
+
+        .bottom-area {
+            text-align: center;
+
+            margin-top: 48px;
+        }
+
+
+        .back-link {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #61736c;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: color .2s ease;
+        }
+
+
+        .back-link:hover {
+            color: var(--mint-dark);
+        }
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        .error-box {
+            display: none;
+
+            max-width: 650px;
+
+            margin: 70px auto;
+
+            padding: 40px;
+
+            text-align: center;
+
+            background: white;
+
+            border-radius: 24px;
+
+            border: 1px solid var(--border);
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .error-icon {
+            width: 65px;
+            height: 65px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 18px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(105, 199, 163, .15),
+                    rgba(145, 130, 232, .15)
+                );
+
+            color: var(--mint-dark);
+
+            font-size: 28px;
+        }
+
+
+        .error-box h2 {
+            font-size: 26px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .error-box p {
+            color: var(--text);
+
+            line-height: 1.6;
+
+            margin-bottom: 24px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .recommendation-content {
+                grid-template-columns:
+                    80px
+                    minmax(0, 1fr);
+            }
+
+
+            .match-wrapper {
+                grid-column: 2;
+
+                justify-content: flex-start;
+
+                margin-top: 8px;
+            }
+
+
+            .card-actions {
+                margin-left: 108px;
+            }
+
+
+            .career-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .page {
+                padding:
+                    40px 16px 60px;
+            }
+
+
+            .hero {
+                margin-bottom: 30px;
+            }
+
+
+            .hero-icon {
+                width: 60px;
+                height: 60px;
+
+                font-size: 27px;
+            }
+
+
+            .hero-label {
+                font-size: 9px;
+
+                letter-spacing: 3px;
+            }
+
+
+            .hero h1 {
+                font-size: 39px;
+
+                letter-spacing: -1.5px;
+            }
+
+
+            .hero-description {
+                font-size: 13px;
+            }
+
+
+            .recommendation-card {
+                padding: 25px 20px;
+
+                border-radius: 22px;
+            }
+
+
+            .recommendation-content {
+                display: flex;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 18px;
+            }
+
+
+            .career-icon {
+                width: 70px;
+                height: 70px;
+            }
+
+
+            .career-info h2 {
+                font-size: 27px;
+            }
+
+
+            .match-wrapper {
+                width: 100%;
+
+                justify-content: center;
+
+                margin-top: 8px;
+            }
+
+
+            .card-actions {
+                margin-left: 0;
+
+                margin-top: 18px;
+            }
+
+
+            .section-heading {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 6px;
+            }
+
+
+            .career-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+<script>
+/* CareerBot authenticated-page guard */
+(async function () {
+    try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error || !data.session) {
+            const next = encodeURIComponent(window.location.pathname.split("/").pop() + window.location.search);
+            window.location.replace("login.html?next=" + next);
+        }
+    } catch (error) {
+        console.error("CareerBot session check failed:", error);
+        window.location.replace("login.html");
+    }
+})();
+</script>
+
+    <script src="script.js"></script>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+    <div class="container">
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero">
+
+            <!-- Separate element so it NEVER overlaps the label -->
+            <div class="hero-icon">
+                ✦
+            </div>
+
+            <span class="hero-label">
+                YOUR CAREER RESULTS
+            </span>
+
+            <h1>
+                Your Career
+                <span>Recommendation.</span>
+            </h1>
+
+            <p class="hero-description">
+                Based on the answers you provided in the CareerBot
+                assessment, here is a career direction that matches
+                your interests and working preferences.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             ERROR BOX
+        ================================================== -->
+
+        <div
+            class="error-box"
+            id="errorBox"
+        >
+
+            <div class="error-icon">
+                ✦
+            </div>
+
+            <h2>
+                Assessment Not Found
+            </h2>
+
+            <p>
+                Please complete the CareerBot assessment first
+                so we can generate your personalized career
+                recommendation.
+            </p>
+
+            <a
+                href="assessment-form.html"
+                class="primary-btn"
+            >
+                Take Assessment →
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             RECOMMENDATION PAGE
+        ================================================== -->
+
+        <main id="recommendationPage">
+
+
+            <!-- =================================================
+                 TOP CAREER
+            ================================================== -->
+
+            <section class="recommendation-card">
+
+                <div class="card-decoration"></div>
+
+
+                <div class="top-match-label">
+                    ✦ YOUR TOP CAREER MATCH
+                </div>
+
+
+                <div class="recommendation-content">
+
+
+                    <!-- Career Icon -->
+
+                    <div
+                        class="career-icon"
+                        id="mainCareerIcon"
+                    >
+                        💻
+                    </div>
+
+
+                    <!-- Career Information -->
+
+                    <div class="career-info">
+
+                        <h2 id="mainCareerName">
+                            Loading your recommendation…
+                        </h2>
+
+                        <p
+                            class="career-description"
+                            id="mainCareerDescription"
+                        >
+                            Your saved assessment result will appear here.
+                        </p>
+
+
+                        <div
+                            class="career-tags"
+                            id="mainCareerTags"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <!-- Match Percentage -->
+
+                    <div class="match-wrapper">
+
+                        <div class="match-circle">
+
+                            <div
+                                class="match-number"
+                                id="matchPercentage"
+                            >
+                                —
+                            </div>
+
+                            <div class="match-text">
+                                Match
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="card-actions">
+
+                    <a
+                        href="#"
+                        id="exploreCareerBtn"
+                        class="primary-btn"
+                    >
+                        Explore This Career →
+                    </a>
+
+                    <a
+                        href="assessment-form.html"
+                        class="secondary-btn"
+                    >
+                        Retake Assessment
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 OTHER CAREER PATHS
+            ================================================== -->
+
+            <section class="other-section">
+
+                <div class="section-heading">
+
+                    <h3>
+                        Other Career Paths
+                    </h3>
+
+                    <p>
+                        Explore careers that also match your profile
+                    </p>
+
+                </div>
+
+
+                <div class="career-grid">
+
+
+                    <!-- AI / ML -->
+
+                    <div class="career-card">
+
+                        <div class="small-icon">
+                            🤖
+                        </div>
+
+                        <h4>
+                            AI / ML Engineer
+                        </h4>
+
+                        <p>
+                            Build intelligent systems using machine
+                            learning, data and artificial intelligence.
+                        </p>
+
+                        <a
+                            href="career-details.html?career=ai-ml-engineer"
+                            class="career-link"
+                        >
+                            Explore Career →
+                        </a>
+
+                    </div>
+
+
+                    <!-- Data Analyst -->
+
+                    <div class="career-card">
+
+                        <div class="small-icon">
+                            📊
+                        </div>
+
+                        <h4>
+                            Data Analyst
+                        </h4>
+
+                        <p>
+                            Turn data into useful insights that help
+                            organizations make better decisions.
+                        </p>
+
+                        <a
+                            href="career-details.html?career=data-analyst"
+                            class="career-link"
+                        >
+                            Explore Career →
+                        </a>
+
+                    </div>
+
+
+                    <!-- UI / UX -->
+
+                    <div class="career-card">
+
+                        <div class="small-icon">
+                            🎨
+                        </div>
+
+                        <h4>
+                            UI / UX Designer
+                        </h4>
+
+                        <p>
+                            Create useful, intuitive and visually
+                            engaging digital experiences.
+                        </p>
+
+                        <a
+                            href="career-details.html?career=ui-ux-designer"
+                            class="career-link"
+                        >
+                            Explore Career →
+                        </a>
+
+                    </div>
+
+
+                    <!-- Product Manager -->
+
+                    <div class="career-card">
+
+                        <div class="small-icon">
+                            🚀
+                        </div>
+
+                        <h4>
+                            Product Manager
+                        </h4>
+
+                        <p>
+                            Guide products from ideas to successful
+                            solutions by combining business and technology.
+                        </p>
+
+                        <a
+                            href="career-details.html?career=product-manager"
+                            class="career-link"
+                        >
+                            Explore Career →
+                        </a>
+
+                    </div>
+
+
+                    <!-- Mobile App Developer -->
+
+                    <div class="career-card">
+
+                        <div class="small-icon">
+                            📱
+                        </div>
+
+                        <h4>
+                            Mobile App Developer
+                        </h4>
+
+                        <p>
+                            Design and build mobile applications for
+                            modern smartphones and devices.
+                        </p>
+
+                        <a
+                            href="career-details.html?career=mobile-app-developer"
+                            class="career-link"
+                        >
+                            Explore Career →
+                        </a>
+
+                    </div>
+
+
+                    <!-- Digital Marketing -->
+
+                    <div class="career-card">
+
+                        <div class="small-icon">
+                            📢
+                        </div>
+
+                        <h4>
+                            Digital Marketing Specialist
+                        </h4>
+
+                        <p>
+                            Use content, campaigns and digital channels
+                            to connect businesses with their audiences.
+                        </p>
+
+                        <a
+                            href="career-details.html?career=digital-marketing"
+                            class="career-link"
+                        >
+                            Explore Career →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 BACK TO ASSESSMENT
+            ================================================== -->
+
+            <div class="bottom-area">
+
+                <a
+                    href="assessment-form.html"
+                    class="back-link"
+                >
+                    ← Back to Assessment
+                </a>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       CAREER DATA
+    ========================================================= */
+
+    const careers = {
+
+        "software-developer": {
+
+            name: "Software Developer",
+
+            icon: "💻",
+
+            description:
+                "A career focused on building applications, solving technical problems, and creating digital solutions.",
+
+            tags: [
+                "Problem Solving",
+                "Technology",
+                "Creativity",
+                "Growth"
+            ]
+
+        },
+
+
+        "ai-ml-engineer": {
+
+            name: "AI / ML Engineer",
+
+            icon: "🤖",
+
+            description:
+                "A technology career focused on artificial intelligence, machine learning and intelligent systems.",
+
+            tags: [
+                "AI",
+                "Technology",
+                "Analytics",
+                "Innovation"
+            ]
+
+        },
+
+
+        "data-analyst": {
+
+            name: "Data Analyst",
+
+            icon: "📊",
+
+            description:
+                "A career focused on analyzing information, finding patterns and turning data into useful insights.",
+
+            tags: [
+                "Analytics",
+                "Logic",
+                "Data",
+                "Problem Solving"
+            ]
+
+        },
+
+
+        "ui-ux-designer": {
+
+            name: "UI / UX Designer",
+
+            icon: "🎨",
+
+            description:
+                "A creative career focused on visual thinking, user experience and designing useful digital products.",
+
+            tags: [
+                "Creativity",
+                "Design",
+                "User Experience",
+                "Visual Thinking"
+            ]
+
+        },
+
+
+        "product-manager": {
+
+            name: "Product Manager",
+
+            icon: "🚀",
+
+            description:
+                "A career that combines business, technology, leadership and user needs to build successful products.",
+
+            tags: [
+                "Leadership",
+                "Business",
+                "Strategy",
+                "Growth"
+            ]
+
+        },
+
+
+        "hr-specialist": {
+
+            name: "HR Specialist",
+
+            icon: "🤝",
+
+            description:
+                "A people-focused career involving communication, teamwork, employee support and organizational development.",
+
+            tags: [
+                "People",
+                "Communication",
+                "Teamwork",
+                "Leadership"
+            ]
+
+        },
+
+
+        "mobile-app-developer": {
+
+            name: "Mobile App Developer",
+
+            icon: "📱",
+
+            description:
+                "A technology career focused on creating mobile applications for smartphones and modern devices.",
+
+            tags: [
+                "Technology",
+                "Development",
+                "Creativity",
+                "Innovation"
+            ]
+
+        },
+
+
+        "digital-marketing": {
+
+            name: "Digital Marketing Specialist",
+
+            icon: "📢",
+
+            description:
+                "A creative and communication-focused career involving digital campaigns, content and audience engagement.",
+
+            tags: [
+                "Creativity",
+                "Communication",
+                "Marketing",
+                "Growth"
+            ]
+
+        }
+
+    };
+
+
+    /* =========================================================
+       ASSESSMENT ANSWER → CATEGORY
+    ========================================================= */
+
+    const answerMapping = {
+
+        /* Technology */
+
+        technology: "technology",
+        technical: "technology",
+        curious: "technology",
+        logic: "technology",
+        expert: "technology",
+        independent: "technology",
+
+
+        /* Design */
+
+        creative: "design",
+        design: "design",
+        creator: "design",
+
+
+        /* Data */
+
+        analytical: "data",
+
+
+        /* People */
+
+        people: "people",
+        communication: "people",
+        helpful: "people",
+        team: "people",
+        social: "people",
+
+
+        /* Business */
+
+        business: "business",
+        leadership: "business",
+        ambitious: "business",
+        startup: "business",
+        corporate: "business",
+        leader: "business",
+        entrepreneur: "business",
+
+
+        /* Marketing */
+
+        remote: "marketing",
+        flexible: "marketing"
+
+    };
+
+
+    /* =========================================================
+       CATEGORY → CAREER
+    ========================================================= */
+
+    const categoryCareer = {
+
+        technology: "software-developer",
+
+        data: "data-analyst",
+
+        design: "ui-ux-designer",
+
+        business: "product-manager",
+
+        people: "hr-specialist",
+
+        marketing: "digital-marketing"
+
+    };
+
+
+    /* =========================================================
+       READ ASSESSMENT
+    ========================================================= */
+
+    function getAssessment() {
+
+        const storedAssessment =
+            localStorage.getItem(
+                "careerbotAssessment"
+            );
+
+
+        if (!storedAssessment) {
+
+            return null;
+
+        }
+
+
+        try {
+
+            const assessment =
+                JSON.parse(storedAssessment);
+
+
+            if (
+                !assessment ||
+                typeof assessment !== "object"
+            ) {
+
+                return null;
+
+            }
+
+
+            return assessment;
+
+        } catch (error) {
+
+            console.error(
+                "Error reading CareerBot assessment:",
+                error
+            );
+
+            return null;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CALCULATE RESULT
+    ========================================================= */
+
+    function calculateCareer(assessment) {
+
+        const scores = {
+
+            technology: 0,
+
+            design: 0,
+
+            data: 0,
+
+            business: 0,
+
+            people: 0,
+
+            marketing: 0
+
+        };
+
+
+        let validAnswers = 0;
+
+
+        Object.keys(assessment).forEach(
+            function (question) {
+
+                const answer =
+                    assessment[question];
+
+
+                if (!answer) {
+
+                    return;
+
+                }
+
+
+                const normalizedAnswer =
+                    String(answer)
+                    .toLowerCase()
+                    .trim();
+
+
+                const category =
+                    answerMapping[
+                        normalizedAnswer
+                    ];
+
+
+                if (
+                    category &&
+                    Object.prototype.hasOwnProperty.call(
+                        scores,
+                        category
+                    )
+                ) {
+
+                    scores[category]++;
+
+                    validAnswers++;
+
+                }
+
+            }
+        );
+
+
+        /*
+           Fallback if no answer can be mapped.
+        */
+
+        if (validAnswers === 0) {
+
+            return {
+
+                career: "software-developer",
+
+                score: 0
+
+            };
+
+        }
+
+
+        let highestCategory =
+            "technology";
+
+
+        let highestScore =
+            scores.technology;
+
+
+        Object.keys(scores).forEach(
+            function (category) {
+
+                if (
+                    scores[category] >
+                    highestScore
+                ) {
+
+                    highestScore =
+                        scores[category];
+
+                    highestCategory =
+                        category;
+
+                }
+
+            }
+        );
+
+
+        const selectedCareer =
+            categoryCareer[
+                highestCategory
+            ] ||
+            "software-developer";
+
+
+        const percentage =
+            Math.round(
+                (
+                    highestScore /
+                    validAnswers
+                ) * 100
+            );
+
+
+        return {
+
+            career: selectedCareer,
+
+            score: percentage
+
+        };
+
+    }
+
+
+    /* =========================================================
+       DISPLAY RESULT
+    ========================================================= */
+
+    function displayRecommendation(
+        careerSlug,
+        percentage,
+        recommendation
+    ) {
+
+        const career = careers[careerSlug] || {
+            name: recommendation?.career_title || careerSlug.replace(/-/g, " "),
+            icon: "✨",
+            description: recommendation?.description || "",
+            tags: Array.isArray(recommendation?.skills)
+                ? recommendation.skills
+                : Array.isArray(recommendation?.required_skills)
+                    ? recommendation.required_skills
+                    : []
+        };
+        const careerName = recommendation?.career_title || career.name;
+
+
+        /* Career icon */
+
+        document.getElementById(
+            "mainCareerIcon"
+        ).textContent =
+            career.icon;
+
+
+        /* Career name */
+
+        document.getElementById(
+            "mainCareerName"
+        ).textContent =
+            careerName;
+
+
+        /* Career description */
+
+        document.getElementById(
+            "mainCareerDescription"
+        ).textContent =
+            recommendation?.description || career.description || "Career recommendation from your assessment.";
+
+
+        /* Match percentage */
+
+        document.getElementById(
+            "matchPercentage"
+        ).textContent =
+            percentage === null || percentage === undefined || String(percentage).trim() === "" || !Number.isFinite(Number(percentage))
+                ? "—"
+                : Math.max(0, Math.min(100, Math.round(Number(percentage)))) + "%";
+
+
+        /* Career tags */
+
+        const tagContainer =
+            document.getElementById(
+                "mainCareerTags"
+            );
+
+
+        tagContainer.innerHTML = "";
+
+
+        career.tags.forEach(
+            function (tag) {
+
+                const tagElement =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                tagElement.className =
+                    "career-tag";
+
+
+                tagElement.textContent =
+                    tag;
+
+
+                tagContainer.appendChild(
+                    tagElement
+                );
+
+            }
+        );
+
+
+        /* Explore button */
+
+        const exploreButton =
+            document.getElementById(
+                "exploreCareerBtn"
+            );
+
+
+        exploreButton.href =
+            "career-details.html?career=" +
+            encodeURIComponent(
+                careerSlug
+            );
+
+
+        /* Save selected career */
+
+        localStorage.setItem(
+            "careerbotSelectedCareer",
+            careerSlug
+        );
+
+    }
+
+
+    /* =========================================================
+       INITIALIZE PAGE
+    ========================================================= */
+
+    /*
+       recommendations.html is hydrated by script.js from the authenticated
+       Supabase result. Keeping a second DOMContentLoaded implementation here
+       can hide the page before the shared integration runs, so there is no
+       localStorage fallback that invents a recommendation.
+    */
+
+</script>
+
+</body>
+</html>

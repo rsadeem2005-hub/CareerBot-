@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerBot — Login & Sign Up</title>
+
+    <!-- CareerBot CSS -->
+    <link rel="stylesheet" href="style.css"
+    ><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+     <script src="supabase.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="auth-page">
+
+    <main class="auth-container">
+
+        <!-- =========================================
+             LEFT SIDE
+        ========================================== -->
+
+        <section class="auth-info">
+
+            <!-- Logo -->
+            <a href="index.html" class="auth-logo">
+                <img
+                    src="CareerBot Growth Mascot Logo(1).png"
+                    alt="CareerBot Logo">
+            </a>
+
+            <div class="auth-info-content">
+
+                <div class="auth-badge">
+                    <span>✦</span>
+                    AI-powered career intelligence
+                </div>
+
+                <h1>
+                    Your career journey
+                    <span>starts here.</span>
+                </h1>
+
+                <p>
+                    Build your personalized career profile and let
+                    CareerBot help you discover the right career path,
+                    skills and opportunities.
+                </p>
+
+                <!-- Benefits -->
+
+                <div class="auth-benefits">
+
+                    <div class="benefit-item">
+                        <span class="benefit-icon">✓</span>
+                        <p>Personalized career recommendations</p>
+                    </div>
+
+                    <div class="benefit-item">
+                        <span class="benefit-icon">✓</span>
+                        <p>AI-powered career roadmap</p>
+                    </div>
+
+                    <div class="benefit-item">
+                        <span class="benefit-icon">✓</span>
+                        <p>Smart job matching</p>
+                    </div>
+
+                    <div class="benefit-item">
+                        <span class="benefit-icon">✓</span>
+                        <p>AI-powered career guidance and planning</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             RIGHT SIDE
+        ========================================== -->
+
+        <section class="auth-card">
+
+            <!-- LOGIN / SIGN UP TABS -->
+
+            <div class="auth-tabs">
+
+                <button
+                    type="button"
+                    class="auth-tab active"
+                    id="loginTab"
+                    onclick="showLogin()">
+                    Login
+                </button>
+
+                <button
+                    type="button"
+                    class="auth-tab"
+                    id="signupTab"
+                    onclick="showSignup()">
+                    Sign Up
+                </button>
+
+            </div>
+
+
+            <!-- =====================================
+                 LOGIN FORM
+            ====================================== -->
+
+            <div id="loginForm">
+
+                <div class="auth-heading">
+
+                    <h2>Welcome back</h2>
+
+                    <p>
+                        Login to continue your career journey.
+                    </p>
+
+                </div>
+
+
+                <form onsubmit="loginUser(event)">
+
+                    <!-- Email -->
+
+                    <label for="loginEmail">
+                        Email address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required>
+
+
+                    <!-- Password -->
+
+                    <label for="loginPassword">
+                        Password
+                    </label>
+
+                    <div class="password-field">
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required>
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('loginPassword')"
+                            aria-label="Show password">
+                            ◉
+                        </button>
+
+                    </div>
+
+
+                    <!-- Remember / Forgot -->
+
+                    <div class="forgot-row">
+
+                        <label class="remember">
+
+                            <input type="checkbox">
+
+                            <span>Remember me</span>
+
+                        </label>
+
+                        <a href="#">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <!-- Login -->
+
+                    <button
+                        type="submit"
+                        class="auth-submit">
+
+                        <span>Login</span>
+
+                        <span>→</span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- Switch to Sign Up -->
+
+                <p class="auth-switch">
+
+                    Don't have an account?
+
+                    <button
+                        type="button"
+                        onclick="showSignup()">
+                        Create an account
+                    </button>
+
+                </p>
+
+            </div>
+
+
+            <!-- =====================================
+                 SIGN UP FORM
+            ====================================== -->
+
+            <div
+                id="signupForm"
+                class="hidden">
+
+                <div class="auth-heading">
+
+                    <h2>Create your account</h2>
+
+                    <p>
+                        Start building your personalized career profile.
+                    </p>
+
+                </div>
+
+
+                <form onsubmit="signupUser(event)">
+
+                    <!-- First and Last Name -->
+
+                    <div class="two-inputs">
+
+                        <div>
+
+                            <label for="firstName">
+                                First name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="firstName"
+                                placeholder="First name"
+                                required>
+
+                        </div>
+
+                        <div>
+
+                            <label for="lastName">
+                                Last name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="lastName"
+                                placeholder="Last name"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Email -->
+
+                    <label for="signupEmail">
+                        Email address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="signupEmail"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required>
+
+
+                    <!-- Password -->
+
+                    <label for="signupPassword">
+                        Password
+                    </label>
+
+                    <div class="password-field">
+
+                        <input
+                            type="password"
+                            id="signupPassword"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required>
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('signupPassword')"
+                            aria-label="Show password">
+                            ◉
+                        </button>
+
+                    </div>
+
+
+                    <!-- Terms -->
+
+                    <label class="terms">
+
+                        <input
+                            type="checkbox"
+                            required>
+
+                        <span>
+                            I agree to the Terms & Privacy Policy.
+                        </span>
+
+                    </label>
+
+
+                    <!-- Create Account -->
+
+                    <button
+                        type="submit"
+                        class="auth-submit">
+
+                        <span>Create Account</span>
+
+                        <span>→</span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- Switch to Login -->
+
+                <p class="auth-switch">
+
+                    Already have an account?
+
+                    <button
+                        type="button"
+                        onclick="showLogin()">
+                        Login
+                    </button>
+
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="auth.js"></script>
+
+    <!-- CareerBot Authentication JavaScript -->
+<!-- SUCCESS POPUP -->
+    <div id="successPopup" class="success-popup">
+
+    <div class="success-popup-box">
+
+        <h3>Success!</h3>
+
+        <p id="popupMessage"></p>
+
+    </div>
+
+</div>
+        <!-- CareerBot Authentication JavaScript -->
+
+
+</body>
+
+</html>
+

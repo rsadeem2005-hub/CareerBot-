@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerBot — Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --dark:#17231f;
+    --text:#5d6b65;
+    --muted:#89948f;
+    --mint:#69c7a3;
+    --mint-dark:#438e70;
+    --lavender:#9182e8;
+    --blue:#79b7df;
+    --cream:#fbfcf9;
+    --white:#ffffff;
+    --border:rgba(35,55,45,.09);
+    --shadow:0 25px 70px rgba(40,60,50,.08);
+    --gradient:linear-gradient(135deg,#69c7a3,#9182e8);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    color:var(--dark);
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 88% 5%,rgba(198,239,221,.55),transparent 30%),
+        radial-gradient(circle at 5% 55%,rgba(230,224,255,.48),transparent 28%),
+        var(--cream);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    width:100%;
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+}
+
+.nav{
+    width:min(1160px,92%);
+    min-height:82px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:"Plus Jakarta Sans",sans-serif;
+    font-size:21px;
+    font-weight:800;
+}
+
+.logo img{
+    width:46px;
+    height:46px;
+    object-fit:contain;
+}
+
+.nav-link{
+    display:inline-flex;
+    align-items:center;
+    padding:11px 17px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:var(--white);
+    color:var(--mint-dark);
+    font-size:14px;
+    font-weight:700;
+    transition:.2s ease;
+}
+
+.nav-link:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(40,60,50,.07);
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+    width:min(1160px,92%);
+    margin:auto;
+    padding:45px 0 70px;
+}
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome{
+    position:relative;
+    overflow:hidden;
+    padding:46px;
+    border-radius:32px;
+    color:white;
+    background:
+        radial-gradient(circle at 90% 20%,rgba(255,255,255,.34),transparent 30%),
+        linear-gradient(135deg,rgba(105,199,163,.96),rgba(145,130,232,.96));
+    box-shadow:0 25px 65px rgba(105,199,163,.18);
+}
+
+.welcome::before{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    right:-100px;
+    top:-120px;
+    border-radius:50%;
+    background:rgba(255,255,255,.10);
+}
+
+.welcome::after{
+    content:"";
+    position:absolute;
+    width:220px;
+    height:220px;
+    right:-70px;
+    bottom:-100px;
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+}
+
+.eyebrow{
+    position:relative;
+    z-index:2;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:16px;
+    padding:8px 13px;
+    border-radius:999px;
+    background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.25);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+}
+
+.eyebrow span{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#fff;
+}
+
+.welcome h1{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+    font-family:"Plus Jakarta Sans",sans-serif;
+    font-size:clamp(31px,5vw,52px);
+    line-height:1.08;
+    margin-bottom:15px;
+}
+
+.welcome h1 span{
+    color:#f2fff9;
+}
+
+.welcome p{
+    position:relative;
+    z-index:2;
+    max-width:720px;
+    color:rgba(255,255,255,.88);
+    font-size:16px;
+    line-height:1.8;
+}
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:18px;
+    margin-top:25px;
+}
+
+.stat-card{
+    position:relative;
+    overflow:hidden;
+    background:rgba(255,255,255,.94);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:22px;
+    box-shadow:var(--shadow);
+}
+
+.stat-card::after{
+    content:"";
+    position:absolute;
+    right:-28px;
+    bottom:-35px;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:rgba(105,199,163,.08);
+}
+
+.stat-icon{
+    width:42px;
+    height:42px;
+    display:grid;
+    place-items:center;
+    border-radius:13px;
+    background:#eef9f4;
+    margin-bottom:15px;
+    font-size:20px;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.stat-value{
+    position:relative;
+    z-index:2;
+    font-family:"Plus Jakarta Sans",sans-serif;
+    font-size:27px;
+    font-weight:800;
+    margin-bottom:4px;
+    word-break:break-word;
+}
+
+.stat-note{
+    color:var(--text);
+    font-size:12px;
+}
+
+/* =========================
+   CHART GRID
+========================= */
+
+.visual-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+    margin-top:25px;
+}
+
+.chart-card{
+    background:rgba(255,255,255,.94);
+    border:1px solid var(--border);
+    border-radius:26px;
+    padding:27px;
+    box-shadow:var(--shadow);
+}
+
+.chart-head{
+    margin-bottom:21px;
+}
+
+.chart-head h2{
+    font-family:"Plus Jakarta Sans",sans-serif;
+    font-size:19px;
+    margin-bottom:6px;
+}
+
+.chart-head p{
+    color:var(--text);
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* =========================
+   BAR GRAPH
+========================= */
+
+.bars{
+    height:235px;
+    display:flex;
+    align-items:flex-end;
+    gap:15px;
+    padding:10px 5px 30px;
+    border-bottom:1px solid var(--border);
+}
+
+.bar-col{
+    height:100%;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    align-items:center;
+    gap:7px;
+}
+
+.bar-wrap{
+    height:175px;
+    width:100%;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+}
+
+.bar{
+    width:min(44px,72%);
+    height:0;
+    border-radius:10px 10px 3px 3px;
+    background:var(--gradient);
+    transition:height:.7s ease;
+}
+
+.bar:nth-child(2){
+    background:linear-gradient(135deg,#9182e8,#79b7df);
+}
+
+.bar-value{
+    font-size:11px;
+    font-weight:800;
+}
+
+.bar-label{
+    color:var(--muted);
+    font-size:11px;
+    text-align:center;
+}
+
+/* =========================
+   DONUT GRAPH
+========================= */
+
+.donut-area{
+    min-height:235px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:30px;
+}
+
+.donut{
+    width:172px;
+    height:172px;
+    flex:0 0 172px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    position:relative;
+    background:conic-gradient(
+        var(--mint) 0 0%,
+        #ece9f7 0 100%
+    );
+}
+
+.donut::after{
+    content:"";
+    position:absolute;
+    width:114px;
+    height:114px;
+    border-radius:50%;
+    background:white;
+}
+
+.donut-center{
+    position:relative;
+    z-index:1;
+    text-align:center;
+}
+
+.donut-center strong{
+    display:block;
+    font-family:"Plus Jakarta Sans",sans-serif;
+    font-size:27px;
+}
+
+.donut-center span{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.legend{
+    display:grid;
+    gap:13px;
+}
+
+.legend-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--text);
+    font-size:12px;
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--mint);
+}
+
+.dot.two{
+    background:var(--lavender);
+}
+
+.dot.three{
+    background:var(--blue);
+}
+
+.dot.four{
+    background:#d6d1f7;
+}
+
+/* =========================
+   TIMELINE
+========================= */
+
+.timeline{
+    display:grid;
+    gap:0;
+    position:relative;
+    padding-left:7px;
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    left:12px;
+    top:13px;
+    bottom:13px;
+    width:2px;
+    background:#e8eee9;
+}
+
+.timeline-item{
+    position:relative;
+    display:flex;
+    gap:15px;
+    padding-bottom:22px;
+}
+
+.timeline-item:last-child{
+    padding-bottom:0;
+}
+
+.timeline-dot{
+    position:relative;
+    z-index:2;
+    width:12px;
+    height:12px;
+    margin-top:4px;
+    flex:0 0 12px;
+    border-radius:50%;
+    background:var(--mint);
+    box-shadow:0 0 0 5px #eef9f4;
+}
+
+.timeline-item strong{
+    display:block;
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.timeline-item span{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+}
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary-box{
+    padding:20px;
+    border-radius:20px;
+    background:#f7faf8;
+    border:1px solid var(--border);
+}
+
+.summary-box h3{
+    font-family:"Plus Jakarta Sans",sans-serif;
+    font-size:16px;
+    margin-bottom:7px;
+}
+
+.summary-box p{
+    color:var(--text);
+    font-size:13px;
+    line-height:1.65;
+    margin-bottom:17px;
+}
+
+.primary-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:13px 18px;
+    border-radius:13px;
+    color:white;
+    background:var(--gradient);
+    font-size:13px;
+    font-weight:800;
+    box-shadow:0 10px 24px rgba(105,199,163,.18);
+    transition:.2s ease;
+}
+
+.primary-btn:hover{
+    transform:translateY(-2px);
+}
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.actions-card{
+    margin-top:25px;
+    background:rgba(255,255,255,.94);
+    border:1px solid var(--border);
+    border-radius:26px;
+    padding:27px;
+    box-shadow:var(--shadow);
+}
+
+.actions-card h2{
+    font-family:"Plus Jakarta Sans",sans-serif;
+    font-size:20px;
+    margin-bottom:6px;
+}
+
+.actions-card > p{
+    color:var(--text);
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+.actions{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+}
+
+.action{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    min-height:135px;
+    padding:17px;
+    border-radius:18px;
+    border:1px solid var(--border);
+    background:#fff;
+    transition:.2s ease;
+}
+
+.action:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 30px rgba(40,60,50,.08);
+}
+
+.action-icon{
+    width:43px;
+    height:43px;
+    display:grid;
+    place-items:center;
+    border-radius:13px;
+    background:#eef9f4;
+    font-size:20px;
+}
+
+.action strong{
+    display:block;
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.action span{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.5;
+}
+
+footer{
+    text-align:center;
+    padding:0 0 35px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .actions{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:850px){
+    .visual-grid{
+        grid-template-columns:1fr;
+    }
+
+    .welcome{
+        padding:36px 28px;
+    }
+}
+
+@media(max-width:620px){
+    .nav{
+        min-height:72px;
+    }
+
+    .logo span{
+        display:none;
+    }
+
+    .nav-link{
+        padding:9px 12px;
+        font-size:12px;
+    }
+
+    .page{
+        width:92%;
+        padding-top:30px;
+    }
+
+    .welcome{
+        border-radius:24px;
+        padding:30px 23px;
+    }
+
+    .welcome p{
+        font-size:14px;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+    }
+
+    .stat-card{
+        padding:17px;
+    }
+
+    .stat-value{
+        font-size:22px;
+    }
+
+    .chart-card,
+    .actions-card{
+        padding:21px;
+        border-radius:22px;
+    }
+
+    .donut-area{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .actions{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+<script>
+/* CareerBot authenticated-page guard */
+(async function () {
+    try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error || !data.session) {
+            const next = encodeURIComponent(window.location.pathname.split("/").pop() + window.location.search);
+            window.location.replace("login.html?next=" + next);
+        }
+    } catch (error) {
+        console.error("CareerBot session check failed:", error);
+        window.location.replace("login.html");
+    }
+})();
+</script>
+
+    <script src="script.js"></script>
+
+</head>
+
+<body>
+
+<header class="header">
+    <nav class="nav">
+
+        <a href="dashboard.html" class="logo">
+            <img src="CareerBot Growth Mascot Logo(1).png" alt="CareerBot Logo">
+            <span>CareerBot</span>
+        </a>
+<a href="dashboard.html" class="nav-link">Dashboard</a>
+    </nav>
+</header>
+
+<main class="page">
+
+    <section class="welcome">
+
+        <div class="eyebrow">
+            <span></span>
+            CareerBot Dashboard
+        </div>
+
+        <h1>
+            Welcome back,
+            <span id="userName">there</span>.
+        </h1>
+
+        <p>
+            Track your career journey, monitor your progress,
+            explore learning opportunities and build projects
+            that move you closer to your career goals.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         STAT CARDS
+    ========================== -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon">🧭</div>
+            <div class="stat-label">Assessment</div>
+            <div class="stat-value" id="statAssessment">Loading…</div>
+            <div class="stat-note">Career assessment</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-label">Learning</div>
+            <div class="stat-value" id="statLearning">Loading…</div>
+            <div class="stat-note">Learning progress</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">💻</div>
+            <div class="stat-label">Projects</div>
+            <div class="stat-value" id="statProjects">Loading…</div>
+            <div class="stat-note">Completed projects</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-label">Career</div>
+            <div class="stat-value" id="statCareer">Loading…</div>
+            <div class="stat-note">Selected career</div>
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CHARTS
+    ========================== -->
+
+    <section class="visual-grid">
+
+        <!-- BAR GRAPH -->
+        <section class="chart-card">
+
+            <div class="chart-head">
+                <h2>Career Journey</h2>
+                <p>Your progress across the main CareerBot stages.</p>
+            </div>
+
+            <div class="bars">
+
+                <div class="bar-col">
+                    <div class="bar-value" id="barAssessmentValue">Loading…</div>
+                    <div class="bar-wrap">
+                        <div class="bar" id="barAssessment"></div>
+                    </div>
+                    <div class="bar-label">Assessment</div>
+                </div>
+
+                <div class="bar-col">
+                    <div class="bar-value" id="barLearningValue">Loading…</div>
+                    <div class="bar-wrap">
+                        <div class="bar" id="barLearning"></div>
+                    </div>
+                    <div class="bar-label">Learning</div>
+                </div>
+
+                <div class="bar-col">
+                    <div class="bar-value" id="barProjectsValue">Loading…</div>
+                    <div class="bar-wrap">
+                        <div class="bar" id="barProjects"></div>
+                    </div>
+                    <div class="bar-label">Projects</div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DONUT GRAPH -->
+        <section class="chart-card">
+
+            <div class="chart-head">
+                <h2>Overall Progress</h2>
+                <p>A quick view of your completed CareerBot journey.</p>
+            </div>
+
+            <div class="donut-area">
+
+                <div class="donut" id="progressDonut">
+
+                    <div class="donut-center">
+                        <strong id="overallProgress">Loading…</strong>
+                        <span>overall</span>
+                    </div>
+
+                </div>
+
+                <div class="legend">
+
+                    <div class="legend-item">
+                        <span class="dot"></span>
+                        Assessment
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="dot two"></span>
+                        Learning
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="dot three"></span>
+                        Projects
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="dot four"></span>
+                        Remaining
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TIMELINE -->
+        <section class="chart-card">
+
+            <div class="chart-head">
+                <h2>Career Journey Timeline</h2>
+                <p>Follow the stages of your CareerBot journey.</p>
+            </div>
+
+            <div class="timeline">
+
+                <div class="timeline-item">
+
+                    <span class="timeline-dot"></span>
+
+                    <div>
+                        <strong>Career Assessment</strong>
+                        <span id="timelineAssessmentStatus">
+                            Loading…
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="timeline-item">
+
+                    <span class="timeline-dot"></span>
+
+                    <div>
+                        <strong>Career Recommendations</strong>
+                        <span>
+                            Explore your matched career paths
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="timeline-item">
+
+                    <span class="timeline-dot"></span>
+
+                    <div>
+                        <strong>Learning & Skills</strong>
+                        <span>
+                            Build skills for your selected career
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="timeline-item">
+
+                    <span class="timeline-dot"></span>
+
+                    <div>
+                        <strong>Projects & Jobs</strong>
+                        <span>
+                            Build projects and explore opportunities
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+        <section class="chart-card">
+
+            <div class="chart-head">
+                <h2>Next Step</h2>
+                <p>CareerBot recommends your next step based on your progress.</p>
+            </div>
+
+            <div class="summary-box">
+
+                <h3 id="summaryTitle">
+                    Start your career journey
+                </h3>
+
+                <p id="summaryText">
+                    Complete your assessment to discover
+                    personalized career recommendations.
+                </p>
+
+                <a
+                    href="assessment.html"
+                    class="primary-btn"
+                    id="summaryButton"
+                >
+                    Start Assessment →
+                </a>
+
+            </div>
+
+        </section>
+
+    </section>
+
+
+    <!-- =========================
+         QUICK ACTIONS
+    ========================== -->
+
+    <section class="actions-card">
+
+        <h2>Quick Actions</h2>
+
+        <p>
+            Jump directly to the part of your career journey you want to continue.
+        </p>
+
+        <div class="actions">
+
+            <a href="assessment.html" class="action">
+                <div class="action-icon">🧭</div>
+                <div><strong>Career Assessment</strong><span>Discover careers matching your interests and strengths.</span></div>
+            </a>
+
+            <a href="recommendations.html" class="action">
+                <div class="action-icon">✨</div>
+                <div><strong>Recommendations</strong><span>View your personalized career recommendations.</span></div>
+            </a>
+
+            <a href="skill-gap.html" class="action">
+                <div class="action-icon">🎯</div>
+                <div><strong>Skill Gap</strong><span>See the skills you need to build for your career.</span></div>
+            </a>
+
+            <a href="learning-guide.html" class="action">
+                <div class="action-icon">📚</div>
+                <div><strong>Learning Guide</strong><span>Follow a structured learning path for your career.</span></div>
+            </a>
+
+            <a href="project-ideas.html" class="action">
+                <div class="action-icon">💻</div>
+                <div><strong>Project Ideas</strong><span>Build practical projects and strengthen your skills.</span></div>
+            </a>
+
+            <a href="job-recommendations.html" class="action">
+                <div class="action-icon">💼</div>
+                <div><strong>Job Recommendations</strong><span>Explore current remote opportunities matched to your career.</span></div>
+            </a>
+
+            <a href="agent.html" class="action">
+                <div class="action-icon">🤖</div>
+                <div><strong>Ask CareerBot</strong><span>Get career guidance from your CareerBot assistant.</span></div>
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    CareerBot — Build skills. Build projects. Build your future.
+</footer>
+
+
+<script>
+/* Dashboard data is loaded from Supabase by script.js. */
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+        if (sessionError) throw sessionError;
+        const userId = sessionData?.session?.user?.id;
+        if (!userId) return;
+        const { data, error } = await supabaseClient
+            .from("profiles")
+            .select("first_name,last_name")
+            .eq("id", userId)
+            .maybeSingle();
+        if (error) throw error;
+        const name = `${data?.first_name || ""} ${data?.last_name || ""}`.trim() || "there";
+        const el = document.getElementById("userName");
+        if (el) el.textContent = name.split(" ")[0];
+    } catch (error) {
+        console.warn("Dashboard profile name could not be loaded:", error);
+    }
+});
+</script>
+
+</body>
+</html>

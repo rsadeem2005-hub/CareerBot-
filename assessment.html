@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Assessment | CareerBot</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            color: #17231f;
+            background:
+                radial-gradient(
+                    circle at 75% 15%,
+                    rgba(190, 239, 222, 0.45),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 15% 90%,
+                    rgba(218, 211, 255, 0.38),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #f9fbfa 45%,
+                    #eefaf5 100%
+                );
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .assessment-header {
+            width: 100%;
+            max-width: 1110px;
+            margin: 0 auto;
+            padding: 14px 0 0;
+
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .assessment-logo {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .assessment-logo img {
+            width: 100px;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .assessment-step {
+            text-align: right;
+            padding-top: 8px;
+        }
+
+        .assessment-step span {
+            display: block;
+            font-size: 12px;
+            color: #7c8d87;
+            margin-bottom: 6px;
+        }
+
+        .assessment-step strong {
+            display: block;
+            font-size: 13px;
+            color: #17231f;
+            font-weight: 700;
+        }
+
+        .question-count {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #71908a;
+        }
+
+        /* =========================
+           PROGRESS BAR
+        ========================= */
+
+        .progress-wrapper {
+            max-width: 1110px;
+            margin: 10px auto 0;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 7px;
+            background: #e8eeeb;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 50%;
+            height: 100%;
+            border-radius: 20px;
+
+            background: linear-gradient(
+                90deg,
+                #63b997,
+                #6c8fdc
+            );
+        }
+
+        /* =========================
+           MAIN CARD
+        ========================= */
+
+        .assessment-container {
+            width: calc(100% - 40px);
+            max-width: 850px;
+            margin: 38px auto 60px;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border-radius: 30px;
+
+            padding: 55px 56px 45px;
+
+            box-shadow:
+                0 25px 70px rgba(57, 92, 77, 0.10),
+                0 5px 20px rgba(57, 92, 77, 0.05);
+
+            border: 1px solid rgba(220, 229, 225, 0.8);
+        }
+
+        /* =========================
+           ICON
+        ========================= */
+
+        .assessment-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e2f6ef,
+                    #eeeaff
+                );
+
+            color: #398e70;
+
+            font-size: 31px;
+
+            box-shadow:
+                0 12px 30px rgba(85, 151, 126, 0.10);
+        }
+
+        /* =========================
+           HEADING
+        ========================= */
+
+        .eyebrow {
+            text-align: center;
+
+            font-size: 10px;
+            letter-spacing: 4px;
+            font-weight: 800;
+
+            color: #3c8d71;
+
+            margin-bottom: 18px;
+        }
+
+        .main-title {
+            text-align: center;
+
+            font-size: clamp(42px, 6vw, 58px);
+            line-height: 1.05;
+
+            font-weight: 800;
+            letter-spacing: -2.5px;
+
+            margin-bottom: 20px;
+        }
+
+        .main-title .gradient-text {
+            background: linear-gradient(
+                90deg,
+                #50a887,
+                #688bdc,
+                #7771d6
+            );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .description {
+            max-width: 600px;
+            margin: 0 auto;
+
+            text-align: center;
+
+            font-size: 15px;
+            line-height: 1.7;
+
+            color: #667670;
+        }
+
+        /* =========================
+           INFO CARDS
+        ========================= */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+
+            margin-top: 42px;
+        }
+
+        .info-card {
+            min-height: 120px;
+
+            padding: 22px 15px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            background: #f8faf9;
+
+            border: 1px solid #dfe7e3;
+
+            border-radius: 17px;
+
+            transition: 0.25s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+
+            background: #fbfdfc;
+
+            box-shadow:
+                0 10px 25px rgba(62, 126, 102, 0.08);
+        }
+
+        .info-icon {
+            font-size: 22px;
+            margin-bottom: 12px;
+
+            color: #429878;
+        }
+
+        .info-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #26352f;
+        }
+
+        .info-text {
+            margin-top: 8px;
+
+            font-size: 10px;
+            color: #8a9792;
+        }
+
+        /* =========================
+           START BUTTON
+        ========================= */
+
+        .start-wrapper {
+            display: flex;
+            justify-content: center;
+
+            margin-top: 40px;
+        }
+
+        .assessment-start-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+
+            min-width: 225px;
+
+            padding: 16px 25px;
+
+            border-radius: 14px;
+
+            text-decoration: none;
+
+            color: #ffffff;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #57ae8b,
+                    #7288d6
+                );
+
+            box-shadow:
+                0 12px 28px rgba(86, 147, 126, 0.22);
+
+            transition: all 0.25s ease;
+        }
+
+        .assessment-start-btn span {
+            font-size: 19px;
+            line-height: 1;
+        }
+
+        .assessment-start-btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 16px 32px rgba(86, 147, 126, 0.28);
+        }
+
+        /* =========================
+           BACK LINK
+        ========================= */
+
+        .back-wrapper {
+            text-align: center;
+            margin-top: 21px;
+        }
+
+        .back-link {
+            color: #788983;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            text-decoration: none;
+
+            transition: 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #3e9474;
+        }
+
+        /* =========================
+           RIGHT DISCOVERY CARD
+        ========================= */
+
+        .discover-card {
+            max-width: 850px;
+            margin: 0 auto 60px;
+
+            padding: 28px 32px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(238, 249, 245, 0.95),
+                    rgba(245, 242, 255, 0.95)
+                );
+
+            border: 1px solid #e0e8e4;
+
+            border-radius: 22px;
+        }
+
+        .discover-card h3 {
+            text-align: center;
+
+            font-size: 17px;
+
+            margin-bottom: 22px;
+
+            color: #26362f;
+        }
+
+        .discover-items {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .discover-item {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .discover-item-icon {
+            width: 40px;
+            height: 40px;
+
+            margin: 0 auto 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: rgba(255, 255, 255, 0.8);
+
+            color: #4c9d7d;
+
+            font-size: 17px;
+        }
+
+        .discover-item span {
+            display: block;
+
+            font-size: 10px;
+
+            color: #71807a;
+            font-weight: 600;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .page-footer {
+            text-align: center;
+
+            padding: 0 20px 35px;
+
+            font-size: 11px;
+
+            color: #9aa7a2;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .assessment-header,
+            .progress-wrapper {
+                width: calc(100% - 40px);
+            }
+
+            .discover-items {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .assessment-header {
+                padding-top: 12px;
+            }
+
+            .assessment-logo img {
+                width: 85px;
+            }
+
+            .assessment-step span,
+            .assessment-step strong,
+            .question-count {
+                font-size: 10px;
+            }
+
+            .question-count {
+                margin-top: 15px;
+            }
+
+            .assessment-container {
+                padding: 40px 22px 35px;
+
+                border-radius: 24px;
+
+                margin-top: 28px;
+            }
+
+            .assessment-icon {
+                width: 62px;
+                height: 62px;
+            }
+
+            .main-title {
+                font-size: 39px;
+                letter-spacing: -1.8px;
+            }
+
+            .description {
+                font-size: 14px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+
+                gap: 10px;
+
+                margin-top: 30px;
+            }
+
+            .info-card {
+                min-height: 90px;
+            }
+
+            .discover-card {
+                width: calc(100% - 40px);
+
+                padding: 25px 18px;
+            }
+
+            .discover-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .assessment-start-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 400px) {
+
+            .assessment-step {
+                max-width: 130px;
+            }
+
+            .main-title {
+                font-size: 34px;
+            }
+
+            .discover-items {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+<script>
+/* CareerBot authenticated-page guard */
+(async function () {
+    try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error || !data.session) {
+            const next = encodeURIComponent(window.location.pathname.split("/").pop() + window.location.search);
+            window.location.replace("login.html?next=" + next);
+        }
+    } catch (error) {
+        console.error("CareerBot session check failed:", error);
+        window.location.replace("login.html");
+    }
+})();
+</script>
+
+    <script src="script.js"></script>
+
+</head>
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="assessment-header">
+
+        <a href="index.html" class="assessment-logo">
+
+            <img
+                src="CareerBot Growth Mascot Logo(1).png"
+                alt="CareerBot Logo"
+            >
+
+        </a>
+
+        <div class="assessment-step">
+
+            <span>
+                Step 2 of 4
+            </span>
+
+            <strong>
+                Career Assessment
+            </strong>
+
+            <div class="question-count">
+                10 Questions
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         PROGRESS
+    ========================= -->
+
+    <div class="progress-wrapper">
+
+        <div class="progress-track">
+
+            <div class="progress-fill"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN ASSESSMENT CARD
+    ========================= -->
+
+    <main>
+
+        <section class="assessment-container">
+
+            <div class="assessment-icon">
+                ✦
+            </div>
+
+
+            <div class="eyebrow">
+                AI CAREER ASSESSMENT
+            </div>
+
+
+            <h1 class="main-title">
+                Discover <span class="gradient-text">Yourself.</span>
+            </h1>
+
+
+            <p class="description">
+                Before we recommend careers, let's understand
+                what makes you unique.
+            </p>
+
+
+            <!-- INFO CARDS -->
+
+            <div class="info-grid">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        ⏱
+                    </div>
+
+                    <div class="info-title">
+                        5–7 minutes
+                    </div>
+
+                    <div class="info-text">
+                        Quick assessment
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        ✦
+                    </div>
+
+                    <div class="info-title">
+                        10 questions
+                    </div>
+
+                    <div class="info-text">
+                        Personalized results
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        ✓
+                    </div>
+
+                    <div class="info-title">
+                        No wrong answers
+                    </div>
+
+                    <div class="info-text">
+                        Be yourself
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- START BUTTON -->
+
+            <div class="start-wrapper">
+
+                <a
+                    href="assessment-form.html"
+                    class="assessment-start-btn"
+                >
+                    Start Assessment
+                    <span>→</span>
+                </a>
+
+            </div>
+
+
+            <!-- BACK -->
+
+            <div class="back-wrapper">
+
+                <a
+                    href="dashboard.html"
+                    class="back-link"
+                >
+                    ← Back to Dashboard
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             DISCOVERY CARD
+        ========================= -->
+
+        <section class="discover-card">
+
+            <h3>
+                What will we discover?
+            </h3>
+
+
+            <div class="discover-items">
+
+                <div class="discover-item">
+
+                    <div class="discover-item-icon">
+                        ♡
+                    </div>
+
+                    <span>
+                        Interests
+                    </span>
+
+                </div>
+
+
+                <div class="discover-item">
+
+                    <div class="discover-item-icon">
+                        ✦
+                    </div>
+
+                    <span>
+                        Strengths
+                    </span>
+
+                </div>
+
+
+                <div class="discover-item">
+
+                    <div class="discover-item-icon">
+                        ◈
+                    </div>
+
+                    <span>
+                        Work Style
+                    </span>
+
+                </div>
+
+
+                <div class="discover-item">
+
+                    <div class="discover-item-icon">
+                        ◎
+                    </div>
+
+                    <span>
+                        Career Goals
+                    </span>
+
+                </div>
+
+
+                <div class="discover-item">
+
+                    <div class="discover-item-icon">
+                        ⌂
+                    </div>
+
+                    <span>
+                        Ideal Environment
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer class="page-footer">
+
+        Your answers help CareerBot create
+        recommendations tailored to you.
+
+    </footer>
+
+
+</body>
+</html>

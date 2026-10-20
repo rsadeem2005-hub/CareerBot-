@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CareerBot — Job Recommendations</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    rel="stylesheet"
+>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<style>
+
+:root {
+    --dark:#17231f;
+    --text:#5d6b65;
+    --muted:#89948f;
+    --mint:#69c7a3;
+    --mint-dark:#438e70;
+    --lavender:#9182e8;
+    --cream:#fbfcf9;
+    --white:#fff;
+    --border:rgba(35,55,45,.09);
+    --shadow:0 25px 70px rgba(40,60,50,.08);
+    --green-soft:#edf9f3;
+    --purple-soft:#f3f0ff;
+    --error:#d86d5c;
+    --error-soft:#fff1ed;
+}
+
+* {
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body {
+    font-family:"DM Sans",sans-serif;
+    background:
+        radial-gradient(
+            circle at 8% 5%,
+            rgba(105,199,163,.11),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 92% 8%,
+            rgba(145,130,232,.11),
+            transparent 28%
+        ),
+        var(--cream);
+
+    color:var(--dark);
+    min-height:100vh;
+}
+
+a {
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input,
+select {
+    font:inherit;
+}
+
+button {
+    cursor:pointer;
+}
+
+.container {
+    width:min(1180px,calc(100% - 40px));
+    margin:auto;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+header {
+    position:sticky;
+    top:0;
+    z-index:50;
+
+    background:rgba(255,255,255,.90);
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid var(--border);
+}
+
+.nav {
+    min-height:78px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.logo {
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-family:"Plus Jakarta Sans";
+    font-weight:800;
+    font-size:20px;
+}
+
+.logo-mark {
+    width:40px;
+    height:40px;
+
+    border-radius:13px;
+
+    display:grid;
+    place-items:center;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--mint),
+            var(--lavender)
+        );
+}
+
+.nav-links {
+    display:flex;
+    gap:27px;
+
+    color:#66736e;
+
+    font-size:14px;
+    font-weight:600;
+}
+
+.nav-links a:hover {
+    color:var(--mint-dark);
+}
+
+.mobile-dashboard-shortcut {
+    display:none;
+    align-items:center;
+    justify-content:center;
+    min-height:38px;
+    padding:9px 13px;
+    border-radius:999px;
+    color:#fff;
+    font-size:13px;
+    font-weight:750;
+    white-space:nowrap;
+    background:linear-gradient(135deg,var(--mint),var(--lavender));
+}
+
+.nav-btn {
+    padding:11px 17px;
+
+    border-radius:12px;
+
+    color:#fff;
+
+    font-size:13px;
+    font-weight:800;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--mint),
+            var(--lavender)
+        );
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    padding:66px 0 35px;
+}
+
+.eyebrow {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:8px 13px;
+
+    border-radius:999px;
+
+    background:var(--green-soft);
+    color:var(--mint-dark);
+
+    font-size:11px;
+    font-weight:800;
+
+    letter-spacing:.8px;
+    text-transform:uppercase;
+
+    margin-bottom:17px;
+}
+
+.eyebrow span {
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:var(--mint);
+}
+
+h1 {
+    font-family:"Plus Jakarta Sans";
+
+    font-size:clamp(38px,5vw,60px);
+
+    line-height:1.06;
+    letter-spacing:-2px;
+
+    max-width:850px;
+
+    margin-bottom:17px;
+}
+
+.hero p {
+    max-width:780px;
+
+    color:var(--text);
+
+    line-height:1.75;
+
+    font-size:16px;
+}
+
+.profile-summary {
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:25px;
+}
+
+.pill {
+    padding:10px 14px;
+
+    border-radius:999px;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    font-size:12px;
+    font-weight:700;
+
+    color:#617069;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.summary {
+    display:grid;
+
+    grid-template-columns:1.5fr .7fr;
+
+    gap:20px;
+
+    margin-bottom:28px;
+}
+
+.card {
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:23px;
+
+    box-shadow:var(--shadow);
+}
+
+.card-pad {
+    padding:28px;
+}
+
+.summary-main {
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:25px;
+}
+
+.small-label {
+    color:var(--mint-dark);
+
+    font-size:11px;
+    font-weight:800;
+
+    text-transform:uppercase;
+    letter-spacing:.8px;
+
+    margin-bottom:7px;
+}
+
+.summary-title {
+    font-family:"Plus Jakarta Sans";
+
+    font-size:27px;
+
+    letter-spacing:-.7px;
+}
+
+.summary-text {
+    color:var(--text);
+
+    font-size:13px;
+
+    line-height:1.65;
+
+    margin-top:8px;
+}
+
+.match {
+    flex:none;
+
+    text-align:center;
+
+    background:var(--purple-soft);
+
+    border-radius:17px;
+
+    padding:14px 20px;
+}
+
+.match strong {
+    display:block;
+
+    font-family:"Plus Jakarta Sans";
+
+    font-size:26px;
+
+    color:#6657b9;
+}
+
+.match span {
+    font-size:11px;
+
+    color:#7569bc;
+
+    font-weight:700;
+}
+
+.stat-grid {
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+}
+
+.stat {
+    padding:18px;
+
+    border-radius:16px;
+
+    background:#fafcfb;
+
+    border:1px solid var(--border);
+}
+
+.stat strong {
+    font-family:"Plus Jakarta Sans";
+
+    font-size:23px;
+
+    display:block;
+}
+
+.stat span {
+    font-size:11px;
+
+    color:var(--muted);
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+    display:none;
+
+    margin-bottom:20px;
+
+    padding:14px 17px;
+
+    border-radius:13px;
+
+    font-size:13px;
+
+    line-height:1.5;
+}
+
+.status.loading {
+    display:block;
+
+    background:#f3f8f6;
+
+    color:var(--text);
+}
+
+.status.error {
+    display:block;
+
+    background:var(--error-soft);
+
+    color:var(--error);
+}
+
+.status.success {
+    display:block;
+
+    background:var(--green-soft);
+
+    color:var(--mint-dark);
+}
+
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+.results-head {
+    display:flex;
+
+    justify-content:space-between;
+    align-items:end;
+
+    gap:20px;
+
+    margin-bottom:17px;
+}
+
+.section-title {
+    font-family:"Plus Jakarta Sans";
+
+    font-size:25px;
+
+    letter-spacing:-.6px;
+}
+
+.results-count {
+    font-size:12px;
+
+    color:var(--muted);
+
+    font-weight:700;
+}
+
+.jobs {
+    display:grid;
+
+    gap:15px;
+
+    margin-bottom:35px;
+}
+
+
+/* =========================================================
+   JOB CARD
+========================================================= */
+
+.job {
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:21px;
+
+    padding:24px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(40,60,50,.045);
+
+    transition:.2s ease;
+}
+
+.job:hover {
+    transform:translateY(-2px);
+
+    box-shadow:var(--shadow);
+}
+
+.job-top {
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.job-main {
+    display:flex;
+
+    gap:15px;
+
+    min-width:0;
+}
+
+.company-logo {
+    width:53px;
+    height:53px;
+
+    flex:none;
+
+    border-radius:15px;
+
+    display:grid;
+    place-items:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eaf9f2,
+            #f0edff
+        );
+
+    font-size:22px;
+}
+
+.job-title {
+    font-family:"Plus Jakarta Sans";
+
+    font-size:18px;
+
+    letter-spacing:-.3px;
+}
+
+.company {
+    color:#65736c;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    margin-top:4px;
+}
+
+.job-location {
+    color:var(--muted);
+
+    font-size:12px;
+
+    margin-top:5px;
+}
+
+.job-match {
+    flex:none;
+
+    padding:8px 11px;
+
+    border-radius:10px;
+
+    background:var(--green-soft);
+
+    color:var(--mint-dark);
+
+    font-size:11px;
+
+    font-weight:800;
+
+    height:max-content;
+}
+
+.job-details {
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin:17px 0 14px 68px;
+}
+
+.tag {
+    padding:7px 10px;
+
+    border-radius:9px;
+
+    background:#f7f8f8;
+
+    color:#65716c;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    border:1px solid var(--border);
+}
+
+.job-description {
+    margin-left:68px;
+
+    color:var(--text);
+
+    font-size:13px;
+
+    line-height:1.65;
+
+    max-width:850px;
+}
+
+.job-bottom {
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin:19px 0 0 68px;
+
+    padding-top:17px;
+
+    border-top:1px solid var(--border);
+}
+
+.skills {
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:6px;
+}
+
+.skill {
+    padding:6px 9px;
+
+    border-radius:8px;
+
+    background:#f4f1ff;
+
+    color:#6657b9;
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+.job-actions {
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+}
+
+.view {
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    padding:11px 15px;
+
+    border-radius:11px;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    border:0;
+}
+
+.view {
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--mint),
+            var(--lavender)
+        );
+}
+
+.view:hover {
+    opacity:.9;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty {
+    padding:55px 25px;
+
+    text-align:center;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:21px;
+
+    color:var(--text);
+}
+
+.empty-icon {
+    font-size:35px;
+
+    margin-bottom:10px;
+}
+
+.empty h3 {
+    font-family:"Plus Jakarta Sans";
+
+    font-size:19px;
+
+    color:var(--dark);
+
+    margin-bottom:6px;
+}
+
+.empty p {
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   GUIDANCE
+========================================================= */
+
+.note {
+    margin-bottom:55px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #17231f,
+            #293b34
+        );
+
+    color:#fff;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+.note:after {
+    content:"";
+
+    position:absolute;
+
+    width:210px;
+    height:210px;
+
+    border-radius:50%;
+
+    background:
+        rgba(105,199,163,.13);
+
+    right:-70px;
+    top:-80px;
+}
+
+.note-inner {
+    padding:28px;
+
+    position:relative;
+
+    z-index:1;
+}
+
+.note-label {
+    color:#7fdbb5;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    text-transform:uppercase;
+
+    letter-spacing:.8px;
+
+    margin-bottom:9px;
+}
+
+.note h2 {
+    font-family:"Plus Jakarta Sans";
+
+    font-size:23px;
+
+    margin-bottom:7px;
+}
+
+.note p {
+    color:#c7d2cd;
+
+    font-size:13px;
+
+    line-height:1.7;
+
+    max-width:760px;
+}
+
+.source-link {
+    display:inline-block;
+
+    margin-top:10px;
+
+    color:#7fdbb5;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px) {
+
+    .nav-links {
+        display:none;
+    }
+
+    .mobile-dashboard-shortcut {
+        display:inline-flex;
+    }
+
+    .summary {
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:620px) {
+
+    .container {
+        width:calc(100% - 28px);
+    }
+
+    .nav {
+        min-height:68px;
+    }
+
+    .nav-btn {
+        padding:9px 12px;
+    }
+
+    .hero {
+        padding-top:45px;
+    }
+
+    .summary-main {
+        align-items:flex-start;
+
+        flex-direction:column;
+    }
+
+    .stat-grid {
+        grid-template-columns:1fr 1fr;
+    }
+
+    .job-top {
+        align-items:flex-start;
+    }
+
+    .job-match {
+        display:none;
+    }
+
+    .job-details,
+    .job-description,
+    .job-bottom {
+        margin-left:0;
+    }
+
+    .job-bottom {
+        align-items:stretch;
+
+        flex-direction:column;
+    }
+
+    .job-actions {
+        width:100%;
+    }
+
+    .view {
+        flex:1;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="container nav">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-mark">✦</div>
+
+        CareerBot
+
+    </a>
+
+    <a href="dashboard.html" class="mobile-dashboard-shortcut">
+        Dashboard
+    </a>
+
+    <nav class="nav-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="assessment-form.html">
+            Assessment
+        </a>
+
+        <a href="recommendations.html">
+            Recommendations
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="agent.html">
+            Ask CareerBot
+        </a>
+
+    </nav>
+
+
+</div>
+
+</header>
+
+
+
+<main>
+
+
+<section class="hero">
+
+<div class="container">
+
+    <div class="eyebrow">
+        <span></span>
+        Career Opportunities
+    </div>
+
+
+    <h1>
+        Jobs that connect with your career path.
+    </h1>
+
+
+    <p id="heroText">
+        Explore current opportunities related to your recommended
+        career and skills. CareerBot loads live listings through
+        its Supabase job service.
+    </p>
+
+
+    <div class="profile-summary">
+
+        <div
+            class="pill"
+            id="careerPill"
+        >
+            🎯 Loading career...
+        </div>
+
+
+        <div
+            class="pill"
+            id="skillPill"
+        >
+            🧩 Career skills
+        </div>
+
+
+        <div
+            class="pill"
+            id="projectPill"
+        >
+            🚀 Project Experience
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<section class="container">
+
+
+<!-- =====================================================
+     SUMMARY
+====================================================== -->
+
+<div class="summary">
+
+
+    <div class="card">
+
+        <div class="card-pad">
+
+            <div class="summary-main">
+
+                <div>
+
+                    <div class="small-label">
+                        Your Target Career
+                    </div>
+
+
+                    <h2
+                        class="summary-title"
+                        id="careerName"
+                    >
+                        Loading...
+                    </h2>
+
+
+                    <p
+                        class="summary-text"
+                        id="careerSummary"
+                    >
+                        Loading your career information...
+                    </p>
+
+                </div>
+
+
+                <div class="match">
+
+                    <strong id="careerMatch">
+                        —
+                    </strong>
+
+                    <span>
+                        Career Match
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <div class="card-pad">
+
+            <div class="stat-grid">
+
+                <div class="stat">
+
+                    <strong id="jobsAvailable">
+                        0
+                    </strong>
+
+                    <span>
+                        Live Jobs
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong id="projectsCompleted">
+                        0
+                    </strong>
+
+                    <span>
+                        Projects Completed
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     STATUS
+====================================================== -->
+
+<div
+    id="statusMessage"
+    class="status"
+></div>
+
+
+
+<!-- =====================================================
+     RESULTS
+====================================================== -->
+
+<div class="results-head">
+
+    <div>
+
+        <div class="small-label">
+            Personalized Results
+        </div>
+
+        <h2 class="section-title">
+            Recommended Opportunities
+        </h2>
+
+    </div>
+
+
+    <div
+        class="results-count"
+        id="resultsCount"
+    >
+        Loading jobs...
+    </div>
+
+</div>
+
+
+
+<div
+    class="jobs"
+    id="jobsList"
+></div>
+
+
+
+<!-- =====================================================
+     GUIDANCE
+====================================================== -->
+
+<div class="note">
+
+    <div class="note-inner">
+
+        <div class="note-label">
+            CareerBot Guidance
+        </div>
+
+
+        <h2 id="guidanceTitle">
+            Build evidence, then apply.
+        </h2>
+
+
+        <p id="guidanceText">
+            Use your completed projects and learning progress
+            to strengthen your portfolio before applying.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<div
+    class="note"
+    style="margin-top:18px"
+>
+
+    <div class="note-inner">
+
+        <div class="note-label">
+            Job Data Sources
+        </div>
+
+
+        <p>
+            CareerBot retrieves live remote job listings through
+            its Supabase job service using free job data sources.
+        </p>
+
+
+        <a
+            class="source-link"
+            href="https://himalayas.app"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Himalayas ↗
+        </a>
+
+    </div>
+
+</div>
+
+
+</section>
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   CAREERBOT JOB RECOMMENDATIONS
+========================================================= */
+
+(() => {
+
+    "use strict";
+
+
+    /* -----------------------------------------------------
+       GLOBAL STATE
+    ----------------------------------------------------- */
+
+    let allJobs = [];
+
+    let currentUser = null;
+
+    let currentCareer =
+        "software-developer";
+
+
+    /* -----------------------------------------------------
+       DOM
+    ----------------------------------------------------- */
+
+    const jobsList =
+        document.getElementById("jobsList");
+
+    const resultsCount =
+        document.getElementById("resultsCount");
+
+    const statusMessage =
+        document.getElementById("statusMessage");
+
+    /* -----------------------------------------------------
+       CAREER INFORMATION
+    ----------------------------------------------------- */
+
+    const careerInfo = {
+
+        "software-developer": {
+            name:"Software Developer",
+            summary:
+                "Build practical software, applications and digital products."
+        },
+
+        "ux-ui-designer": {
+            name:"UX/UI Designer",
+            summary:
+                "Design useful, accessible and engaging digital experiences."
+        },
+
+        "human-resources-specialist": {
+            name:"Human Resources Specialist",
+            summary:
+                "Help organizations support people, teams and workplace growth."
+        },
+
+        "business-analyst": {
+            name:"Business Analyst",
+            summary:
+                "Analyze business needs and turn information into practical decisions."
+        }
+
+    };
+
+
+    /* -----------------------------------------------------
+       GET CAREER
+    ----------------------------------------------------- */
+
+    function getCareer() {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        return (
+            params.get("career") ||
+            localStorage.getItem(
+                "careerbotSelectedCareer"
+            ) ||
+            "software-developer"
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       SET CAREER UI
+    ----------------------------------------------------- */
+
+    function updateCareerUI() {
+
+        const info =
+            careerInfo[currentCareer] ||
+            careerInfo["software-developer"];
+
+
+        document.getElementById(
+            "careerName"
+        ).textContent =
+            info.name;
+
+
+        document.getElementById(
+            "careerSummary"
+        ).textContent =
+            info.summary;
+
+
+        document.getElementById(
+            "careerPill"
+        ).textContent =
+            "🎯 " + info.name;
+
+
+        document.getElementById(
+            "skillPill"
+        ).textContent =
+            "🧩 Career Skills";
+
+
+        localStorage.setItem(
+            "careerbotSelectedCareer",
+            currentCareer
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       STATUS
+    ----------------------------------------------------- */
+
+    function showStatus(
+        message,
+        type = "loading"
+    ) {
+
+        statusMessage.textContent =
+            message;
+
+        statusMessage.className =
+            "status " + type;
+
+    }
+
+
+    function hideStatus() {
+
+        statusMessage.className =
+            "status";
+
+        statusMessage.textContent =
+            "";
+
+    }
+
+
+    /* -----------------------------------------------------
+       ESCAPE HTML
+    ----------------------------------------------------- */
+
+    function escapeHTML(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+            return "";
+        }
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* -----------------------------------------------------
+       NORMALIZE JOB
+    ----------------------------------------------------- */
+
+    function normalizeJob(
+        job,
+        index
+    ) {
+
+        const skills =
+            Array.isArray(job.skills)
+                ? job.skills
+                : Array.isArray(job.tags)
+                    ? job.tags
+                    : [];
+
+
+        const applicationURL =
+            job.applicationUrl ||
+            job.application_url ||
+            job.url ||
+            job.link ||
+            job.source_url ||
+            "";
+
+
+        const rawLocation =
+            job.location ||
+            job.locations ||
+            "Remote";
+
+
+        let location =
+            Array.isArray(rawLocation)
+                ? rawLocation.join(", ")
+                : String(rawLocation);
+
+
+        let mode =
+            job.mode ||
+            job.workMode ||
+            job.work_mode ||
+            "";
+
+
+        if (!mode) {
+
+            if (
+                location
+                    .toLowerCase()
+                    .includes("remote")
+            ) {
+                mode = "Remote";
+            } else {
+                mode = "Remote";
+            }
+
+        }
+
+
+        return {
+
+            id:
+                String(
+                    job.id ||
+                    job.job_id ||
+                    job.slug ||
+                    ("job-" + index)
+                ),
+
+            title:
+                job.title ||
+                job.name ||
+                "Software Developer",
+
+            company:
+                job.company ||
+                job.company_name ||
+                job.employer ||
+                "Company",
+
+            location,
+
+            mode,
+
+            type:
+                job.type ||
+                job.job_type ||
+                job.employment_type ||
+                "Full-time",
+
+            experience:
+                job.experience ||
+                job.experience_level ||
+                "Not specified",
+
+            salary:
+                job.salary ||
+                job.salary_range ||
+                "Not specified",
+
+            posted:
+                job.posted ||
+                job.posted_at ||
+                job.created_at ||
+                "Recently",
+
+            description:
+                job.description ||
+                job.summary ||
+                "View the original listing for complete job information.",
+
+            skills,
+
+            applicationUrl:
+                applicationURL,
+
+            source:
+                job.source ||
+                "CareerBot Jobs"
+
+        };
+
+    }
+
+
+    /* -----------------------------------------------------
+       EXTRACT JOB ARRAY
+    ----------------------------------------------------- */
+
+    function extractJobs(response) {
+
+        if (Array.isArray(response)) {
+            return response;
+        }
+
+
+        if (
+            response &&
+            Array.isArray(response.jobs)
+        ) {
+            return response.jobs;
+        }
+
+
+        if (
+            response &&
+            response.data &&
+            Array.isArray(response.data)
+        ) {
+            return response.data;
+        }
+
+
+        if (
+            response &&
+            response.data &&
+            Array.isArray(response.data.jobs)
+        ) {
+            return response.data.jobs;
+        }
+
+
+        if (
+            response &&
+            response.results &&
+            Array.isArray(response.results)
+        ) {
+            return response.results;
+        }
+
+
+        return [];
+
+    }
+
+
+    /* -----------------------------------------------------
+       LOAD LIVE JOBS FROM SUPABASE
+    ----------------------------------------------------- */
+
+    async function loadLiveJobs() {
+
+        showStatus(
+            "Loading live job opportunities...",
+            "loading"
+        );
+
+
+        jobsList.innerHTML = "";
+
+
+        try {
+
+            if (
+                typeof supabaseClient ===
+                "undefined"
+            ) {
+
+                throw new Error(
+                    "Supabase client is not available. Check supabase.js."
+                );
+
+            }
+
+
+            /* ---------------------------------------------
+               AUTH SESSION
+            --------------------------------------------- */
+
+            const sessionResult =
+                await supabaseClient.auth.getSession();
+
+
+            if (
+                sessionResult.error
+            ) {
+
+                throw sessionResult.error;
+
+            }
+
+
+            currentUser =
+                sessionResult.data.session;
+
+
+            if (!currentUser) {
+
+                const next =
+                    encodeURIComponent(
+                        window.location.pathname.split("/").pop() +
+                        window.location.search
+                    );
+
+                window.location.href =
+                    "login.html?next=" + next;
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               CALL EXISTING EDGE FUNCTION
+            --------------------------------------------- */
+
+            const functionResult =
+                await supabaseClient.functions.invoke(
+                    "careerbot-jobs",
+                    {
+                        body: {
+                            career: currentCareer,
+                            user_id: currentUser.user.id
+                        }
+                    }
+                );
+
+
+            if (functionResult.error) {
+
+                console.error(
+                    "careerbot-jobs error:",
+                    functionResult.error
+                );
+
+                throw new Error(
+                    functionResult.error.message ||
+                    "The job service returned an error."
+                );
+
+            }
+
+
+            const rawJobs =
+                extractJobs(
+                    functionResult.data
+                );
+
+
+            allJobs =
+                rawJobs.map(
+                    normalizeJob
+                );
+
+
+            /* ---------------------------------------------
+               REMOVE DUPLICATE JOBS
+            --------------------------------------------- */
+
+            const unique =
+                new Map();
+
+
+            allJobs.forEach(job => {
+
+                const key =
+                    job.id ||
+                    (
+                        job.title +
+                        "|" +
+                        job.company
+                    ).toLowerCase();
+
+
+                if (!unique.has(key)) {
+
+                    unique.set(
+                        key,
+                        job
+                    );
+
+                }
+
+            });
+
+
+            allJobs =
+                Array.from(
+                    unique.values()
+                );
+
+
+            window.careerbotLiveJobs =
+                allJobs;
+
+
+            document.getElementById(
+                "jobsAvailable"
+            ).textContent =
+                allJobs.length;
+
+
+            if (!allJobs.length) {
+
+                showStatus(
+                    "The job service responded successfully, but no current listings were returned. Please try again later.",
+                    "error"
+                );
+
+                renderJobs();
+
+                return;
+
+            }
+
+
+            hideStatus();
+
+            renderJobs();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "CareerBot live jobs failed:",
+                error
+            );
+
+
+            allJobs = [];
+
+            window.careerbotLiveJobs = [];
+
+
+            document.getElementById(
+                "jobsAvailable"
+            ).textContent = "0";
+
+
+            showStatus(
+                "Jobs could not be loaded right now. " +
+                "Please check the careerbot-jobs Edge Function and try again.",
+                "error"
+            );
+
+
+            jobsList.innerHTML = `
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        ⚠️
+                    </div>
+
+                    <h3>
+                        Jobs are temporarily unavailable
+                    </h3>
+
+                    <p>
+                        The CareerBot job service could not
+                        return live listings.
+                    </p>
+
+                </div>
+            `;
+
+        }
+
+    }
+
+
+    /* -----------------------------------------------------
+       RENDER JOBS
+    ----------------------------------------------------- */
+
+    function renderJobs() {
+
+        const jobs = allJobs;
+
+
+        resultsCount.textContent =
+            jobs.length +
+            (
+                jobs.length === 1
+                    ? " opportunity"
+                    : " opportunities"
+            );
+
+
+        if (!jobs.length) {
+
+            jobsList.innerHTML = `
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        🔎
+                    </div>
+
+                    <h3>
+                        ${
+                            allJobs.length
+                                ? "No matching jobs found"
+                                : "No live jobs available"
+                        }
+                    </h3>
+
+                    <p>
+                        ${
+                            allJobs.length
+                            ? "No job opportunities are available for this career right now."
+                                : "Please try again later."
+                        }
+                    </p>
+
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        jobsList.innerHTML =
+            jobs.map(
+                renderJobCard
+            ).join("");
+
+
+        attachJobEvents();
+
+    }
+
+
+    /* -----------------------------------------------------
+       JOB CARD
+    ----------------------------------------------------- */
+
+    function renderJobCard(job) {
+
+        const skills =
+            job.skills.length
+                ? job.skills
+                    .slice(0,6)
+                    .map(
+                        skill =>
+                            `
+                            <span class="skill">
+                                ${escapeHTML(skill)}
+                            </span>
+                            `
+                    )
+                    .join("")
+                : `
+                    <span class="skill">
+                        Career Skills
+                    </span>
+                `;
+
+
+        const applicationURL =
+            job.applicationUrl;
+
+
+        const viewButton =
+            applicationURL
+                ? `
+                    <a
+                        href="${escapeHTML(applicationURL)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="view careerbot-view-job"
+                        data-job-id="${escapeHTML(job.id)}"
+                    >
+                        View Job ↗
+                    </a>
+                `
+                : `
+                    <span
+                        class="view"
+                        style="opacity:.55"
+                    >
+                        Application link unavailable
+                    </span>
+                `;
+
+
+        return `
+            <article
+                class="job"
+                data-job-id="${escapeHTML(job.id)}"
+            >
+
+                <div class="job-top">
+
+
+                    <div class="job-main">
+
+                        <div class="company-logo">
+                            💼
+                        </div>
+
+
+                        <div>
+
+                            <div class="job-title">
+                                ${escapeHTML(job.title)}
+                            </div>
+
+
+                            <div class="company">
+                                ${escapeHTML(job.company)}
+                            </div>
+
+
+                            <div class="job-location">
+                                📍 ${escapeHTML(job.location)}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="job-match">
+                        Career Match
+                    </div>
+
+                </div>
+
+
+
+                <div class="job-details">
+
+                    <span class="tag">
+                        ${escapeHTML(job.type)}
+                    </span>
+
+                    <span class="tag">
+                        ${escapeHTML(job.mode)}
+                    </span>
+
+                    <span class="tag">
+                        ${escapeHTML(job.experience)}
+                    </span>
+
+                    <span class="tag">
+                        ${escapeHTML(job.salary)}
+                    </span>
+
+                    <span class="tag">
+                        Posted ${escapeHTML(job.posted)}
+                    </span>
+
+                </div>
+
+
+
+                <p class="job-description">
+
+                    ${escapeHTML(
+                        job.description
+                    )}
+
+                </p>
+
+
+
+                <div class="job-bottom">
+
+                    <div class="skills">
+                        ${skills}
+                    </div>
+
+
+                    <div class="job-actions">
+
+                        ${viewButton}
+
+                    </div>
+
+                </div>
+
+            </article>
+        `;
+
+    }
+
+
+    /* -----------------------------------------------------
+       RECORD JOB VIEW
+    ----------------------------------------------------- */
+
+    async function recordViewed(job) {
+
+        try {
+
+            if (
+                typeof supabaseClient ===
+                "undefined"
+            ) {
+                return;
+            }
+
+
+            const sessionResult =
+                await supabaseClient.auth.getSession();
+
+
+            const session =
+                sessionResult.data.session;
+
+
+            if (!session) {
+                return;
+            }
+
+
+            await supabaseClient.rpc(
+                "record_job_activity",
+                {
+                    p_activity:{
+                        job_id:job.id,
+
+                        activity_type:"viewed",
+
+                        job_title:job.title,
+
+                        company:job.company,
+
+                        application_url:
+                            job.applicationUrl,
+
+                        career:
+                            currentCareer
+                    }
+                }
+            );
+
+        }
+
+        catch (error) {
+
+            console.warn(
+                "Could not record viewed activity:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* -----------------------------------------------------
+       ATTACH CARD EVENTS
+    ----------------------------------------------------- */
+
+    function attachJobEvents() {
+
+        const viewButtons =
+            document.querySelectorAll(
+                ".careerbot-view-job"
+            );
+
+
+        viewButtons.forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const job =
+                            allJobs.find(
+                                item =>
+                                    String(item.id) ===
+                                    String(
+                                        button.dataset.jobId
+                                    )
+                            );
+
+
+                        if (job) {
+
+                            recordViewed(job);
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       INITIALIZE
+    ----------------------------------------------------- */
+
+    async function initialize() {
+
+        currentCareer =
+            getCareer();
+
+
+        updateCareerUI();
+
+
+        await loadLiveJobs();
+
+    }
+
+
+    initialize();
+
+})();
+
+</script>
+
+</body>
+</html>

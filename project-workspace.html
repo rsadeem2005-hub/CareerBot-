@@ -1,0 +1,2875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerBot — Project Workspace</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --dark:#17231f;
+            --text:#5d6b65;
+            --muted:#89948f;
+            --mint:#69c7a3;
+            --mint-dark:#438e70;
+            --lavender:#9182e8;
+            --blue:#79b7df;
+            --cream:#fbfcf9;
+            --white:#ffffff;
+            --border:rgba(35,55,45,.09);
+            --shadow:0 25px 70px rgba(40,60,50,.08);
+            --green-soft:#edf9f3;
+            --purple-soft:#f3f0ff;
+        }
+
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+
+        body{
+            font-family:"DM Sans",sans-serif;
+            background:
+                radial-gradient(circle at 10% 5%, rgba(105,199,163,.10), transparent 28%),
+                radial-gradient(circle at 90% 10%, rgba(145,130,232,.10), transparent 28%),
+                var(--cream);
+            color:var(--dark);
+            min-height:100vh;
+        }
+
+        a{
+            text-decoration:none;
+            color:inherit;
+        }
+
+        button,
+        input{
+            font:inherit;
+        }
+
+        .container{
+            width:min(1180px,calc(100% - 40px));
+            margin:0 auto;
+        }
+
+        /* HEADER */
+        header{
+            width:100%;
+            background:rgba(255,255,255,.86);
+            backdrop-filter:blur(18px);
+            border-bottom:1px solid var(--border);
+            position:sticky;
+            top:0;
+            z-index:100;
+        }
+
+        .nav{
+            min-height:78px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:24px;
+        }
+
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-family:"Plus Jakarta Sans",sans-serif;
+            font-size:20px;
+            font-weight:800;
+            letter-spacing:-.5px;
+        }
+
+        .logo-mark{
+            width:40px;
+            height:40px;
+            border-radius:13px;
+            display:grid;
+            place-items:center;
+            color:white;
+            background:linear-gradient(135deg,var(--mint),var(--lavender));
+            box-shadow:0 8px 20px rgba(105,199,163,.22);
+            font-size:19px;
+        }
+
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:28px;
+            color:#66736e;
+            font-size:14px;
+            font-weight:600;
+        }
+
+        .nav-links a:hover{
+            color:var(--mint-dark);
+        }
+
+        .nav-button{
+            padding:11px 17px;
+            border-radius:12px;
+            background:linear-gradient(135deg,var(--mint),var(--lavender));
+            color:#fff;
+            font-weight:700;
+            font-size:14px;
+        }
+
+        /* HERO */
+        .hero{
+            padding:70px 0 38px;
+        }
+
+        .eyebrow{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:8px 13px;
+            border-radius:999px;
+            background:var(--green-soft);
+            color:var(--mint-dark);
+            font-size:12px;
+            font-weight:800;
+            letter-spacing:.8px;
+            text-transform:uppercase;
+            margin-bottom:18px;
+        }
+
+        .eyebrow span{
+            width:7px;
+            height:7px;
+            border-radius:50%;
+            background:var(--mint);
+        }
+
+        h1{
+            font-family:"Plus Jakarta Sans",sans-serif;
+            font-size:clamp(38px,5vw,62px);
+            line-height:1.06;
+            letter-spacing:-2px;
+            max-width:820px;
+            margin-bottom:18px;
+        }
+
+        .hero-description{
+            max-width:760px;
+            color:var(--text);
+            font-size:17px;
+            line-height:1.75;
+        }
+
+        .project-meta{
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+            margin-top:25px;
+        }
+
+        .meta-pill{
+            padding:10px 14px;
+            border-radius:999px;
+            background:#fff;
+            border:1px solid var(--border);
+            color:#5f6e67;
+            font-size:13px;
+            font-weight:700;
+        }
+
+        /* MAIN GRID */
+        .workspace-grid{
+            display:grid;
+            grid-template-columns:minmax(0,1.55fr) minmax(290px,.75fr);
+            gap:24px;
+            align-items:start;
+            padding-bottom:60px;
+        }
+
+        .card{
+            background:#fff;
+            border:1px solid var(--border);
+            border-radius:24px;
+            box-shadow:var(--shadow);
+        }
+
+        .card-padding{
+            padding:30px;
+        }
+
+        .section-title{
+            font-family:"Plus Jakarta Sans",sans-serif;
+            font-size:22px;
+            letter-spacing:-.5px;
+            margin-bottom:9px;
+        }
+
+        .section-text{
+            color:var(--text);
+            line-height:1.7;
+            font-size:14px;
+        }
+
+        /* OVERVIEW */
+        .overview-card{
+            margin-bottom:24px;
+        }
+
+        .overview-top{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:20px;
+            margin-bottom:24px;
+        }
+
+        .project-icon{
+            width:62px;
+            height:62px;
+            border-radius:19px;
+            display:grid;
+            place-items:center;
+            background:linear-gradient(135deg,#e9faf2,#f1edff);
+            font-size:30px;
+            margin-bottom:17px;
+        }
+
+        .overview-label{
+            color:var(--mint-dark);
+            font-size:12px;
+            font-weight:800;
+            letter-spacing:.7px;
+            text-transform:uppercase;
+            margin-bottom:7px;
+        }
+
+        .overview-title{
+            font-family:"Plus Jakarta Sans",sans-serif;
+            font-size:28px;
+            letter-spacing:-.8px;
+        }
+
+        .match-badge{
+            flex:none;
+            text-align:center;
+            padding:15px 20px;
+            border-radius:17px;
+            background:var(--purple-soft);
+            color:#6657b9;
+        }
+
+        .match-badge strong{
+            display:block;
+            font-family:"Plus Jakarta Sans",sans-serif;
+            font-size:25px;
+        }
+
+        .match-badge span{
+            font-size:11px;
+            font-weight:700;
+        }
+
+        .overview-details{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:12px;
+        }
+
+        .detail-box{
+            padding:16px;
+            border-radius:16px;
+            background:#fafcfb;
+            border:1px solid var(--border);
+        }
+
+        .detail-box small{
+            display:block;
+            color:var(--muted);
+            font-size:11px;
+            font-weight:700;
+            margin-bottom:6px;
+            text-transform:uppercase;
+            letter-spacing:.5px;
+        }
+
+        .detail-box strong{
+            font-size:14px;
+        }
+
+        /* REQUIREMENTS */
+        .two-column{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:24px;
+            margin-bottom:24px;
+        }
+
+        .list{
+            list-style:none;
+            margin-top:18px;
+            display:grid;
+            gap:12px;
+        }
+
+        .list li{
+            display:flex;
+            gap:10px;
+            align-items:flex-start;
+            color:#53625b;
+            font-size:14px;
+            line-height:1.5;
+        }
+
+        .check{
+            width:22px;
+            height:22px;
+            flex:none;
+            border-radius:7px;
+            display:grid;
+            place-items:center;
+            background:var(--green-soft);
+            color:var(--mint-dark);
+            font-size:12px;
+            font-weight:900;
+        }
+
+        .tech-list{
+            display:flex;
+            flex-wrap:wrap;
+            gap:9px;
+            margin-top:18px;
+        }
+
+        .tech{
+            padding:9px 12px;
+            border-radius:10px;
+            background:#f5f6ff;
+            color:#6657b9;
+            border:1px solid rgba(145,130,232,.14);
+            font-size:12px;
+            font-weight:700;
+        }
+
+        /* PLAN */
+        .plan-card{
+            margin-bottom:24px;
+        }
+
+        .plan-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-end;
+            gap:20px;
+            margin-bottom:22px;
+        }
+
+        .progress-info{
+            min-width:160px;
+            text-align:right;
+        }
+
+        .progress-number{
+            font-family:"Plus Jakarta Sans",sans-serif;
+            font-size:25px;
+            font-weight:800;
+        }
+
+        .progress-label{
+            color:var(--muted);
+            font-size:12px;
+            margin-top:3px;
+        }
+
+        .progress-track{
+            width:100%;
+            height:10px;
+            border-radius:999px;
+            background:#edf1ef;
+            overflow:hidden;
+            margin-bottom:25px;
+        }
+
+        .progress-bar{
+            height:100%;
+            width:0%;
+            border-radius:inherit;
+            background:linear-gradient(90deg,var(--mint),var(--lavender));
+            transition:width .3s ease;
+        }
+
+        .tasks{
+            display:grid;
+            gap:10px;
+        }
+
+        .task{
+            display:flex;
+            align-items:center;
+            gap:14px;
+            padding:16px;
+            border:1px solid var(--border);
+            border-radius:15px;
+            cursor:pointer;
+            transition:.2s ease;
+            background:#fff;
+        }
+
+        .task:hover{
+            transform:translateY(-1px);
+            border-color:rgba(105,199,163,.35);
+            background:#fcfffd;
+        }
+
+        .task-checkbox{
+            width:24px;
+            height:24px;
+            border:2px solid #ccd6d1;
+            border-radius:8px;
+            flex:none;
+            display:grid;
+            place-items:center;
+            color:white;
+            font-size:13px;
+            font-weight:900;
+        }
+
+        .task.done .task-checkbox{
+            border-color:var(--mint);
+            background:var(--mint);
+        }
+
+        .task.done .task-title{
+            color:#8b9792;
+            text-decoration:line-through;
+        }
+
+        .task-number{
+            color:var(--muted);
+            font-size:11px;
+            font-weight:800;
+            min-width:43px;
+        }
+
+        .task-title{
+            font-size:14px;
+            font-weight:700;
+            flex:1;
+        }
+
+        .task-description{
+            color:var(--muted);
+            font-size:12px;
+            margin-top:4px;
+            line-height:1.5;
+        }
+
+        /* SIDEBAR */
+        .sidebar{
+            position:sticky;
+            top:102px;
+        }
+
+        .sidebar-card{
+            margin-bottom:20px;
+        }
+
+        .career-card{
+            background:linear-gradient(145deg,#17231f,#263832);
+            color:#fff;
+            overflow:hidden;
+            position:relative;
+        }
+
+        .career-card::after{
+            content:"";
+            position:absolute;
+            width:170px;
+            height:170px;
+            border-radius:50%;
+            background:rgba(105,199,163,.15);
+            right:-65px;
+            top:-60px;
+        }
+
+        .career-card .card-padding{
+            position:relative;
+            z-index:1;
+        }
+
+        .career-card .section-title{
+            color:#fff;
+        }
+
+        .career-card .section-text{
+            color:#c4d0ca;
+        }
+
+        .career-small{
+            color:#7fdbb5;
+            font-size:11px;
+            font-weight:800;
+            text-transform:uppercase;
+            letter-spacing:1px;
+            margin-bottom:10px;
+        }
+
+        .skills{
+            display:flex;
+            flex-wrap:wrap;
+            gap:7px;
+            margin-top:17px;
+        }
+
+        .skill{
+            padding:7px 10px;
+            border-radius:9px;
+            background:rgba(255,255,255,.09);
+            color:#dce9e3;
+            font-size:11px;
+            font-weight:600;
+        }
+
+        .tip{
+            display:flex;
+            gap:12px;
+            align-items:flex-start;
+            padding:15px;
+            border-radius:15px;
+            background:#fbfbff;
+            border:1px solid rgba(145,130,232,.12);
+            margin-top:18px;
+        }
+
+        .tip-icon{
+            width:31px;
+            height:31px;
+            border-radius:10px;
+            display:grid;
+            place-items:center;
+            background:#eeeaff;
+            flex:none;
+        }
+
+        .tip p{
+            color:#69736f;
+            font-size:12px;
+            line-height:1.55;
+        }
+
+        .saved-message{
+            display:none;
+            margin-top:10px;
+            color:var(--mint-dark);
+            font-size:12px;
+            font-weight:700;
+            text-align:center;
+        }
+
+        /* BOTTOM ACTIONS */
+        .bottom-actions{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:15px;
+            padding:26px 30px;
+            margin-bottom:60px;
+        }
+
+        .secondary-btn,
+        .primary-btn{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            min-height:48px;
+            padding:0 20px;
+            border-radius:13px;
+            font-size:13px;
+            font-weight:800;
+            transition:.2s ease;
+        }
+
+        .secondary-btn{
+            border:1px solid var(--border);
+            background:#fff;
+            color:#5d6b65;
+        }
+
+        .secondary-btn:hover{
+            transform:translateY(-1px);
+        }
+
+        .primary-btn{
+            border:0;
+            color:#fff;
+            background:linear-gradient(135deg,var(--mint),var(--lavender));
+            box-shadow:0 10px 25px rgba(105,199,163,.18);
+        }
+
+        .primary-btn:hover{
+            transform:translateY(-1px);
+        }
+
+        .completion-note{
+            color:var(--muted);
+            font-size:12px;
+            text-align:right;
+        }
+
+        /* TOAST */
+        .toast{
+            position:fixed;
+            left:50%;
+            bottom:25px;
+            transform:translate(-50%,20px);
+            background:#17231f;
+            color:#fff;
+            padding:12px 18px;
+            border-radius:12px;
+            font-size:13px;
+            font-weight:600;
+            opacity:0;
+            pointer-events:none;
+            transition:.25s ease;
+            z-index:200;
+            box-shadow:0 15px 35px rgba(0,0,0,.16);
+        }
+
+        .toast.show{
+            opacity:1;
+            transform:translate(-50%,0);
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:900px){
+            .workspace-grid{
+                grid-template-columns:1fr;
+            }
+
+            .sidebar{
+                position:static;
+            }
+
+            .nav-links{
+                display:none;
+            }
+        }
+
+        @media(max-width:650px){
+            .container{
+                width:min(100% - 28px,1180px);
+            }
+
+            .nav{
+                min-height:68px;
+            }
+
+            .nav-button{
+                padding:9px 12px;
+                font-size:12px;
+            }
+
+            .hero{
+                padding-top:45px;
+            }
+
+            h1{
+                letter-spacing:-1.2px;
+            }
+
+            .overview-top,
+            .plan-header,
+            .bottom-actions{
+                flex-direction:column;
+                align-items:stretch;
+            }
+
+            .match-badge{
+                align-self:flex-start;
+            }
+
+            .overview-details,
+            .two-column{
+                grid-template-columns:1fr;
+            }
+
+            .progress-info{
+                text-align:left;
+            }
+
+            .completion-note{
+                text-align:left;
+            }
+
+            .primary-btn,
+            .secondary-btn{
+                width:100%;
+            }
+
+            .task{
+                align-items:flex-start;
+            }
+
+            .task-number{
+                min-width:30px;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+<script>
+/* CareerBot authenticated-page guard */
+(async function () {
+    try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error || !data.session) {
+            const next = encodeURIComponent(window.location.pathname.split("/").pop() + window.location.search);
+            window.location.replace("login.html?next=" + next);
+        }
+    } catch (error) {
+        console.error("CareerBot session check failed:", error);
+        window.location.replace("login.html");
+    }
+})();
+</script>
+
+    <script src="script.js"></script>
+
+</head>
+
+<body>
+
+
+<header>
+    <div class="container nav">
+
+        <a href="index.html" class="logo">
+            <div class="logo-mark">✦</div>
+            CareerBot
+        </a>
+
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="assessment.html">Assessment</a>
+            <a href="recommendations.html">Recommendations</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="agent.html">Ask CareerBot</a>
+        </nav>
+
+        <a href="job-recommendations.html" class="nav-button">
+            Find Jobs
+        </a>
+
+    </div>
+</header>
+
+
+<main>
+
+    <section class="hero">
+        <div class="container">
+
+            <div class="eyebrow">
+                <span></span>
+                Project Workspace
+            </div>
+
+            <h1 id="pageTitle">
+                Build something that proves your skills.
+            </h1>
+
+            <p class="hero-description" id="heroDescription">
+                Follow your personalized project plan, complete each task,
+                and turn your learning into a portfolio-ready project.
+            </p>
+
+            <div class="project-meta" id="projectMeta"></div>
+
+        </div>
+    </section>
+
+
+    <section class="container workspace-grid">
+
+        <div>
+
+            <!-- PROJECT OVERVIEW -->
+            <div class="card overview-card">
+                <div class="card-padding">
+
+                    <div class="overview-top">
+
+                        <div>
+                            <div class="project-icon" id="projectIcon">💻</div>
+
+                            <div class="overview-label" id="careerLabel">
+                                Your selected career
+                            </div>
+
+                            <h2 class="overview-title" id="projectTitle">
+                                Personal Portfolio Website
+                            </h2>
+                        </div>
+
+                        <div class="match-badge">
+                            <strong id="matchPercentage">—</strong>
+                            <span>Career Match</span>
+                        </div>
+
+                    </div>
+
+                    <p class="section-text" id="projectDescription">
+                        Build a responsive personal portfolio website that
+                        showcases your skills, projects, experience and
+                        professional profile.
+                    </p>
+
+                    <div class="overview-details">
+
+                        <div class="detail-box">
+                            <small>Difficulty</small>
+                            <strong id="difficulty">Beginner</strong>
+                        </div>
+
+                        <div class="detail-box">
+                            <small>Estimated Time</small>
+                            <strong id="estimatedTime">3–5 Days</strong>
+                        </div>
+
+                        <div class="detail-box">
+                            <small>Project Type</small>
+                            <strong id="projectType">Portfolio Project</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- REQUIREMENTS + TECHNOLOGIES -->
+            <div class="two-column">
+
+                <div class="card">
+                    <div class="card-padding">
+
+                        <h2 class="section-title">Project Requirements</h2>
+
+                        <p class="section-text">
+                            These are the main features you should complete
+                            before considering the project finished.
+                        </p>
+
+                        <ul class="list" id="requirementsList"></ul>
+
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-padding">
+
+                        <h2 class="section-title">Technologies</h2>
+
+                        <p class="section-text">
+                            Recommended technologies and skills for building
+                            this project.
+                        </p>
+
+                        <div class="tech-list" id="technologiesList"></div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- PROJECT PLAN -->
+            <div class="card plan-card">
+                <div class="card-padding">
+
+                    <div class="plan-header">
+
+                        <div>
+                            <h2 class="section-title">Your Project Plan</h2>
+                            <p class="section-text">
+                                Complete the tasks in order. Your progress is
+                                automatically saved in this browser.
+                            </p>
+                        </div>
+
+                        <div class="progress-info">
+                            <div class="progress-number" id="progressPercentage">
+                                0%
+                            </div>
+                            <div class="progress-label" id="progressLabel">
+                                0 of 8 tasks completed
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="progress-track">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+
+                    <div class="tasks" id="tasksList"></div>
+                    <div id="workspaceStatus" class="saved-message" role="status" style="display:none"></div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <!-- CAREER CONTEXT -->
+            <div class="card career-card sidebar-card">
+                <div class="card-padding">
+
+                    <div class="career-small">
+                        Your Career Path
+                    </div>
+
+                    <h2 class="section-title" id="careerTitle">
+                        Your selected career
+                    </h2>
+
+                    <p class="section-text">
+                        This project was selected to help you build practical
+                        experience related to your recommended career.
+                    </p>
+
+                    <div class="skills" id="skillsList"></div>
+
+                    <div class="tip">
+                        <div class="tip-icon">💡</div>
+                        <p>
+                            Focus on understanding the concepts instead of
+                            simply copying code. Your completed project will
+                            become part of your portfolio.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </aside>
+
+    </section>
+
+
+    <!-- BOTTOM ACTIONS -->
+    <section class="container">
+
+        <div class="card bottom-actions">
+
+            <a href="project-ideas.html" id="backToProjects" class="secondary-btn">
+                ← Back to Project Ideas
+            </a>
+
+            <div class="completion-note" id="completionNote">
+                Complete your project tasks to unlock the next step.
+            </div>
+
+            <a href="job-recommendations.html" id="jobButton" class="primary-btn">
+                Continue to Job Recommendations →
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+/* =========================================================
+   CAREERBOT — PROJECT WORKSPACE
+   ========================================================= */
+
+const params = new URLSearchParams(window.location.search);
+
+const selectedCareer =
+    params.get("career") ||
+    localStorage.getItem("careerbotSelectedCareer") ||
+    "";
+
+const selectedProjectParam =
+    params.get("project") || "";
+
+const requestedProjectTitle =
+    params.get("title") || "";
+
+if (!selectedProjectParam) {
+    const target = selectedCareer
+        ? `project-ideas.html?career=${encodeURIComponent(selectedCareer)}`
+        : "project-ideas.html";
+    window.location.replace(target);
+}
+
+localStorage.setItem("careerbotSelectedCareer", selectedCareer);
+if (selectedProjectParam) localStorage.setItem("careerbotSelectedProject", selectedProjectParam);
+
+
+/* =========================================================
+   CAREER DATA
+   ========================================================= */
+
+const careers = {
+
+    "software-developer": {
+        name: "Software Developer",
+        match: "—",
+        skills: ["HTML", "CSS", "JavaScript", "Git", "Problem Solving"]
+    },
+
+    "ai-ml-engineer": {
+        name: "AI / ML Engineer",
+        match: "90%",
+        skills: ["Python", "Machine Learning", "Data", "Statistics", "Git"]
+    },
+
+    "data-analyst": {
+        name: "Data Analyst",
+        match: "88%",
+        skills: ["Excel", "SQL", "Python", "Data Visualization", "Statistics"]
+    },
+
+    "ui-ux-designer": {
+        name: "UI / UX Designer",
+        match: "91%",
+        skills: ["Figma", "UX Research", "Wireframing", "Prototyping", "Design"]
+    },
+
+    "product-manager": {
+        name: "Product Manager",
+        match: "86%",
+        skills: ["Product Strategy", "Research", "Roadmaps", "Analytics", "Communication"]
+    },
+
+    "hr-specialist": {
+        name: "HR Specialist",
+        match: "84%",
+        skills: ["Communication", "Recruitment", "Employee Relations", "Analytics", "Planning"]
+    },
+
+    "mobile-app-developer": {
+        name: "Mobile App Developer",
+        match: "89%",
+        skills: ["Mobile Development", "UI", "APIs", "JavaScript", "Git"]
+    },
+
+    "digital-marketing": {
+        name: "Digital Marketing Specialist",
+        match: "87%",
+        skills: ["SEO", "Content", "Social Media", "Analytics", "Marketing"]
+    }
+
+};
+
+
+/* =========================================================
+   PROJECT DATA
+   ========================================================= */
+
+const projects = {
+
+    "software-developer": {
+
+        "portfolio-website": {
+            icon:"💻",
+            title:"Personal Portfolio Website",
+            description:"Build a responsive personal portfolio website that showcases your skills, projects, experience and professional profile.",
+            difficulty:"Beginner",
+            time:"3–5 Days",
+            type:"Portfolio Project",
+            skills:["HTML","CSS","JavaScript","Responsive Design"],
+            requirements:[
+                "Create a professional homepage",
+                "Add an About Me section",
+                "Showcase at least three projects",
+                "Add a skills section",
+                "Create a contact section",
+                "Make the website responsive"
+            ],
+            technologies:["HTML","CSS","JavaScript","Git"],
+            tasks:[
+                ["Create project structure","Set up HTML, CSS and JavaScript files."],
+                ["Build the page layout","Create navigation, hero and main sections."],
+                ["Create the About section","Add your profile and career information."],
+                ["Add project cards","Show your projects with descriptions and links."],
+                ["Add responsive styling","Make the website work on mobile and desktop."],
+                ["Add JavaScript interactions","Add useful buttons and interactive elements."],
+                ["Test the website","Check links, layout and responsiveness."],
+                ["Deploy the project","Publish the portfolio using a hosting service."]
+            ]
+        },
+
+        "task-management-app": {
+            icon:"✅",
+            title:"Task Management App",
+            description:"Create a task management application where users can add, edit, complete and remove tasks.",
+            difficulty:"Intermediate",
+            time:"5–7 Days",
+            type:"Web Application",
+            skills:["HTML","CSS","JavaScript","LocalStorage"],
+            requirements:[
+                "Add new tasks",
+                "Mark tasks as completed",
+                "Edit existing tasks",
+                "Delete tasks",
+                "Filter tasks by status",
+                "Save tasks between browser sessions"
+            ],
+            technologies:["HTML","CSS","JavaScript","LocalStorage"],
+            tasks:[
+                ["Create project structure","Set up the application files."],
+                ["Build the task interface","Create the form and task list."],
+                ["Add task creation","Allow users to create new tasks."],
+                ["Add completion logic","Allow tasks to be marked complete."],
+                ["Add edit and delete","Implement task management actions."],
+                ["Add filtering","Create All, Active and Completed filters."],
+                ["Add LocalStorage","Persist tasks in the browser."],
+                ["Test and polish","Fix bugs and improve the interface."]
+            ]
+        },
+
+        "expense-tracker": {
+            icon:"💰",
+            title:"Expense Tracker",
+            description:"Build an expense tracking application that lets users record spending, organize transactions and understand their monthly expenses.",
+            difficulty:"Intermediate",
+            time:"5–7 Days",
+            type:"Web Application",
+            skills:["JavaScript","Forms","LocalStorage","Data Handling"],
+            requirements:[
+                "Add new expenses",
+                "Categorize expenses",
+                "Calculate total spending",
+                "Display transaction history",
+                "Delete transactions",
+                "Save expense data"
+            ],
+            technologies:["HTML","CSS","JavaScript","LocalStorage"],
+            tasks:[
+                ["Create project structure","Set up the application files."],
+                ["Build the dashboard","Create the main expense tracking layout."],
+                ["Create expense form","Add fields for amount, category and date."],
+                ["Implement expense logic","Store and display transactions."],
+                ["Calculate totals","Calculate spending totals dynamically."],
+                ["Add LocalStorage","Save data between sessions."],
+                ["Add validation","Prevent invalid expense entries."],
+                ["Test the application","Test calculations and user flows."]
+            ]
+        },
+
+        "weather-application": {
+            icon:"🌤️",
+            title:"Weather Application",
+            description:"Create a weather application that displays useful weather information for a selected location.",
+            difficulty:"Intermediate",
+            time:"4–6 Days",
+            type:"API Project",
+            skills:["JavaScript","APIs","JSON","UI Design"],
+            requirements:[
+                "Search for a city",
+                "Fetch weather data",
+                "Display temperature",
+                "Display weather conditions",
+                "Handle invalid locations",
+                "Create a responsive interface"
+            ],
+            technologies:["HTML","CSS","JavaScript","REST API"],
+            tasks:[
+                ["Create application layout","Build the search and weather sections."],
+                ["Create search functionality","Allow users to enter a city."],
+                ["Connect the weather API","Fetch data from a weather service."],
+                ["Parse API response","Read the required weather values."],
+                ["Display weather data","Show useful information clearly."],
+                ["Handle errors","Show a helpful message for invalid searches."],
+                ["Improve responsive design","Optimize the application for mobile."],
+                ["Test API interactions","Test several locations and edge cases."]
+            ]
+        },
+
+        "ecommerce-website": {
+            icon:"🛒",
+            title:"E-Commerce Website",
+            description:"Build a small e-commerce website with product listings, a shopping cart and a simple checkout experience.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"Full Web Project",
+            skills:["HTML","CSS","JavaScript","UI","State Management"],
+            requirements:[
+                "Create product listing",
+                "Create product details",
+                "Add products to cart",
+                "Update cart quantities",
+                "Calculate totals",
+                "Create checkout interface"
+            ],
+            technologies:["HTML","CSS","JavaScript","Git"],
+            tasks:[
+                ["Plan the application","Define pages, components and user flow."],
+                ["Build product listing","Create product cards and categories."],
+                ["Build product details","Create a detailed product view."],
+                ["Implement shopping cart","Add and remove products."],
+                ["Calculate cart totals","Handle quantities and totals."],
+                ["Create checkout UI","Build a simple checkout form."],
+                ["Test the full flow","Test browsing through checkout."],
+                ["Deploy the project","Publish the completed application."]
+            ]
+        },
+
+        "career-recommendation-system": {
+            icon:"🎯",
+            title:"Career Recommendation System",
+            description:"Build a career recommendation system that uses user interests and skills to suggest suitable career paths.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"Career Technology Project",
+            skills:["JavaScript","Logic","Data","UI","Problem Solving"],
+            requirements:[
+                "Create an assessment form",
+                "Collect user preferences",
+                "Create career scoring logic",
+                "Display recommended careers",
+                "Show career details",
+                "Create a personalized result"
+            ],
+            technologies:["HTML","CSS","JavaScript","LocalStorage"],
+            tasks:[
+                ["Design the assessment","Create questions and answer options."],
+                ["Collect user answers","Store assessment responses."],
+                ["Create scoring logic","Map answers to career categories."],
+                ["Generate recommendations","Calculate suitable career matches."],
+                ["Create results page","Display personalized recommendations."],
+                ["Add career details","Show skills and learning paths."],
+                ["Test recommendations","Test multiple user profiles."],
+                ["Polish and deploy","Improve UI and publish the system."]
+            ]
+        }
+    },
+
+
+    "ai-ml-engineer": {
+
+        "house-price-predictor": {
+            icon:"🏠",
+            title:"House Price Predictor",
+            description:"Build a machine learning model that predicts house prices from selected property features.",
+            difficulty:"Intermediate",
+            time:"1–2 Weeks",
+            type:"Machine Learning Project",
+            skills:["Python","Pandas","Machine Learning","Statistics"],
+            requirements:[
+                "Collect a housing dataset",
+                "Clean the dataset",
+                "Explore important features",
+                "Train a regression model",
+                "Evaluate model performance",
+                "Create predictions"
+            ],
+            technologies:["Python","Pandas","NumPy","Scikit-learn"],
+            tasks:[
+                ["Collect the dataset","Find and load a suitable housing dataset."],
+                ["Clean the data","Handle missing and incorrect values."],
+                ["Explore the data","Identify useful patterns and relationships."],
+                ["Prepare features","Create the model input variables."],
+                ["Train the model","Train a regression algorithm."],
+                ["Evaluate performance","Measure prediction performance."],
+                ["Create predictions","Test the model on new examples."],
+                ["Document the project","Explain the approach and results."]
+            ]
+        },
+
+        "spam-email-classifier": {
+            icon:"📧",
+            title:"Spam Email Classifier",
+            description:"Create a machine learning model that identifies whether an email is spam or legitimate.",
+            difficulty:"Intermediate",
+            time:"1–2 Weeks",
+            type:"Machine Learning Project",
+            skills:["Python","NLP","Classification","Data"],
+            requirements:[
+                "Collect labeled email data",
+                "Clean text data",
+                "Convert text into features",
+                "Train a classifier",
+                "Evaluate predictions",
+                "Test new messages"
+            ],
+            technologies:["Python","Pandas","Scikit-learn","NLP"],
+            tasks:[
+                ["Collect the dataset","Load a labeled spam dataset."],
+                ["Clean email text","Normalize and prepare the messages."],
+                ["Create text features","Convert text into numerical features."],
+                ["Train a classifier","Train a classification model."],
+                ["Evaluate the model","Measure accuracy and other metrics."],
+                ["Test new emails","Run predictions on sample messages."],
+                ["Improve the model","Experiment with preprocessing."],
+                ["Document results","Explain the model and findings."]
+            ]
+        },
+
+        "sentiment-analysis": {
+            icon:"😊",
+            title:"Sentiment Analysis",
+            description:"Build a natural language processing system that classifies text as positive, negative or neutral.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"NLP Project",
+            skills:["Python","NLP","Machine Learning","Text Processing"],
+            requirements:[
+                "Collect text data",
+                "Clean text",
+                "Create text features",
+                "Train a sentiment classifier",
+                "Evaluate predictions",
+                "Create a simple prediction interface"
+            ],
+            technologies:["Python","Pandas","Scikit-learn","NLP"],
+            tasks:[
+                ["Collect text dataset","Load labeled text examples."],
+                ["Clean the text","Normalize and preprocess the data."],
+                ["Create features","Transform text into model features."],
+                ["Train the classifier","Build the sentiment model."],
+                ["Evaluate performance","Check model predictions."],
+                ["Create prediction function","Allow new text to be classified."],
+                ["Build simple interface","Create a basic user-facing demo."],
+                ["Document the project","Explain the NLP pipeline."]
+            ]
+        },
+
+        "movie-recommendation-system": {
+            icon:"🎬",
+            title:"Movie Recommendation System",
+            description:"Build a recommendation system that suggests movies based on user preferences or movie similarity.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"Recommendation System",
+            skills:["Python","Data","Recommendation Systems","Machine Learning"],
+            requirements:[
+                "Collect movie data",
+                "Prepare movie features",
+                "Calculate similarity",
+                "Generate recommendations",
+                "Test recommendations",
+                "Create a simple interface"
+            ],
+            technologies:["Python","Pandas","Scikit-learn","Data"],
+            tasks:[
+                ["Collect movie data","Load movie titles and metadata."],
+                ["Clean the dataset","Prepare useful features."],
+                ["Choose recommendation method","Select a similarity approach."],
+                ["Build similarity logic","Calculate movie relationships."],
+                ["Generate recommendations","Return similar movies."],
+                ["Test recommendations","Try several movies."],
+                ["Build a simple interface","Allow users to search for a movie."],
+                ["Document the system","Explain how recommendations work."]
+            ]
+        },
+
+        "image-classification-app": {
+            icon:"🖼️",
+            title:"Image Classification App",
+            description:"Create an AI application that classifies images into predefined categories.",
+            difficulty:"Advanced",
+            time:"2–3 Weeks",
+            type:"Computer Vision Project",
+            skills:["Python","Machine Learning","Computer Vision","Data"],
+            requirements:[
+                "Collect image data",
+                "Prepare training data",
+                "Train a classifier",
+                "Evaluate model performance",
+                "Accept a new image",
+                "Display the predicted class"
+            ],
+            technologies:["Python","TensorFlow","Computer Vision","NumPy"],
+            tasks:[
+                ["Choose image categories","Define what the model should classify."],
+                ["Collect image dataset","Gather and organize training images."],
+                ["Prepare the images","Resize and normalize images."],
+                ["Train the model","Train a classification model."],
+                ["Evaluate performance","Measure model performance."],
+                ["Create prediction flow","Accept and classify a new image."],
+                ["Build demo interface","Create a simple image upload UI."],
+                ["Document the model","Explain training and limitations."]
+            ]
+        },
+
+        "ai-career-recommendation-system": {
+            icon:"🤖",
+            title:"AI Career Recommendation System",
+            description:"Create an intelligent career recommendation prototype using user skills, interests and preferences.",
+            difficulty:"Advanced",
+            time:"2–3 Weeks",
+            type:"AI Career Project",
+            skills:["Python","Machine Learning","Data","Recommendation Logic"],
+            requirements:[
+                "Create career dataset",
+                "Collect user information",
+                "Build feature representation",
+                "Create recommendation logic",
+                "Evaluate recommendations",
+                "Create user-facing results"
+            ],
+            technologies:["Python","Pandas","Scikit-learn","Machine Learning"],
+            tasks:[
+                ["Design career dataset","Define career categories and features."],
+                ["Collect profile data","Create user inputs for interests and skills."],
+                ["Prepare features","Represent users and careers consistently."],
+                ["Build recommendation logic","Calculate career similarity."],
+                ["Evaluate recommendations","Test several sample profiles."],
+                ["Create result interface","Display personalized recommendations."],
+                ["Improve the system","Experiment with scoring approaches."],
+                ["Document the project","Explain the recommendation approach."]
+            ]
+        }
+    },
+
+
+    "data-analyst": {
+
+        "sales-dashboard": {
+            icon:"📊",
+            title:"Sales Dashboard",
+            description:"Analyze sales data and build a dashboard that helps users understand revenue, products and sales performance.",
+            difficulty:"Beginner",
+            time:"3–5 Days",
+            type:"Data Analytics Project",
+            skills:["Excel","Data Cleaning","Charts","Business Analysis"],
+            requirements:[
+                "Clean sales data",
+                "Calculate key metrics",
+                "Identify sales trends",
+                "Create visualizations",
+                "Build dashboard",
+                "Write business insights"
+            ],
+            technologies:["Excel","Charts","Data Analysis"],
+            tasks:[
+                ["Find a sales dataset","Choose a realistic dataset."],
+                ["Clean the data","Fix missing and inconsistent values."],
+                ["Calculate KPIs","Create revenue and sales metrics."],
+                ["Analyze trends","Identify important patterns."],
+                ["Create charts","Build useful visualizations."],
+                ["Build dashboard","Combine metrics and charts."],
+                ["Write insights","Explain the key findings."],
+                ["Present the results","Create a clear final report."]
+            ]
+        },
+
+        "student-performance-analysis": {
+            icon:"🎓",
+            title:"Student Performance Analysis",
+            description:"Analyze student performance data to identify patterns and factors associated with academic results.",
+            difficulty:"Beginner",
+            time:"3–5 Days",
+            type:"Data Analysis Project",
+            skills:["Excel","Statistics","Data Visualization","Analysis"],
+            requirements:[
+                "Collect student data",
+                "Clean the dataset",
+                "Calculate performance metrics",
+                "Compare groups",
+                "Create charts",
+                "Summarize findings"
+            ],
+            technologies:["Excel","Python","Pandas","Charts"],
+            tasks:[
+                ["Load the dataset","Open and inspect the student data."],
+                ["Clean the data","Handle missing and inconsistent values."],
+                ["Calculate metrics","Calculate useful performance measures."],
+                ["Compare groups","Explore differences between groups."],
+                ["Create visualizations","Build charts for key findings."],
+                ["Identify patterns","Look for meaningful relationships."],
+                ["Write conclusions","Summarize the analysis."],
+                ["Create final report","Present the findings clearly."]
+            ]
+        },
+
+        "customer-churn-analysis": {
+            icon:"📉",
+            title:"Customer Churn Analysis",
+            description:"Analyze customer data to understand why customers leave and identify patterns that may support retention decisions.",
+            difficulty:"Intermediate",
+            time:"1 Week",
+            type:"Business Analytics Project",
+            skills:["SQL","Python","Statistics","Visualization"],
+            requirements:[
+                "Prepare customer data",
+                "Calculate churn rate",
+                "Analyze customer segments",
+                "Identify churn patterns",
+                "Create dashboard",
+                "Present recommendations"
+            ],
+            technologies:["SQL","Python","Pandas","Power BI"],
+            tasks:[
+                ["Understand the dataset","Identify customer and churn fields."],
+                ["Clean the data","Prepare the analysis dataset."],
+                ["Calculate churn metrics","Calculate overall churn."],
+                ["Segment customers","Compare customer groups."],
+                ["Find churn patterns","Identify useful relationships."],
+                ["Build dashboard","Visualize important findings."],
+                ["Write recommendations","Turn findings into actions."],
+                ["Present the analysis","Create a concise business report."]
+            ]
+        },
+
+        "ecommerce-analytics": {
+            icon:"🛍️",
+            title:"E-Commerce Analytics",
+            description:"Analyze online store data to understand products, customers, revenue and purchasing behavior.",
+            difficulty:"Intermediate",
+            time:"1 Week",
+            type:"Business Analytics Project",
+            skills:["SQL","Excel","Data Visualization","Business"],
+            requirements:[
+                "Analyze product sales",
+                "Calculate revenue",
+                "Analyze customer behavior",
+                "Identify top products",
+                "Build visualizations",
+                "Create business insights"
+            ],
+            technologies:["SQL","Excel","Power BI","Data Analysis"],
+            tasks:[
+                ["Prepare e-commerce data","Load and inspect the dataset."],
+                ["Clean the data","Fix data quality issues."],
+                ["Analyze revenue","Calculate important revenue metrics."],
+                ["Analyze products","Find top and low-performing products."],
+                ["Analyze customers","Explore customer purchasing patterns."],
+                ["Build dashboard","Create an interactive dashboard."],
+                ["Write insights","Summarize business findings."],
+                ["Present recommendations","Suggest data-driven actions."]
+            ]
+        },
+
+        "business-intelligence-dashboard": {
+            icon:"📈",
+            title:"Business Intelligence Dashboard",
+            description:"Create an executive-style dashboard that transforms raw business data into useful decision-making information.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"Business Intelligence Project",
+            skills:["SQL","Power BI","Data Modeling","Analytics"],
+            requirements:[
+                "Prepare business dataset",
+                "Create data model",
+                "Define KPIs",
+                "Build interactive dashboard",
+                "Add filters",
+                "Present insights"
+            ],
+            technologies:["SQL","Power BI","Data Modeling","Excel"],
+            tasks:[
+                ["Choose business dataset","Select a realistic business scenario."],
+                ["Prepare the data","Clean and transform the source data."],
+                ["Build data model","Create relationships between tables."],
+                ["Define KPIs","Select useful business metrics."],
+                ["Build dashboard","Create executive-level visualizations."],
+                ["Add filters","Allow users to explore the data."],
+                ["Analyze findings","Identify important insights."],
+                ["Create presentation","Explain the dashboard and findings."]
+            ]
+        },
+
+        "data-storytelling-case-study": {
+            icon:"📖",
+            title:"Data Storytelling Case Study",
+            description:"Turn a real dataset into a clear data story with visual evidence, insights and recommendations.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"Analytics Case Study",
+            skills:["Data Analysis","Visualization","Storytelling","Communication"],
+            requirements:[
+                "Choose a real-world question",
+                "Collect data",
+                "Analyze the data",
+                "Create visualizations",
+                "Build a narrative",
+                "Present recommendations"
+            ],
+            technologies:["Python","Pandas","Power BI","Data Visualization"],
+            tasks:[
+                ["Define the business question","Choose a meaningful question."],
+                ["Collect the data","Find relevant reliable data."],
+                ["Clean and analyze","Prepare and analyze the dataset."],
+                ["Create visualizations","Select charts that support the story."],
+                ["Build the narrative","Connect findings into a clear story."],
+                ["Create recommendations","Translate findings into actions."],
+                ["Design final report","Create a polished case study."],
+                ["Present the story","Explain the analysis clearly."]
+            ]
+        }
+    },
+
+
+    "ui-ux-designer": {
+
+        "mobile-banking-app": {
+            icon:"📱",
+            title:"Mobile Banking App",
+            description:"Design a modern mobile banking experience focused on clear navigation, trust and usability.",
+            difficulty:"Intermediate",
+            time:"1 Week",
+            type:"UX/UI Design Project",
+            skills:["Figma","UX Research","Wireframes","Prototyping"],
+            requirements:[
+                "Define target users",
+                "Create user flow",
+                "Create wireframes",
+                "Design high-fidelity screens",
+                "Create prototype",
+                "Test the design"
+            ],
+            technologies:["Figma","UX Research","Prototyping"],
+            tasks:[
+                ["Define target user","Create a basic user persona."],
+                ["Research the problem","Identify important banking user needs."],
+                ["Create user flow","Map the main task journey."],
+                ["Create wireframes","Design the core screens."],
+                ["Create visual design","Build high-fidelity screens."],
+                ["Create prototype","Connect the main interactions."],
+                ["Run usability test","Test the experience with users."],
+                ["Document the case study","Explain decisions and improvements."]
+            ]
+        },
+
+        "food-delivery-app": {
+            icon:"🍔",
+            title:"Food Delivery App",
+            description:"Design a food delivery experience from restaurant discovery through order confirmation.",
+            difficulty:"Intermediate",
+            time:"1 Week",
+            type:"UX/UI Design Project",
+            skills:["Figma","User Flow","UI Design","Prototyping"],
+            requirements:[
+                "Create user persona",
+                "Design restaurant discovery",
+                "Design menu experience",
+                "Design cart",
+                "Design checkout",
+                "Create interactive prototype"
+            ],
+            technologies:["Figma","UX Research","Prototyping"],
+            tasks:[
+                ["Define the user","Create a target customer profile."],
+                ["Map the user journey","Define the food ordering flow."],
+                ["Wireframe the screens","Create low-fidelity layouts."],
+                ["Design the UI","Apply visual styles and components."],
+                ["Create restaurant screens","Design menus and food details."],
+                ["Create checkout","Design cart and payment flow."],
+                ["Prototype interactions","Connect important actions."],
+                ["Test and document","Gather feedback and create a case study."]
+            ]
+        },
+
+        "travel-booking-experience": {
+            icon:"✈️",
+            title:"Travel Booking Experience",
+            description:"Design a travel booking experience that helps users search, compare and reserve trips.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"UX Case Study",
+            skills:["UX Research","Figma","Information Architecture","Prototyping"],
+            requirements:[
+                "Research travelers",
+                "Create information architecture",
+                "Design search flow",
+                "Design comparison experience",
+                "Design booking flow",
+                "Create prototype"
+            ],
+            technologies:["Figma","UX Research","Prototyping"],
+            tasks:[
+                ["Research travel users","Understand common booking needs."],
+                ["Create personas","Define representative travelers."],
+                ["Design information architecture","Organize the experience."],
+                ["Create wireframes","Design the booking journey."],
+                ["Create visual design","Apply a consistent UI system."],
+                ["Build prototype","Connect the booking flow."],
+                ["Run usability testing","Identify friction points."],
+                ["Create case study","Document research and design decisions."]
+            ]
+        },
+
+        "career-platform-ui": {
+            icon:"🎯",
+            title:"Career Platform UI",
+            description:"Design a career platform where users can discover careers, learn skills and track their progress.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"Product Design Project",
+            skills:["Figma","UX Research","Product Design","UI"],
+            requirements:[
+                "Research career discovery",
+                "Design dashboard",
+                "Design career pages",
+                "Design learning flow",
+                "Design progress tracking",
+                "Create complete prototype"
+            ],
+            technologies:["Figma","UX Research","Prototyping"],
+            tasks:[
+                ["Research users","Understand career discovery problems."],
+                ["Create product structure","Define the main platform areas."],
+                ["Design dashboard","Create the personalized home experience."],
+                ["Design career discovery","Create career exploration screens."],
+                ["Design learning flow","Create the learning experience."],
+                ["Design progress tracking","Show user progress clearly."],
+                ["Prototype the product","Connect the key screens."],
+                ["Create portfolio case study","Document the complete design."]
+            ]
+        },
+
+        "ecommerce-redesign": {
+            icon:"🛒",
+            title:"E-Commerce Redesign",
+            description:"Redesign an e-commerce shopping experience to improve navigation, product discovery and checkout usability.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"UX/UI Redesign",
+            skills:["UX Audit","Figma","UI Design","Usability"],
+            requirements:[
+                "Audit an existing experience",
+                "Identify usability issues",
+                "Redesign navigation",
+                "Redesign product page",
+                "Improve checkout",
+                "Create before/after case study"
+            ],
+            technologies:["Figma","UX Research","UI Design"],
+            tasks:[
+                ["Select an e-commerce experience","Choose an interface to analyze."],
+                ["Run a UX audit","Identify usability problems."],
+                ["Map problem areas","Prioritize important issues."],
+                ["Redesign navigation","Improve information architecture."],
+                ["Redesign key screens","Improve product and checkout pages."],
+                ["Create prototype","Connect the redesigned flow."],
+                ["Compare before and after","Explain design improvements."],
+                ["Create case study","Present the complete redesign."]
+            ]
+        },
+
+        "design-system": {
+            icon:"🎨",
+            title:"Complete Design System",
+            description:"Create a reusable design system with typography, colors, components and interaction patterns.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"Design System Project",
+            skills:["Figma","Components","Design Systems","UI"],
+            requirements:[
+                "Define design principles",
+                "Create color system",
+                "Define typography",
+                "Create components",
+                "Create component states",
+                "Document usage"
+            ],
+            technologies:["Figma","Components","Design Tokens"],
+            tasks:[
+                ["Define design principles","Create the foundations of the system."],
+                ["Create color tokens","Define primary and supporting colors."],
+                ["Define typography","Create a consistent type scale."],
+                ["Build components","Create buttons, inputs and cards."],
+                ["Add component states","Create hover, active and disabled states."],
+                ["Create layouts","Define spacing and layout rules."],
+                ["Document components","Explain how components should be used."],
+                ["Create showcase","Present the completed design system."]
+            ]
+        }
+    },
+
+
+    "product-manager": {
+
+        "product-requirements-document": {
+            icon:"📄",
+            title:"Product Requirements Document",
+            description:"Create a professional PRD for a digital product from problem definition through success metrics.",
+            difficulty:"Beginner",
+            time:"3–5 Days",
+            type:"Product Management Project",
+            skills:["Product Thinking","Research","Writing","Analytics"],
+            requirements:[
+                "Define the problem",
+                "Identify target users",
+                "Define product goals",
+                "Create user stories",
+                "Define requirements",
+                "Create success metrics"
+            ],
+            technologies:["Docs","Product Frameworks","Analytics"],
+            tasks:[
+                ["Define the problem","Write a clear problem statement."],
+                ["Research users","Identify target user needs."],
+                ["Define product goals","Set measurable product objectives."],
+                ["Create user stories","Describe important user needs."],
+                ["Write requirements","Define expected product behavior."],
+                ["Define success metrics","Choose measurable outcomes."],
+                ["Identify risks","Document important assumptions."],
+                ["Complete the PRD","Create the polished final document."]
+            ]
+        },
+
+        "feature-prioritization-system": {
+            icon:"⚖️",
+            title:"Feature Prioritization System",
+            description:"Build a practical framework for comparing and prioritizing product features.",
+            difficulty:"Intermediate",
+            time:"4–6 Days",
+            type:"Product Strategy Project",
+            skills:["Prioritization","Analytics","Product Strategy","Communication"],
+            requirements:[
+                "Collect feature ideas",
+                "Define prioritization criteria",
+                "Score features",
+                "Compare impact and effort",
+                "Create priority list",
+                "Explain decisions"
+            ],
+            technologies:["Excel","Product Frameworks","Analytics"],
+            tasks:[
+                ["Collect feature ideas","Create a realistic feature backlog."],
+                ["Define criteria","Choose impact, effort and strategic factors."],
+                ["Create scoring model","Build a consistent scoring system."],
+                ["Score features","Evaluate each feature."],
+                ["Create priority list","Organize features by priority."],
+                ["Review trade-offs","Document important decisions."],
+                ["Create roadmap input","Turn priorities into a plan."],
+                ["Present the framework","Explain how the system works."]
+            ]
+        },
+
+        "product-roadmap": {
+            icon:"🗺️",
+            title:"Product Roadmap",
+            description:"Create a product roadmap that connects user needs, business goals and planned product improvements.",
+            difficulty:"Intermediate",
+            time:"4–6 Days",
+            type:"Product Planning Project",
+            skills:["Roadmapping","Strategy","Research","Communication"],
+            requirements:[
+                "Define product vision",
+                "Identify objectives",
+                "Create initiatives",
+                "Prioritize work",
+                "Build roadmap",
+                "Define success metrics"
+            ],
+            technologies:["Product Frameworks","Docs","Planning"],
+            tasks:[
+                ["Define product vision","Write the product direction."],
+                ["Identify objectives","Define measurable goals."],
+                ["Gather initiatives","Create a list of potential initiatives."],
+                ["Prioritize initiatives","Select work based on impact."],
+                ["Create roadmap","Organize initiatives over time."],
+                ["Define dependencies","Identify important relationships."],
+                ["Add success metrics","Define how progress will be measured."],
+                ["Present roadmap","Create a clear stakeholder presentation."]
+            ]
+        },
+
+        "user-research-case-study": {
+            icon:"🔎",
+            title:"User Research Case Study",
+            description:"Conduct a structured user research project and turn findings into product opportunities.",
+            difficulty:"Intermediate",
+            time:"1 Week",
+            type:"Product Research Project",
+            skills:["User Research","Interviews","Analysis","Product Thinking"],
+            requirements:[
+                "Define research question",
+                "Recruit participants",
+                "Conduct interviews",
+                "Analyze findings",
+                "Identify patterns",
+                "Create recommendations"
+            ],
+            technologies:["Research","Docs","Spreadsheets"],
+            tasks:[
+                ["Define research question","Decide what you need to learn."],
+                ["Create research plan","Plan questions and methodology."],
+                ["Conduct interviews","Collect user perspectives."],
+                ["Organize findings","Group responses and observations."],
+                ["Identify patterns","Find recurring needs and problems."],
+                ["Define opportunities","Turn findings into product opportunities."],
+                ["Create recommendations","Suggest product actions."],
+                ["Write the case study","Document the complete research process."]
+            ]
+        },
+
+        "mvp-planning": {
+            icon:"🚀",
+            title:"MVP Planning",
+            description:"Plan a minimum viable product from problem statement to launch scope and validation metrics.",
+            difficulty:"Advanced",
+            time:"1 Week",
+            type:"Product Strategy Project",
+            skills:["MVP Strategy","Prioritization","Research","Analytics"],
+            requirements:[
+                "Define product problem",
+                "Identify target users",
+                "Define MVP scope",
+                "Prioritize features",
+                "Define validation plan",
+                "Create launch metrics"
+            ],
+            technologies:["Product Frameworks","Analytics","Planning"],
+            tasks:[
+                ["Define the problem","Identify the problem worth solving."],
+                ["Define target user","Choose the primary audience."],
+                ["Identify core needs","Define what users must accomplish."],
+                ["Set MVP scope","Select only essential features."],
+                ["Prioritize features","Explain why each feature belongs."],
+                ["Create validation plan","Define how assumptions will be tested."],
+                ["Define launch metrics","Choose early success indicators."],
+                ["Present the MVP plan","Create a complete product proposal."]
+            ]
+        },
+
+        "product-launch-simulation": {
+            icon:"📣",
+            title:"Product Launch Simulation",
+            description:"Create a simulated product launch plan covering positioning, communication, metrics and post-launch learning.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"Product Launch Project",
+            skills:["Strategy","Marketing","Analytics","Communication"],
+            requirements:[
+                "Define launch goals",
+                "Create positioning",
+                "Identify audiences",
+                "Create launch plan",
+                "Define metrics",
+                "Create post-launch review"
+            ],
+            technologies:["Product Strategy","Analytics","Planning"],
+            tasks:[
+                ["Define launch goals","Set measurable launch objectives."],
+                ["Create positioning","Explain the product value."],
+                ["Identify audiences","Define key customer groups."],
+                ["Create launch plan","Organize launch activities."],
+                ["Define communication","Plan important product messaging."],
+                ["Define metrics","Choose launch success indicators."],
+                ["Create review framework","Plan post-launch analysis."],
+                ["Present the launch plan","Create the final simulation."]
+            ]
+        }
+    },
+
+
+    "hr-specialist": {
+
+        "employee-feedback-survey": {
+            icon:"💬",
+            title:"Employee Feedback Survey",
+            description:"Design an employee feedback system that collects useful information about workplace experience.",
+            difficulty:"Beginner",
+            time:"3–5 Days",
+            type:"HR Project",
+            skills:["Communication","Survey Design","Analysis","HR"],
+            requirements:[
+                "Define survey goals",
+                "Create survey questions",
+                "Organize response categories",
+                "Create analysis method",
+                "Summarize feedback",
+                "Create action plan"
+            ],
+            technologies:["Forms","Spreadsheets","Data Analysis"],
+            tasks:[
+                ["Define survey objectives","Decide what the survey should measure."],
+                ["Create questions","Write clear employee questions."],
+                ["Build the survey","Create the digital survey."],
+                ["Collect sample responses","Gather example responses."],
+                ["Analyze responses","Identify common themes."],
+                ["Summarize findings","Create a concise report."],
+                ["Create action items","Turn findings into actions."],
+                ["Present recommendations","Explain the results."]
+            ]
+        },
+
+        "employee-onboarding-plan": {
+            icon:"👋",
+            title:"Employee Onboarding Plan",
+            description:"Create a structured onboarding program that helps new employees become productive and connected.",
+            difficulty:"Beginner",
+            time:"3–5 Days",
+            type:"HR Planning Project",
+            skills:["HR Planning","Communication","Organization","Employee Experience"],
+            requirements:[
+                "Define onboarding goals",
+                "Create pre-joining checklist",
+                "Plan first day",
+                "Plan first week",
+                "Define training",
+                "Create feedback process"
+            ],
+            technologies:["Docs","Spreadsheets","Planning"],
+            tasks:[
+                ["Define onboarding goals","Identify what new employees need."],
+                ["Create pre-joining checklist","Plan tasks before joining."],
+                ["Plan first day","Create a welcoming first-day schedule."],
+                ["Plan first week","Define early activities."],
+                ["Create training plan","Plan essential learning."],
+                ["Add manager check-ins","Define support points."],
+                ["Create feedback process","Plan onboarding feedback."],
+                ["Document the program","Create the final onboarding guide."]
+            ]
+        },
+
+        "recruitment-dashboard": {
+            icon:"📊",
+            title:"Recruitment Dashboard",
+            description:"Create a recruitment dashboard that tracks candidates, hiring stages and recruitment metrics.",
+            difficulty:"Intermediate",
+            time:"1 Week",
+            type:"HR Analytics Project",
+            skills:["Recruitment","Excel","Analytics","Reporting"],
+            requirements:[
+                "Track open positions",
+                "Track candidates",
+                "Monitor hiring stages",
+                "Calculate recruitment metrics",
+                "Create dashboard",
+                "Summarize insights"
+            ],
+            technologies:["Excel","Power BI","Data Analysis"],
+            tasks:[
+                ["Define recruitment metrics","Choose useful hiring measures."],
+                ["Prepare sample data","Create candidate and position data."],
+                ["Clean the data","Prepare the dataset."],
+                ["Calculate metrics","Calculate time and funnel measures."],
+                ["Build dashboard","Create visual recruitment reporting."],
+                ["Add filters","Allow users to explore roles."],
+                ["Identify insights","Find recruitment patterns."],
+                ["Create report","Present the dashboard and findings."]
+            ]
+        },
+
+        "performance-management-system": {
+            icon:"📋",
+            title:"Performance Management System",
+            description:"Design a structured performance management framework covering goals, reviews and employee development.",
+            difficulty:"Intermediate",
+            time:"1 Week",
+            type:"HR Process Project",
+            skills:["Performance Management","HR","Planning","Communication"],
+            requirements:[
+                "Define performance goals",
+                "Create review cycle",
+                "Define evaluation criteria",
+                "Create feedback process",
+                "Create development plan",
+                "Define metrics"
+            ],
+            technologies:["Docs","Spreadsheets","HR Frameworks"],
+            tasks:[
+                ["Define performance goals","Create measurable employee goals."],
+                ["Design review cycle","Define review stages."],
+                ["Create evaluation criteria","Define fair evaluation areas."],
+                ["Design feedback process","Create manager and employee feedback."],
+                ["Create development planning","Connect reviews to growth."],
+                ["Define metrics","Choose useful program metrics."],
+                ["Test the process","Run through sample employee cases."],
+                ["Document the system","Create the complete framework."]
+            ]
+        },
+
+        "talent-development-strategy": {
+            icon:"🌱",
+            title:"Talent Development Strategy",
+            description:"Create a talent development strategy that connects employee skills with learning and growth opportunities.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"HR Strategy Project",
+            skills:["Talent Development","Learning","Strategy","Communication"],
+            requirements:[
+                "Identify skill needs",
+                "Create competency framework",
+                "Map learning paths",
+                "Create development plans",
+                "Define success measures",
+                "Create implementation plan"
+            ],
+            technologies:["Docs","Spreadsheets","Planning"],
+            tasks:[
+                ["Identify business skill needs","Understand important future capabilities."],
+                ["Create competency framework","Define skill levels."],
+                ["Map learning opportunities","Connect skills to learning."],
+                ["Create development plans","Build employee growth paths."],
+                ["Define success metrics","Measure development outcomes."],
+                ["Create implementation plan","Plan how the strategy will launch."],
+                ["Identify risks","Document potential challenges."],
+                ["Present strategy","Create the final HR strategy."]
+            ]
+        },
+
+        "hr-analytics-case-study": {
+            icon:"📈",
+            title:"HR Analytics Case Study",
+            description:"Analyze workforce data to identify trends in hiring, retention, engagement or employee development.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"HR Analytics Project",
+            skills:["HR Analytics","Excel","Data","Communication"],
+            requirements:[
+                "Choose HR question",
+                "Collect workforce data",
+                "Clean the data",
+                "Analyze trends",
+                "Create dashboard",
+                "Present recommendations"
+            ],
+            technologies:["Excel","Power BI","Data Analysis"],
+            tasks:[
+                ["Define the HR question","Choose an important workforce question."],
+                ["Prepare workforce data","Collect or create sample data."],
+                ["Clean the data","Prepare it for analysis."],
+                ["Analyze trends","Identify important workforce patterns."],
+                ["Create dashboard","Visualize the findings."],
+                ["Interpret results","Explain what the data suggests."],
+                ["Create recommendations","Suggest evidence-based actions."],
+                ["Present the case study","Create the final report."]
+            ]
+        }
+    },
+
+
+    "mobile-app-developer": {
+
+        "notes-app": {
+            icon:"📝",
+            title:"Notes App",
+            description:"Build a mobile notes application where users can create, edit, search and delete notes.",
+            difficulty:"Beginner",
+            time:"4–6 Days",
+            type:"Mobile Application",
+            skills:["Mobile Development","UI","State Management","Storage"],
+            requirements:[
+                "Create notes",
+                "Edit notes",
+                "Delete notes",
+                "Search notes",
+                "Save notes",
+                "Create clean mobile UI"
+            ],
+            technologies:["JavaScript","Mobile Framework","Local Storage"],
+            tasks:[
+                ["Create app structure","Set up the mobile project."],
+                ["Design notes screen","Create the main notes interface."],
+                ["Add note creation","Allow users to create notes."],
+                ["Add editing","Allow notes to be updated."],
+                ["Add delete functionality","Allow notes to be removed."],
+                ["Add search","Allow users to find notes."],
+                ["Add local storage","Persist notes between sessions."],
+                ["Test on mobile","Test different screen sizes."]
+            ]
+        },
+
+        "habit-tracker": {
+            icon:"🔥",
+            title:"Habit Tracker",
+            description:"Create a mobile habit tracking application that helps users monitor daily habits and progress.",
+            difficulty:"Intermediate",
+            time:"5–7 Days",
+            type:"Mobile Application",
+            skills:["Mobile UI","State Management","Storage","UX"],
+            requirements:[
+                "Create habits",
+                "Mark habits complete",
+                "Track streaks",
+                "Display progress",
+                "Save habit data",
+                "Create mobile-friendly UI"
+            ],
+            technologies:["JavaScript","Mobile Framework","Local Storage"],
+            tasks:[
+                ["Plan the app","Define habit tracking screens."],
+                ["Create habit UI","Build the main interface."],
+                ["Add habit creation","Allow users to create habits."],
+                ["Add completion logic","Track daily completion."],
+                ["Calculate streaks","Calculate consecutive completion."],
+                ["Display progress","Show useful progress indicators."],
+                ["Save data","Persist habits and progress."],
+                ["Test the application","Test several habit scenarios."]
+            ]
+        },
+
+        "mobile-expense-tracker": {
+            icon:"💳",
+            title:"Mobile Expense Tracker",
+            description:"Build a mobile application for recording and reviewing personal expenses.",
+            difficulty:"Intermediate",
+            time:"1 Week",
+            type:"Mobile Application",
+            skills:["Mobile Development","Forms","Storage","UI"],
+            requirements:[
+                "Add expenses",
+                "Categorize expenses",
+                "View totals",
+                "View history",
+                "Delete transactions",
+                "Save expense data"
+            ],
+            technologies:["JavaScript","Mobile Framework","Local Storage"],
+            tasks:[
+                ["Plan the screens","Define dashboard and transaction screens."],
+                ["Create expense form","Add amount and category fields."],
+                ["Store transactions","Save expense records."],
+                ["Calculate totals","Calculate spending dynamically."],
+                ["Create history","Display previous expenses."],
+                ["Add categories","Allow expenses to be organized."],
+                ["Add storage","Persist records locally."],
+                ["Test the app","Test calculations and navigation."]
+            ]
+        },
+
+        "fitness-tracking-app": {
+            icon:"🏃",
+            title:"Fitness Tracking App",
+            description:"Design and build a mobile app that lets users track workouts and personal fitness progress.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"Mobile Application",
+            skills:["Mobile Development","UI","Data","State Management"],
+            requirements:[
+                "Create workout plans",
+                "Record workouts",
+                "Track progress",
+                "Display statistics",
+                "Create user profile",
+                "Store workout data"
+            ],
+            technologies:["JavaScript","Mobile Framework","Charts","Storage"],
+            tasks:[
+                ["Define user flow","Plan the main fitness experience."],
+                ["Design dashboard","Create the main progress screen."],
+                ["Create workout logging","Allow workouts to be recorded."],
+                ["Track statistics","Calculate useful fitness metrics."],
+                ["Create progress charts","Visualize progress."],
+                ["Add profile","Create user settings."],
+                ["Save data","Persist workout information."],
+                ["Test and polish","Improve the mobile experience."]
+            ]
+        },
+
+        "social-networking-app": {
+            icon:"👥",
+            title:"Social Networking App",
+            description:"Build a mobile social application with profiles, posts, interactions and a simple feed.",
+            difficulty:"Advanced",
+            time:"2–3 Weeks",
+            type:"Mobile Application",
+            skills:["Mobile Development","APIs","UI","State Management"],
+            requirements:[
+                "Create user profile",
+                "Create posts",
+                "Display feed",
+                "Add interactions",
+                "Create navigation",
+                "Connect data source"
+            ],
+            technologies:["JavaScript","Mobile Framework","REST API","Git"],
+            tasks:[
+                ["Plan application structure","Define screens and navigation."],
+                ["Create profile screen","Build user profile interface."],
+                ["Create post interface","Allow users to create posts."],
+                ["Build feed","Display posts in a feed."],
+                ["Add interactions","Implement likes and other actions."],
+                ["Connect API","Connect the app to a data source."],
+                ["Test navigation","Check all user flows."],
+                ["Deploy the app","Prepare a demo release."]
+            ]
+        },
+
+        "delivery-tracking-app": {
+            icon:"📦",
+            title:"Delivery Tracking App",
+            description:"Create a mobile delivery tracking experience where users can view order status and delivery progress.",
+            difficulty:"Advanced",
+            time:"2–3 Weeks",
+            type:"Mobile Application",
+            skills:["Mobile Development","APIs","Maps","UI"],
+            requirements:[
+                "Display orders",
+                "Show delivery status",
+                "Create tracking screen",
+                "Display location",
+                "Create notifications",
+                "Handle order updates"
+            ],
+            technologies:["JavaScript","Mobile Framework","REST API","Maps"],
+            tasks:[
+                ["Define delivery flow","Map the order-to-delivery experience."],
+                ["Create order screen","Display order details."],
+                ["Create status tracking","Show delivery stages."],
+                ["Add location UI","Display delivery location."],
+                ["Connect data","Handle delivery updates."],
+                ["Add notifications","Create status notification UI."],
+                ["Test tracking flow","Test several order states."],
+                ["Polish the application","Improve mobile usability."]
+            ]
+        }
+    },
+
+
+    "digital-marketing": {
+
+        "social-media-campaign": {
+            icon:"📱",
+            title:"Social Media Campaign",
+            description:"Create a complete social media campaign for a fictional or real brand with content, targeting and performance goals.",
+            difficulty:"Beginner",
+            time:"3–5 Days",
+            type:"Marketing Campaign",
+            skills:["Social Media","Content","Strategy","Analytics"],
+            requirements:[
+                "Define campaign goal",
+                "Identify audience",
+                "Create content themes",
+                "Create posting plan",
+                "Define KPIs",
+                "Create campaign report"
+            ],
+            technologies:["Canva","Spreadsheets","Analytics"],
+            tasks:[
+                ["Define campaign goal","Choose a measurable objective."],
+                ["Research audience","Identify the target audience."],
+                ["Create content themes","Define content categories."],
+                ["Create content ideas","Plan posts for the campaign."],
+                ["Build posting calendar","Schedule campaign content."],
+                ["Define KPIs","Choose engagement and conversion metrics."],
+                ["Create reporting template","Plan performance tracking."],
+                ["Present campaign","Create the final campaign plan."]
+            ]
+        },
+
+        "content-marketing-calendar": {
+            icon:"📅",
+            title:"Content Marketing Calendar",
+            description:"Build a structured content calendar that aligns content topics with audience needs and marketing goals.",
+            difficulty:"Beginner",
+            time:"3–5 Days",
+            type:"Content Marketing Project",
+            skills:["Content Strategy","SEO","Planning","Research"],
+            requirements:[
+                "Define target audience",
+                "Research topics",
+                "Create content pillars",
+                "Plan publishing schedule",
+                "Define content formats",
+                "Track performance"
+            ],
+            technologies:["Spreadsheets","SEO Tools","Content Planning"],
+            tasks:[
+                ["Define audience","Identify who the content is for."],
+                ["Research topics","Find relevant audience questions."],
+                ["Create content pillars","Group topics into themes."],
+                ["Create content ideas","Develop useful content topics."],
+                ["Build calendar","Schedule content over time."],
+                ["Define content formats","Choose articles, videos or social posts."],
+                ["Define metrics","Choose content performance measures."],
+                ["Create final calendar","Present the completed strategy."]
+            ]
+        },
+
+        "seo-website-audit": {
+            icon:"🔍",
+            title:"SEO Website Audit",
+            description:"Perform an SEO audit of a website and create a practical improvement plan.",
+            difficulty:"Intermediate",
+            time:"4–6 Days",
+            type:"SEO Project",
+            skills:["SEO","Analytics","Research","Content"],
+            requirements:[
+                "Review technical SEO",
+                "Analyze keywords",
+                "Review content",
+                "Check on-page SEO",
+                "Analyze backlinks",
+                "Create recommendations"
+            ],
+            technologies:["SEO Tools","Google Analytics","Spreadsheets"],
+            tasks:[
+                ["Select a website","Choose a site for the audit."],
+                ["Run technical review","Check indexing and technical factors."],
+                ["Analyze keywords","Identify target search terms."],
+                ["Review content","Evaluate content quality and relevance."],
+                ["Check on-page SEO","Review titles, headings and descriptions."],
+                ["Review backlinks","Analyze link opportunities."],
+                ["Create action plan","Prioritize improvements."],
+                ["Write audit report","Present findings and recommendations."]
+            ]
+        },
+
+        "email-marketing-campaign": {
+            icon:"✉️",
+            title:"Email Marketing Campaign",
+            description:"Design an email marketing campaign with audience segmentation, content and performance tracking.",
+            difficulty:"Intermediate",
+            time:"4–6 Days",
+            type:"Marketing Campaign",
+            skills:["Email Marketing","Copywriting","Analytics","Strategy"],
+            requirements:[
+                "Define campaign goal",
+                "Segment audience",
+                "Create email sequence",
+                "Write email copy",
+                "Define KPIs",
+                "Create reporting plan"
+            ],
+            technologies:["Email Platform","Spreadsheets","Analytics"],
+            tasks:[
+                ["Define campaign objective","Choose the desired business outcome."],
+                ["Segment audience","Create relevant audience groups."],
+                ["Plan email sequence","Define the campaign flow."],
+                ["Write email copy","Create clear and useful messages."],
+                ["Create subject lines","Develop several variations."],
+                ["Define KPIs","Choose open, click and conversion measures."],
+                ["Create testing plan","Define A/B test ideas."],
+                ["Create campaign report","Present the final strategy."]
+            ]
+        },
+
+        "marketing-analytics-dashboard": {
+            icon:"📊",
+            title:"Marketing Analytics Dashboard",
+            description:"Create a dashboard that tracks marketing performance across campaigns, traffic and conversions.",
+            difficulty:"Advanced",
+            time:"1–2 Weeks",
+            type:"Marketing Analytics Project",
+            skills:["Analytics","Data Visualization","Marketing","Reporting"],
+            requirements:[
+                "Collect campaign data",
+                "Define marketing KPIs",
+                "Calculate performance",
+                "Create dashboard",
+                "Add filters",
+                "Write insights"
+            ],
+            technologies:["Excel","Power BI","Google Analytics","Data"],
+            tasks:[
+                ["Collect marketing data","Prepare campaign and traffic data."],
+                ["Define KPIs","Choose relevant marketing metrics."],
+                ["Clean the data","Prepare the dataset."],
+                ["Calculate performance","Calculate campaign metrics."],
+                ["Build dashboard","Create useful visualizations."],
+                ["Add filters","Allow campaign comparisons."],
+                ["Identify insights","Find important performance patterns."],
+                ["Create report","Present recommendations."]
+            ]
+        },
+
+        "full-digital-campaign": {
+            icon:"🚀",
+            title:"Full Digital Campaign",
+            description:"Plan a complete digital marketing campaign across content, social media, email, SEO and analytics.",
+            difficulty:"Advanced",
+            time:"2–3 Weeks",
+            type:"Full Marketing Project",
+            skills:["Digital Marketing","SEO","Content","Analytics"],
+            requirements:[
+                "Define campaign strategy",
+                "Research audience",
+                "Create content plan",
+                "Plan social campaign",
+                "Plan email campaign",
+                "Define analytics"
+            ],
+            technologies:["SEO Tools","Analytics","Canva","Spreadsheets"],
+            tasks:[
+                ["Define campaign strategy","Set goals and positioning."],
+                ["Research target audience","Understand audience needs."],
+                ["Create content strategy","Plan campaign content."],
+                ["Plan social media","Create social campaign schedule."],
+                ["Plan email marketing","Create email sequence."],
+                ["Create SEO strategy","Identify search opportunities."],
+                ["Define analytics","Create campaign measurement plan."],
+                ["Present the campaign","Create the complete marketing proposal."]
+            ]
+        }
+    }
+
+};
+
+
+/* =========================================================
+   GET SELECTED DATA
+   ========================================================= */
+
+const career =
+    careers[selectedCareer] ||
+    {
+        name: window.CareerBotIntegration?.careerTitleForSlug(selectedCareer) || "Selected career",
+        match: "—",
+        skills: []
+    };
+
+const careerProjects =
+    projects[selectedCareer] || {};
+
+function normalizeProjectTitle(value) {
+    return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "").trim();
+}
+
+const titleMatch = Object.entries(careerProjects).find(([, item]) =>
+    normalizeProjectTitle(item.title) === normalizeProjectTitle(requestedProjectTitle)
+);
+
+const projectKey = titleMatch?.[0] || (careerProjects[selectedProjectParam] ? selectedProjectParam : "");
+const mappedProject = projectKey ? careerProjects[projectKey] : null;
+const selectedSkills = (params.get("skills") || "").split(",").map(skill => skill.trim()).filter(Boolean);
+const project = mappedProject || {
+    title: requestedProjectTitle || "Selected project",
+    icon: "💡",
+    description: params.get("description") || "Work through the project tasks and save your progress as you go.",
+    difficulty: params.get("difficulty") || "Recommended",
+    time: params.get("time") || "Self-paced",
+    type: "General starter checklist",
+    requirements: selectedSkills,
+    technologies: selectedSkills,
+    tasks: [
+        ["Define the project goal", "Write down the problem this project will solve and who it is for."],
+        ["Plan the first version", "List the core features, tools, and steps needed to complete the first version."],
+        ["Build and test", "Create the project, test the main flow, and note any issues to fix."],
+        ["Document and present your work", "Write a short README and prepare a walkthrough of the project's goals and features."]
+    ]
+};
+const actualProjectId = selectedProjectParam;
+
+if (actualProjectId) localStorage.setItem("careerbotSelectedProject", actualProjectId);
+
+
+/* =========================================================
+   DOM ELEMENTS
+   ========================================================= */
+
+const pageTitle = document.getElementById("pageTitle");
+const heroDescription = document.getElementById("heroDescription");
+const projectMeta = document.getElementById("projectMeta");
+
+const projectIcon = document.getElementById("projectIcon");
+const careerLabel = document.getElementById("careerLabel");
+const projectTitle = document.getElementById("projectTitle");
+const matchPercentage = document.getElementById("matchPercentage");
+const projectDescription = document.getElementById("projectDescription");
+
+const difficulty = document.getElementById("difficulty");
+const estimatedTime = document.getElementById("estimatedTime");
+const projectType = document.getElementById("projectType");
+
+const requirementsList = document.getElementById("requirementsList");
+const technologiesList = document.getElementById("technologiesList");
+const skillsList = document.getElementById("skillsList");
+const tasksList = document.getElementById("tasksList");
+
+const progressPercentage = document.getElementById("progressPercentage");
+const progressLabel = document.getElementById("progressLabel");
+const progressBar = document.getElementById("progressBar");
+
+const backToProjects = document.getElementById("backToProjects");
+const jobButton = document.getElementById("jobButton");
+const completionNote = document.getElementById("completionNote");
+
+const toast = document.getElementById("toast");
+
+function escapeHTML(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================================
+   PAGE CONTENT
+   ========================================================= */
+
+pageTitle.textContent = project.title;
+heroDescription.textContent = mappedProject
+    ? `Build ${project.title} step by step, complete the practical tasks, and turn your learning into a portfolio-ready project.`
+    : `This project does not have a custom task plan yet. Use the general checklist below for ${project.title}.`;
+
+projectIcon.textContent = project.icon;
+careerLabel.textContent = career.name;
+projectTitle.textContent = project.title;
+matchPercentage.textContent = "—";
+projectDescription.textContent = project.description;
+
+difficulty.textContent = project.difficulty;
+estimatedTime.textContent = project.time;
+projectType.textContent = project.type;
+
+projectMeta.innerHTML = `
+    <div class="meta-pill">🎯 ${escapeHTML(career.name)}</div>
+    <div class="meta-pill">📌 ${escapeHTML(project.difficulty)}</div>
+    <div class="meta-pill">⏱ ${escapeHTML(project.time)}</div>
+    <div class="meta-pill">🧩 ${escapeHTML(project.type)}</div>
+`;
+
+document.getElementById("careerTitle").textContent = career.name;
+
+
+/* =========================================================
+   REQUIREMENTS
+   ========================================================= */
+
+requirementsList.innerHTML = project.requirements
+    .map(requirement => `
+        <li>
+            <span class="check">✓</span>
+            <span>${escapeHTML(requirement)}</span>
+        </li>
+    `)
+    .join("");
+
+
+/* =========================================================
+   TECHNOLOGIES
+   ========================================================= */
+
+technologiesList.innerHTML = project.technologies
+    .map(technology => `
+        <span class="tech">${escapeHTML(technology)}</span>
+    `)
+    .join("");
+
+
+/* =========================================================
+   CAREER SKILLS
+   ========================================================= */
+
+skillsList.innerHTML = career.skills
+    .map(skill => `
+        <span class="skill">${escapeHTML(skill)}</span>
+    `)
+    .join("");
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+const careerQuery =
+    "?career=" + encodeURIComponent(selectedCareer);
+
+const projectQuery =
+    careerQuery +
+    "&project=" + encodeURIComponent(actualProjectId);
+
+backToProjects.href =
+    "project-ideas.html" + careerQuery;
+
+jobButton.href =
+    "job-recommendations.html" + careerQuery;
+
+
+/* =========================================================
+   PROGRESS STORAGE
+   ========================================================= */
+
+const progressStorageKey =
+    "careerbotProjectProgress_" +
+    selectedCareer +
+    "_" +
+    actualProjectId;
+
+let completedTasks =
+    JSON.parse(localStorage.getItem(progressStorageKey) || "[]");
+
+
+/* =========================================================
+   RENDER TASKS
+   ========================================================= */
+
+function renderTasks(){
+
+    tasksList.innerHTML = "";
+
+    project.tasks.forEach((task, index) => {
+
+        const isDone =
+            completedTasks.includes(index);
+
+        const taskElement =
+            document.createElement("div");
+
+        taskElement.className =
+            "task" +
+            (isDone ? " done" : "");
+
+        taskElement.dataset.index = index;
+
+        taskElement.innerHTML = `
+            <div class="task-checkbox">
+                ${isDone ? "✓" : ""}
+            </div>
+
+            <div class="task-number">
+                STEP ${index + 1}
+            </div>
+
+            <div>
+                <div class="task-title">
+                    ${task[0]}
+                </div>
+
+                <div class="task-description">
+                    ${task[1]}
+                </div>
+            </div>
+        `;
+
+        taskElement.addEventListener("click", () => {
+            toggleTask(index);
+        });
+
+        tasksList.appendChild(taskElement);
+
+    });
+
+    updateProgress();
+}
+
+
+/* =========================================================
+   TOGGLE TASK
+   ========================================================= */
+
+function toggleTask(index){
+
+    if(completedTasks.includes(index)){
+
+        completedTasks =
+            completedTasks.filter(
+                item => item !== index
+            );
+
+    }else{
+
+        completedTasks.push(index);
+
+    }
+
+    completedTasks.sort((a,b) => a-b);
+
+    localStorage.setItem(
+        progressStorageKey,
+        JSON.stringify(completedTasks)
+    );
+
+    renderTasks();
+
+    if(completedTasks.length === project.tasks.length){
+
+        showToast("🎉 Project plan completed!");
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE PROGRESS
+   ========================================================= */
+
+function updateProgress(){
+
+    const total =
+        project.tasks.length;
+
+    const completed =
+        completedTasks.length;
+
+    const percentage =
+        Math.round((completed / total) * 100);
+
+    progressPercentage.textContent =
+        percentage + "%";
+
+    progressLabel.textContent =
+        completed +
+        " of " +
+        total +
+        " tasks completed";
+
+    progressBar.style.width =
+        percentage + "%";
+
+    if(percentage === 100){
+
+        completionNote.textContent =
+            "🎉 You completed all project tasks. Your project is ready for the next step.";
+
+        completionNote.style.color =
+            "#438e70";
+
+        completionNote.style.fontWeight =
+            "700";
+
+    }else{
+
+        completionNote.textContent =
+            "Complete your project tasks to unlock the next step.";
+
+        completionNote.style.color =
+            "";
+
+        completionNote.style.fontWeight =
+            "";
+
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function showToast(message){
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(window.careerbotToast);
+
+    window.careerbotToast =
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 2200);
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+renderTasks();
+
+</script>
+
+</body>
+</html>

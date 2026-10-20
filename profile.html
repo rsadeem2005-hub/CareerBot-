@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CareerBot — Build Your Profile</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+<script>
+/* CareerBot authenticated-page guard */
+(async function () {
+    try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error || !data.session) {
+            const next = encodeURIComponent(window.location.pathname.split("/").pop() + window.location.search);
+            window.location.replace("login.html?next=" + next);
+        }
+    } catch (error) {
+        console.error("CareerBot session check failed:", error);
+        window.location.replace("login.html");
+    }
+})();
+</script>
+
+
+    <script src="script.js"></script>
+
+</head>
+
+
+<body class="profile-page">
+
+
+
+<div class="profile-container">
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <div class="profile-header">
+
+        <a href="index.html">
+
+            <img
+                src="CareerBot Growth Mascot Logo(1).png"
+                alt="CareerBot"
+            >
+
+        </a>
+
+        <span>
+            Step 1 of 4
+        </span>
+
+    </div>
+
+
+    <!-- =====================================
+         PROGRESS
+    ====================================== -->
+
+    <div class="progress">
+
+        <div class="progress-fill"></div>
+
+    </div>
+
+
+    <!-- =====================================
+         PROFILE CARD
+    ====================================== -->
+
+    <div class="profile-card">
+
+
+        <!-- TITLE -->
+
+        <div class="profile-title">
+
+            <span class="profile-badge">
+                STUDENT PROFILE
+            </span>
+
+            <h1>
+                Tell us about yourself.
+            </h1>
+
+            <p>
+                This information helps CareerBot personalize
+                your career recommendations.
+            </p>
+
+        </div>
+
+
+        <!-- =====================================
+             PROFILE FORM
+        ====================================== -->
+
+        <form onsubmit="saveProfile(event)">
+
+
+            <!-- =================================
+                 PERSONAL INFORMATION
+            ================================== -->
+
+            <h3>
+                Personal information
+            </h3>
+
+
+            <div class="form-grid">
+
+
+                <!-- FIRST NAME -->
+
+                <div>
+
+                    <label for="profileFirstName">
+                        First name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="profileFirstName"
+                        placeholder="First name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- LAST NAME -->
+
+                <div>
+
+                    <label for="profileLastName">
+                        Last name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="profileLastName"
+                        placeholder="Last name"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <label for="profilePhone">
+                Phone number
+            </label>
+
+            <input
+                type="tel"
+                id="profilePhone"
+                placeholder="+91 XXXXX XXXXX"
+            >
+
+
+            <!-- LOCATION -->
+
+            <label for="profileLocation">
+                Location
+            </label>
+
+            <input
+                type="text"
+                id="profileLocation"
+                placeholder="City, State"
+            >
+
+
+
+            <!-- =================================
+                 EDUCATION
+            ================================== -->
+
+            <h3>
+                Education
+            </h3>
+
+
+            <!-- EDUCATION LEVEL -->
+
+            <label for="educationLevel">
+                Current education level
+            </label>
+
+            <select
+                id="educationLevel"
+                required
+            >
+
+                <option value="">
+                    Select education level
+                </option>
+
+                <option value="High School">
+                    High School
+                </option>
+
+                <option value="Diploma">
+                    Diploma
+                </option>
+
+                <option value="Undergraduate">
+                    Undergraduate
+                </option>
+
+                <option value="Postgraduate">
+                    Postgraduate
+                </option>
+
+                <option value="Doctorate">
+                    Doctorate
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+            <!-- FIELD OF STUDY -->
+
+            <label for="fieldOfStudy">
+                Field of study
+            </label>
+
+            <input
+                type="text"
+                id="fieldOfStudy"
+                placeholder="Computer Science, Commerce, Design..."
+            >
+
+
+            <!-- COLLEGE -->
+
+            <label for="college">
+                College / University
+            </label>
+
+            <input
+                type="text"
+                id="college"
+                placeholder="Your institution"
+            >
+
+
+            <!-- GRADUATION YEAR -->
+
+            <label for="graduationYear">
+                Graduation year
+            </label>
+
+            <select id="graduationYear">
+
+                <option value="">
+                    Select year
+                </option>
+
+                <option value="2026">
+                    2026
+                </option>
+
+                <option value="2027">
+                    2027
+                </option>
+
+                <option value="2028">
+                    2028
+                </option>
+
+                <option value="2029">
+                    2029
+                </option>
+
+                <option value="2030">
+                    2030
+                </option>
+
+            </select>
+
+
+
+            <!-- =================================
+                 INTERESTS
+            ================================== -->
+
+            <h3>
+                Your interests
+            </h3>
+
+            <p class="form-help">
+                Select areas you're interested in.
+            </p>
+
+
+            <div class="choice-grid">
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="interests"
+                        value="Technology"
+                    >
+
+                    Technology
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="interests"
+                        value="Business"
+                    >
+
+                    Business
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="interests"
+                        value="Design"
+                    >
+
+                    Design
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="interests"
+                        value="Finance"
+                    >
+
+                    Finance
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="interests"
+                        value="Healthcare"
+                    >
+
+                    Healthcare
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="interests"
+                        value="Marketing"
+                    >
+
+                    Marketing
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="interests"
+                        value="Data Science"
+                    >
+
+                    Data Science
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="interests"
+                        value="Entrepreneurship"
+                    >
+
+                    Entrepreneurship
+
+                </label>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 SKILLS
+            ================================== -->
+
+            <h3>
+                Skills
+            </h3>
+
+            <p class="form-help">
+                Choose the skills you already have.
+            </p>
+
+
+            <div class="choice-grid">
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="skills"
+                        value="Programming"
+                    >
+
+                    Programming
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="skills"
+                        value="Communication"
+                    >
+
+                    Communication
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="skills"
+                        value="Leadership"
+                    >
+
+                    Leadership
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="skills"
+                        value="Problem Solving"
+                    >
+
+                    Problem Solving
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="skills"
+                        value="Creativity"
+                    >
+
+                    Creativity
+
+                </label>
+
+
+                <label class="choice">
+
+                    <input
+                        type="checkbox"
+                        name="skills"
+                        value="Analytical Thinking"
+                    >
+
+                    Analytical Thinking
+
+                </label>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 CAREER PREFERENCES
+            ================================== -->
+
+            <h3>
+                Career preferences
+            </h3>
+
+
+            <!-- WORK ENVIRONMENT -->
+
+            <label for="workEnvironment">
+                Preferred work environment
+            </label>
+
+            <select id="workEnvironment">
+
+                <option value="">
+                    Select preference
+                </option>
+
+                <option value="Remote">
+                    Remote
+                </option>
+
+                <option value="Hybrid">
+                    Hybrid
+                </option>
+
+                <option value="Office">
+                    Office
+                </option>
+
+                <option value="No preference">
+                    No preference
+                </option>
+
+            </select>
+
+
+            <!-- INDUSTRY -->
+
+            <label for="preferredIndustry">
+                Preferred industry
+            </label>
+
+            <select id="preferredIndustry">
+
+                <option value="">
+                    Select industry
+                </option>
+
+                <option value="Technology">
+                    Technology
+                </option>
+
+                <option value="Finance">
+                    Finance
+                </option>
+
+                <option value="Healthcare">
+                    Healthcare
+                </option>
+
+                <option value="Education">
+                    Education
+                </option>
+
+                <option value="Media">
+                    Media
+                </option>
+
+                <option value="Consulting">
+                    Consulting
+                </option>
+
+                <option value="Government">
+                    Government
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+
+            <!-- =================================
+                 CAREER GOALS
+            ================================== -->
+
+            <h3>
+                Career goals
+            </h3>
+
+
+            <label for="careerGoal">
+                What is your main career goal?
+            </label>
+
+            <textarea
+                id="careerGoal"
+                rows="5"
+                placeholder="Tell us what you want to achieve..."
+            ></textarea>
+
+
+
+            <!-- =================================
+                 SUBMIT
+            ================================== -->
+
+            <button
+                type="submit"
+                class="profile-submit"
+            >
+
+                Save Profile & Continue
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================
+     PROFILE SUCCESS POPUP
+====================================== -->
+
+<div
+    id="profileSuccessPopup"
+    class="profile-success-popup"
+>
+
+    <div class="profile-success-popup-box">
+
+        <h3>
+            Profile Saved!
+        </h3>
+
+        <p id="profilePopupMessage"></p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================
+     PROFILE JAVASCRIPT
+====================================== -->
+
+<script>
+
+async function saveProfile(event) {
+    event.preventDefault();
+    const get = id => document.getElementById(id);
+    const checked = name => [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x => x.value);
+    const profile = {
+        p_first_name: get("profileFirstName")?.value.trim() || "",
+        p_last_name: get("profileLastName")?.value.trim() || "",
+        p_phone: get("profilePhone")?.value.trim() || null,
+        p_location: get("profileLocation")?.value.trim() || null,
+        p_education_level: get("educationLevel")?.value || null,
+        p_field_of_study: get("fieldOfStudy")?.value.trim() || null,
+        p_college: get("college")?.value.trim() || null,
+        p_graduation_year: get("graduationYear")?.value ? Number(get("graduationYear").value) : null,
+        p_interests: checked("interests"),
+        p_skills: checked("skills"),
+        p_work_environment: get("workEnvironment")?.value || null,
+        p_preferred_industry: get("preferredIndustry")?.value || null,
+        p_career_goal: get("careerGoal")?.value.trim() || null
+    };
+    if (!profile.p_first_name || !profile.p_last_name) {
+        alert("Please enter your first and last name.");
+        return;
+    }
+    try {
+        const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+        if (sessionError) throw sessionError;
+        if (!sessionData?.session) {
+            window.location.href = "login.html";
+            return;
+        }
+        const { error } = await supabaseClient.rpc("upsert_profile", profile);
+        if (error) throw error;
+        localStorage.setItem("careerbotName", `${profile.p_first_name} ${profile.p_last_name}`.trim());
+        localStorage.setItem("careerbotProfileName", `${profile.p_first_name} ${profile.p_last_name}`.trim());
+        const popup = get("profileSuccessPopup");
+        const message = get("profilePopupMessage");
+        if (message) message.textContent = "Your profile has been saved. Your career assessment is next.";
+        popup?.classList.add("show");
+        setTimeout(() => { window.location.href = "assessment.html"; }, 900);
+    } catch (error) {
+        console.error("Profile save failed:", error);
+        alert(error?.message || "Could not save your profile. Please try again.");
+    }
+}
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerBot — Career Details</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        :root {
+            --dark: #17231f;
+            --text: #5d6b65;
+            --muted: #89948f;
+            --mint: #69c7a3;
+            --mint-dark: #438e70;
+            --lavender: #9182e8;
+            --blue: #79b7df;
+            --cream: #fbfcf9;
+            --white: #ffffff;
+            --border: rgba(35,55,45,.09);
+            --shadow: 0 25px 70px rgba(40,60,50,.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background:
+                radial-gradient(
+                    circle at 10% 0%,
+                    rgba(105,199,163,.13),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(145,130,232,.13),
+                    transparent 30%
+                ),
+                var(--cream);
+
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            width: 100%;
+            padding: 18px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid var(--border);
+
+            background: rgba(255,255,255,.90);
+            backdrop-filter: blur(12px);
+
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-weight: 800;
+            font-size: 21px;
+            color: var(--dark);
+        }
+
+        .logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dashboard-btn,
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 11px 17px;
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: .2s ease;
+        }
+
+        .dashboard-btn {
+            background: linear-gradient(
+                135deg,
+                var(--mint),
+                var(--lavender)
+            );
+
+            color: white;
+        }
+
+        .back-btn {
+            color: var(--mint-dark);
+            background: white;
+            border: 1px solid var(--border);
+        }
+
+        .dashboard-btn:hover,
+        .back-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .page {
+            width: min(1180px, 90%);
+            margin: 0 auto;
+            padding: 45px 0 80px;
+        }
+
+        /* =========================
+           PROGRESS
+        ========================= */
+
+        .step {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .step-number {
+            color: var(--mint-dark);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .step-title {
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .progress {
+            width: min(600px, 100%);
+            height: 8px;
+
+            background: #e9eee9;
+            border-radius: 20px;
+
+            margin: 16px auto 0;
+            overflow: hidden;
+        }
+
+        .progress span {
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--mint),
+                    var(--lavender)
+                );
+
+            border-radius: inherit;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            background: var(--white);
+
+            border: 1px solid var(--border);
+            border-radius: 30px;
+
+            padding: 45px;
+
+            box-shadow: var(--shadow);
+
+            display: grid;
+            grid-template-columns: 1fr auto;
+
+            gap: 35px;
+            align-items: center;
+
+            margin-bottom: 28px;
+        }
+
+        .career-label {
+            display: inline-flex;
+
+            padding: 8px 13px;
+            border-radius: 30px;
+
+            background: rgba(105,199,163,.12);
+            color: var(--mint-dark);
+
+            font-size: 12px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: .06em;
+
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 5vw, 56px);
+            line-height: 1.05;
+
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            color: var(--text);
+            line-height: 1.8;
+            max-width: 720px;
+        }
+
+        .career-icon {
+            width: 125px;
+            height: 125px;
+
+            border-radius: 35px;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 55px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(105,199,163,.18),
+                    rgba(145,130,232,.18)
+                );
+        }
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        .section {
+            background: var(--white);
+
+            border: 1px solid var(--border);
+            border-radius: 26px;
+
+            padding: 32px;
+
+            box-shadow:
+                0 15px 45px rgba(40,60,50,.05);
+
+            margin-bottom: 24px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .section-intro {
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           SNAPSHOT
+        ========================= */
+
+        .snapshot-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .snapshot-card {
+            padding: 20px;
+
+            background: #f8faf8;
+
+            border-radius: 18px;
+            border: 1px solid var(--border);
+        }
+
+        .snapshot-card span {
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+        .snapshot-card strong {
+            color: var(--dark);
+
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        /* =========================
+           SKILLS / LEARNING
+        ========================= */
+
+        .skills-grid,
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .skill-card,
+        .learn-card {
+            padding: 19px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fbfffd,
+                    #f7f5ff
+                );
+
+            border: 1px solid var(--border);
+
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* =========================
+           ROADMAP
+        ========================= */
+
+        .roadmap {
+            display: grid;
+            gap: 14px;
+        }
+
+        .roadmap-item {
+            display: grid;
+
+            grid-template-columns: 50px 1fr;
+
+            gap: 16px;
+
+            align-items: start;
+
+            padding: 18px;
+
+            border-radius: 18px;
+
+            background: #f8faf8;
+
+            border: 1px solid var(--border);
+        }
+
+        .roadmap-number {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            display: grid;
+            place-items: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--mint),
+                    var(--lavender)
+                );
+
+            color: white;
+
+            font-weight: 800;
+        }
+
+        .roadmap-item h3 {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .roadmap-item p {
+            color: var(--text);
+
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* =========================
+           SUIT BOX
+        ========================= */
+
+        .suit-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(105,199,163,.12),
+                    rgba(145,130,232,.12)
+                );
+
+            border-radius: 20px;
+
+            padding: 25px;
+        }
+
+        .suit-box p {
+            color: var(--text);
+            line-height: 1.75;
+        }
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            text-align: center;
+
+            padding: 38px;
+
+            border-radius: 26px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e9faf3,
+                    #f1efff
+                );
+
+            border: 1px solid var(--border);
+        }
+
+        .cta h2 {
+            margin-bottom: 9px;
+        }
+
+        .cta p {
+            color: var(--text);
+            margin-bottom: 22px;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            padding: 14px 22px;
+
+            border-radius: 13px;
+
+            font-weight: 800;
+
+            transition: .2s ease;
+
+            margin: 5px;
+        }
+
+        .primary-btn {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--mint),
+                    var(--lavender)
+                );
+
+            color: white;
+
+            box-shadow:
+                0 12px 25px rgba(105,199,163,.2);
+        }
+
+        .secondary-btn {
+            background: white;
+
+            color: var(--mint-dark);
+
+            border: 1px solid var(--border);
+        }
+
+        .primary-btn:hover,
+        .secondary-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           NOT FOUND
+        ========================= */
+
+        .not-found {
+            display: none;
+
+            text-align: center;
+
+            background: white;
+
+            border: 1px solid var(--border);
+            border-radius: 25px;
+
+            padding: 55px 25px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .not-found h1 {
+            margin-bottom: 12px;
+        }
+
+        .not-found p {
+            color: var(--text);
+            margin-bottom: 22px;
+        }
+
+        /* =========================
+           ERROR MESSAGE
+        ========================= */
+
+        .error-box {
+            display: none;
+
+            margin-bottom: 24px;
+
+            padding: 16px 20px;
+
+            border-radius: 15px;
+
+            background: #fff0ed;
+
+            border: 1px solid #ffd1c8;
+
+            color: #c45143;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 30px;
+            }
+
+            .career-icon {
+                width: 90px;
+                height: 90px;
+                font-size: 40px;
+            }
+
+            .snapshot-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .skills-grid,
+            .learn-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header-actions {
+                gap: 6px;
+            }
+
+            .dashboard-btn,
+            .back-btn {
+                padding: 9px 11px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 560px) {
+
+            .header {
+                padding: 14px 5%;
+            }
+
+            .page {
+                width: 92%;
+                padding-top: 30px;
+            }
+
+            .logo span {
+                font-size: 18px;
+            }
+
+            .logo img {
+                width: 38px;
+                height: 38px;
+            }
+
+            .header-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero,
+            .section {
+                padding: 24px;
+                border-radius: 21px;
+            }
+
+            .snapshot-grid,
+            .skills-grid,
+            .learn-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Your Supabase configuration -->
+    <script src="supabase.js"></script>
+
+    <!-- Your global script -->
+    <script src="script.js"></script>
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="index.html" class="logo">
+        <img
+            src="CareerBot Growth Mascot Logo(1).png"
+            alt="CareerBot Logo"
+        >
+
+        <span>CareerBot</span>
+    </a>
+
+    <div class="header-actions">
+
+        <a
+            href="dashboard.html"
+            class="dashboard-btn"
+        >
+            Dashboard
+        </a>
+
+        <a
+            href="recommendations.html"
+            class="back-btn"
+        >
+            ← Back to Recommendations
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="page">
+
+    <!-- =========================
+         PROGRESS
+    ========================== -->
+
+    <div class="step">
+
+        <div class="step-number">
+            Step 4 of 4
+        </div>
+
+        <div class="step-title">
+            Personalized Career Details
+        </div>
+
+        <div class="progress">
+            <span></span>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ERROR
+    ========================== -->
+
+    <div
+        id="errorBox"
+        class="error-box"
+    ></div>
+
+
+    <!-- =========================
+         CAREER CONTENT
+    ========================== -->
+
+    <div id="careerContent">
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div>
+
+                <span class="career-label">
+                    Your Selected Career
+                </span>
+
+                <h1 id="careerName">
+                    Career
+                </h1>
+
+                <p id="careerDescription"></p>
+
+            </div>
+
+            <div
+                class="career-icon"
+                id="careerIcon"
+            >
+                💼
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+
+        <section class="section">
+
+            <h2>
+                About This Career
+            </h2>
+
+            <p
+                class="section-intro"
+                id="careerAbout"
+            ></p>
+
+            <div class="snapshot-grid">
+
+                <div class="snapshot-card">
+
+                    <span>
+                        Education
+                    </span>
+
+                    <strong id="education">
+                    </strong>
+
+                </div>
+
+
+                <div class="snapshot-card">
+
+                    <span>
+                        Core Skills
+                    </span>
+
+                    <strong id="coreSkills">
+                    </strong>
+
+                </div>
+
+
+                <div class="snapshot-card">
+
+                    <span>
+                        Work Areas
+                    </span>
+
+                    <strong id="workAreas">
+                    </strong>
+
+                </div>
+
+
+                <div class="snapshot-card">
+
+                    <span>
+                        Growth
+                    </span>
+
+                    <strong id="growth">
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SKILLS -->
+
+        <section class="section">
+
+            <h2>
+                Skills You Should Develop
+            </h2>
+
+            <p class="section-intro">
+                These are the important skills connected to
+                your selected career. The next step will
+                compare them with your current skill profile.
+            </p>
+
+            <div
+                class="skills-grid"
+                id="skillsGrid"
+            ></div>
+
+        </section>
+
+
+        <!-- ROADMAP -->
+
+        <section class="section">
+
+            <h2>
+                Career Roadmap
+            </h2>
+
+            <p class="section-intro">
+                A simple path you can follow as you work
+                toward this career.
+            </p>
+
+            <div
+                class="roadmap"
+                id="roadmap"
+            ></div>
+
+        </section>
+
+
+        <!-- LEARNING -->
+
+        <section class="section">
+
+            <h2>
+                What You Can Learn
+            </h2>
+
+            <div
+                class="learn-grid"
+                id="learnGrid"
+            ></div>
+
+        </section>
+
+
+        <!-- SUIT -->
+
+        <section class="section">
+
+            <h2>
+                This Career May Suit You If...
+            </h2>
+
+            <div class="suit-box">
+
+                <p id="suitText"></p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ENVIRONMENT -->
+
+        <section class="section">
+
+            <h2>
+                Typical Work Environment
+            </h2>
+
+            <p
+                class="section-intro"
+                id="environment"
+            ></p>
+
+        </section>
+
+
+        <!-- CTA -->
+
+        <section class="cta">
+
+            <h2>
+                Ready to personalize your next step?
+            </h2>
+
+            <p>
+                CareerBot can now compare your profile
+                with the skills required for this selected
+                career.
+            </p>
+
+            <a
+                href="skill-gap.html"
+                id="skillGapLink"
+                class="primary-btn"
+            >
+                Identify My Skill Gap →
+            </a>
+
+            <a
+                href="recommendations.html"
+                class="secondary-btn"
+            >
+                ← View Recommendations
+            </a>
+
+        </section>
+
+    </div>
+
+
+    <!-- =========================
+         NOT FOUND
+    ========================== -->
+
+    <section
+        class="not-found"
+        id="notFound"
+    >
+
+        <h1>
+            Career Details Not Found
+        </h1>
+
+        <p>
+            Please return to your recommendations
+            and select a career again.
+        </p>
+
+        <a
+            href="recommendations.html"
+            class="primary-btn"
+        >
+            Back to Recommendations →
+        </a>
+
+    </section>
+
+</main>
+
+
+<script>
+
+/* ========================================================
+   CAREER DATA
+======================================================== */
+
+const careers = {
+
+    /* ====================================================
+       SOFTWARE DEVELOPER
+    ==================================================== */
+
+    "software-developer": {
+
+        name: "Software Developer",
+
+        icon: "💻",
+
+        description:
+            "Design, build, test and maintain software applications that solve real-world problems.",
+
+        about:
+            "Software developers create applications, websites, systems and digital tools. They work with programming languages, databases, APIs and development tools to turn ideas into working software.",
+
+        education:
+            "Computer Science, IT or related field",
+
+        coreSkills:
+            "Programming, problem solving, debugging",
+
+        workAreas:
+            "Web, mobile, software and technology",
+
+        growth:
+            "Developer → Senior Developer → Lead / Architect",
+
+        skills: [
+            "Programming",
+            "Problem Solving",
+            "Data Structures",
+            "Git & GitHub",
+            "Databases",
+            "APIs"
+        ],
+
+        roadmap: [
+
+            [
+                "1",
+                "Learn Programming",
+                "Build a strong foundation in a language such as JavaScript, Python or Java."
+            ],
+
+            [
+                "2",
+                "Build Projects",
+                "Create practical applications that demonstrate your skills."
+            ],
+
+            [
+                "3",
+                "Learn Development Tools",
+                "Practice Git, GitHub, databases, APIs and development workflows."
+            ],
+
+            [
+                "4",
+                "Build a Portfolio",
+                "Organize your strongest projects and document what you learned."
+            ],
+
+            [
+                "5",
+                "Prepare for Opportunities",
+                "Practice interviews and apply for internships or entry-level roles."
+            ]
+
+        ],
+
+        learn: [
+            "HTML & CSS",
+            "JavaScript / Python",
+            "Git & GitHub",
+            "SQL & Databases",
+            "APIs",
+            "Software Development"
+        ],
+
+        suit:
+            "You may enjoy this career if you like technology, logical problem solving, building things, learning new tools and turning ideas into working applications.",
+
+        environment:
+            "Software developers may work in technology companies, startups, software teams, agencies or remote environments. Their work commonly involves coding, testing, collaboration, debugging and continuous learning."
+    },
+
+
+    /* ====================================================
+       AI / ML ENGINEER
+    ==================================================== */
+
+    "ai-ml-engineer": {
+
+        name: "AI / ML Engineer",
+
+        icon: "🤖",
+
+        description:
+            "Build intelligent systems that use data, machine learning and artificial intelligence techniques.",
+
+        about:
+            "AI and ML engineers work with data, algorithms and software to develop systems that can identify patterns, make predictions or automate tasks.",
+
+        education:
+            "Computer Science, AI, Data Science or related field",
+
+        coreSkills:
+            "Python, mathematics, machine learning",
+
+        workAreas:
+            "AI products, automation, data and research",
+
+        growth:
+            "ML Engineer → Senior ML Engineer → AI Lead / Specialist",
+
+        skills: [
+            "Python",
+            "Statistics",
+            "Machine Learning",
+            "Data Processing",
+            "Model Evaluation",
+            "Problem Solving"
+        ],
+
+        roadmap: [
+
+            [
+                "1",
+                "Learn Python",
+                "Build programming fundamentals with Python."
+            ],
+
+            [
+                "2",
+                "Strengthen Mathematics",
+                "Study statistics, probability and the mathematical ideas behind models."
+            ],
+
+            [
+                "3",
+                "Learn Machine Learning",
+                "Understand supervised, unsupervised and model evaluation concepts."
+            ],
+
+            [
+                "4",
+                "Build AI Projects",
+                "Create practical projects using datasets and machine learning techniques."
+            ],
+
+            [
+                "5",
+                "Create a Portfolio",
+                "Document projects, experiments and results."
+            ]
+
+        ],
+
+        learn: [
+            "Python",
+            "Statistics",
+            "Machine Learning",
+            "Data Analysis",
+            "Model Evaluation",
+            "AI Concepts"
+        ],
+
+        suit:
+            "You may enjoy this career if you are curious about technology, data, patterns, experimentation and solving complex problems.",
+
+        environment:
+            "AI and ML work can involve software development, data preparation, experimentation, model evaluation and collaboration with product or engineering teams."
+    },
+
+
+    /* ====================================================
+       DATA ANALYST
+    ==================================================== */
+
+    "data-analyst": {
+
+        name: "Data Analyst",
+
+        icon: "📊",
+
+        description:
+            "Turn data into useful insights that help organizations understand problems and make informed decisions.",
+
+        about:
+            "Data analysts collect, clean, analyze and visualize information. They use data to identify patterns, answer business questions and communicate findings.",
+
+        education:
+            "Data Science, Statistics, Computer Science, Business or related field",
+
+        coreSkills:
+            "Excel, SQL, statistics, visualization",
+
+        workAreas:
+            "Business, finance, technology and operations",
+
+        growth:
+            "Data Analyst → Senior Analyst → Analytics Lead",
+
+        skills: [
+            "SQL",
+            "Excel",
+            "Statistics",
+            "Data Visualization",
+            "Data Cleaning",
+            "Communication"
+        ],
+
+        roadmap: [
+
+            [
+                "1",
+                "Learn Excel",
+                "Practice formulas, tables, charts and basic data analysis."
+            ],
+
+            [
+                "2",
+                "Learn SQL",
+                "Understand how to retrieve and manipulate data from databases."
+            ],
+
+            [
+                "3",
+                "Study Statistics",
+                "Learn the statistical concepts needed to interpret data."
+            ],
+
+            [
+                "4",
+                "Create Dashboards",
+                "Practice presenting insights through clear visualizations."
+            ],
+
+            [
+                "5",
+                "Build Case Studies",
+                "Analyze real or sample datasets and explain your findings."
+            ]
+
+        ],
+
+        learn: [
+            "Excel",
+            "SQL",
+            "Statistics",
+            "Power BI / Tableau",
+            "Python Basics",
+            "Data Storytelling"
+        ],
+
+        suit:
+            "You may enjoy this career if you like numbers, patterns, logical thinking, research and explaining information clearly.",
+
+        environment:
+            "Data analysts often work with business, product, finance, marketing or operations teams and spend significant time working with datasets and dashboards."
+    },
+
+
+    /* ====================================================
+       UI / UX DESIGNER
+    ==================================================== */
+
+    "ui-ux-designer": {
+
+        name: "UI / UX Designer",
+
+        icon: "🎨",
+
+        description:
+            "Design digital experiences that are useful, accessible and visually engaging.",
+
+        about:
+            "UI/UX designers research user needs, plan interfaces, create wireframes and prototypes, and improve digital experiences through testing and iteration.",
+
+        education:
+            "Design, UX, HCI or related field",
+
+        coreSkills:
+            "Research, wireframing, visual design",
+
+        workAreas:
+            "Apps, websites, products and digital services",
+
+        growth:
+            "Designer → Senior Designer → Design Lead",
+
+        skills: [
+            "UX Research",
+            "Wireframing",
+            "UI Design",
+            "Prototyping",
+            "Typography",
+            "Communication"
+        ],
+
+        roadmap: [
+
+            [
+                "1",
+                "Learn Design Fundamentals",
+                "Understand layout, typography, hierarchy and visual consistency."
+            ],
+
+            [
+                "2",
+                "Learn UX Research",
+                "Practice understanding users and identifying their needs."
+            ],
+
+            [
+                "3",
+                "Create Wireframes",
+                "Turn ideas into simple interface structures."
+            ],
+
+            [
+                "4",
+                "Build Prototypes",
+                "Create interactive designs and test user flows."
+            ],
+
+            [
+                "5",
+                "Build a Portfolio",
+                "Show your design process and final solutions."
+            ]
+
+        ],
+
+        learn: [
+            "Figma",
+            "UX Research",
+            "Wireframing",
+            "Prototyping",
+            "UI Design",
+            "Design Systems"
+        ],
+
+        suit:
+            "You may enjoy this career if you are creative, curious about people, interested in visual design and enjoy improving how users interact with products.",
+
+        environment:
+            "UI/UX designers often collaborate with product managers, developers, researchers and other designers in product teams."
+    },
+
+
+    /* ====================================================
+       PRODUCT MANAGER
+    ==================================================== */
+
+    "product-manager": {
+
+        name: "Product Manager",
+
+        icon: "🚀",
+
+        description:
+            "Guide products from ideas to execution by connecting user needs, business goals and technology.",
+
+        about:
+            "Product managers help define product goals, understand users, prioritize work and coordinate with teams to build useful products.",
+
+        education:
+            "Business, Technology, Management or related field",
+
+        coreSkills:
+            "Communication, planning, prioritization",
+
+        workAreas:
+            "Technology, startups, SaaS and digital products",
+
+        growth:
+            "Product Manager → Senior PM → Product Lead",
+
+        skills: [
+            "Product Strategy",
+            "Communication",
+            "User Research",
+            "Prioritization",
+            "Analytics",
+            "Leadership"
+        ],
+
+        roadmap: [
+
+            [
+                "1",
+                "Understand Products",
+                "Learn how digital products are planned and developed."
+            ],
+
+            [
+                "2",
+                "Learn User Research",
+                "Practice identifying user problems and needs."
+            ],
+
+            [
+                "3",
+                "Practice Prioritization",
+                "Learn how teams decide what to build first."
+            ],
+
+            [
+                "4",
+                "Build Product Case Studies",
+                "Analyze products and propose improvements."
+            ],
+
+            [
+                "5",
+                "Develop Leadership Skills",
+                "Practice communication, planning and cross-team collaboration."
+            ]
+
+        ],
+
+        learn: [
+            "Product Strategy",
+            "User Research",
+            "Agile",
+            "Analytics",
+            "Roadmapping",
+            "Communication"
+        ],
+
+        suit:
+            "You may enjoy this career if you like solving problems, communicating with people, organizing work and connecting business and technology.",
+
+        environment:
+            "Product managers commonly work across engineering, design, marketing, sales and business teams."
+    },
+
+
+    /* ====================================================
+       HR SPECIALIST
+    ==================================================== */
+
+    "hr-specialist": {
+
+        name: "HR Specialist",
+
+        icon: "👥",
+
+        description:
+            "Support people and organizations through recruitment, employee development and workplace processes.",
+
+        about:
+            "HR specialists work with employees and organizations on areas such as recruitment, onboarding, training, employee support and HR operations.",
+
+        education:
+            "Human Resources, Business, Psychology or related field",
+
+        coreSkills:
+            "Communication, organization, people skills",
+
+        workAreas:
+            "Recruitment, HR operations and employee development",
+
+        growth:
+            "HR Specialist → Senior HR → HR Manager",
+
+        skills: [
+            "Communication",
+            "Recruitment",
+            "Organization",
+            "Conflict Resolution",
+            "People Management",
+            "HR Processes"
+        ],
+
+        roadmap: [
+
+            [
+                "1",
+                "Learn HR Fundamentals",
+                "Understand recruitment, onboarding and employee processes."
+            ],
+
+            [
+                "2",
+                "Develop Communication",
+                "Practice professional communication and active listening."
+            ],
+
+            [
+                "3",
+                "Learn Recruitment",
+                "Understand sourcing, screening and interview processes."
+            ],
+
+            [
+                "4",
+                "Gain Practical Experience",
+                "Work on HR projects, internships or organizational activities."
+            ],
+
+            [
+                "5",
+                "Build Professional Skills",
+                "Develop organization, documentation and people-management skills."
+            ]
+
+        ],
+
+        learn: [
+            "Recruitment",
+            "Communication",
+            "HR Operations",
+            "Employee Relations",
+            "Interviewing",
+            "People Management"
+        ],
+
+        suit:
+            "You may enjoy this career if you like working with people, communication, organization, helping others and understanding workplace needs.",
+
+        environment:
+            "HR specialists commonly work with employees, managers and leadership teams across recruitment, employee support and organizational processes."
+    },
+
+
+    /* ====================================================
+       MOBILE APP DEVELOPER
+    ==================================================== */
+
+    "mobile-app-developer": {
+
+        name: "Mobile App Developer",
+
+        icon: "📱",
+
+        description:
+            "Create mobile applications for smartphones and tablets.",
+
+        about:
+            "Mobile developers build, test and maintain applications for mobile platforms. They work with user interfaces, APIs, databases and application logic.",
+
+        education:
+            "Computer Science, IT or related field",
+
+        coreSkills:
+            "Programming, mobile development, debugging",
+
+        workAreas:
+            "Android, iOS and cross-platform applications",
+
+        growth:
+            "Mobile Developer → Senior Developer → Mobile Lead",
+
+        skills: [
+            "Programming",
+            "Mobile UI",
+            "APIs",
+            "Databases",
+            "Debugging",
+            "App Deployment"
+        ],
+
+        roadmap: [
+
+            [
+                "1",
+                "Learn Programming",
+                "Build a strong programming foundation."
+            ],
+
+            [
+                "2",
+                "Choose a Mobile Stack",
+                "Learn Android, iOS or a cross-platform development approach."
+            ],
+
+            [
+                "3",
+                "Build Small Apps",
+                "Create simple applications to practice development."
+            ],
+
+            [
+                "4",
+                "Learn APIs & Databases",
+                "Connect apps to real data and services."
+            ],
+
+            [
+                "5",
+                "Publish Projects",
+                "Test, document and showcase your applications."
+            ]
+
+        ],
+
+        learn: [
+            "Flutter / React Native",
+            "Android / iOS",
+            "APIs",
+            "Databases",
+            "UI Design",
+            "App Testing"
+        ],
+
+        suit:
+            "You may enjoy this career if you like technology, building applications, solving problems and creating products people can use on mobile devices.",
+
+        environment:
+            "Mobile developers work in software teams, startups, agencies or independently, often collaborating with designers, backend developers and product teams."
+    },
+
+
+    /* ====================================================
+       DIGITAL MARKETING
+    ==================================================== */
+
+    "digital-marketing": {
+
+        name: "Digital Marketing Specialist",
+
+        icon: "📣",
+
+        description:
+            "Use digital channels, content and analytics to help organizations reach and engage audiences.",
+
+        about:
+            "Digital marketing specialists work across channels such as search, social media, email and content while using analytics to understand campaign performance.",
+
+        education:
+            "Marketing, Business, Communications or related field",
+
+        coreSkills:
+            "Content, analytics, communication",
+
+        workAreas:
+            "Marketing agencies, startups, brands and digital businesses",
+
+        growth:
+            "Marketing Specialist → Senior Specialist → Marketing Lead",
+
+        skills: [
+            "Content Marketing",
+            "SEO",
+            "Social Media",
+            "Analytics",
+            "Copywriting",
+            "Communication"
+        ],
+
+        roadmap: [
+
+            [
+                "1",
+                "Learn Marketing Basics",
+                "Understand audiences, positioning and digital channels."
+            ],
+
+            [
+                "2",
+                "Learn Content Creation",
+                "Practice writing and creating useful digital content."
+            ],
+
+            [
+                "3",
+                "Learn SEO & Analytics",
+                "Understand search visibility and campaign measurement."
+            ],
+
+            [
+                "4",
+                "Run Practice Campaigns",
+                "Create sample campaigns and measure their results."
+            ],
+
+            [
+                "5",
+                "Build a Marketing Portfolio",
+                "Document campaigns, content and analytical insights."
+            ]
+
+        ],
+
+        learn: [
+            "SEO",
+            "Content Marketing",
+            "Social Media",
+            "Analytics",
+            "Copywriting",
+            "Campaign Planning"
+        ],
+
+        suit:
+            "You may enjoy this career if you are creative, interested in communication, business, audiences and understanding what makes digital content effective.",
+
+        environment:
+            "Digital marketers may work with content, design, sales, product and analytics teams across agencies, startups and established organizations."
+    }
+
+};
+
+
+/* ========================================================
+   CAREER ALIASES
+======================================================== */
+
+const careerAliases = {
+
+    "Software Developer":
+        "software-developer",
+
+    "software developer":
+        "software-developer",
+
+    "AI / ML Engineer":
+        "ai-ml-engineer",
+
+    "AI/ML Engineer":
+        "ai-ml-engineer",
+
+    "ai / ml engineer":
+        "ai-ml-engineer",
+
+    "ai/ml engineer":
+        "ai-ml-engineer",
+
+    "Data Analyst":
+        "data-analyst",
+
+    "data analyst":
+        "data-analyst",
+
+    "UI / UX Designer":
+        "ui-ux-designer",
+
+    "UI/UX Designer":
+        "ui-ux-designer",
+
+    "ui / ux designer":
+        "ui-ux-designer",
+
+    "ui/ux designer":
+        "ui-ux-designer",
+
+    "Product Manager":
+        "product-manager",
+
+    "product manager":
+        "product-manager",
+
+    "HR Specialist":
+        "hr-specialist",
+
+    "hr specialist":
+        "hr-specialist",
+
+    "Mobile App Developer":
+        "mobile-app-developer",
+
+    "mobile app developer":
+        "mobile-app-developer",
+
+    "Digital Marketing Specialist":
+        "digital-marketing",
+
+    "digital marketing specialist":
+        "digital-marketing"
+};
+
+
+/* ========================================================
+   GET SELECTED CAREER
+======================================================== */
+
+const params =
+    new URLSearchParams(window.location.search);
+
+
+/*
+    Priority:
+
+    1. URL career parameter
+    2. Previously selected career in localStorage
+*/
+
+let selectedCareer =
+    params.get("career") ||
+    localStorage.getItem("careerbotSelectedCareer");
+
+
+/* ========================================================
+   NORMALIZE CAREER
+======================================================== */
+
+if (selectedCareer) {
+
+    selectedCareer =
+        selectedCareer.trim();
+
+    if (careerAliases[selectedCareer]) {
+
+        selectedCareer =
+            careerAliases[selectedCareer];
+
+    }
+
+    /*
+       Also handle URL values such as:
+       Software%20Developer
+    */
+
+    const normalized =
+        selectedCareer
+            .toLowerCase()
+            .replace(/\s+/g, "-");
+
+    if (careers[normalized]) {
+
+        selectedCareer =
+            normalized;
+
+    }
+}
+
+
+/* ========================================================
+   LOAD CAREER
+======================================================== */
+
+const career =
+    selectedCareer
+        ? careers[selectedCareer]
+        : null;
+
+
+/* ========================================================
+   ELEMENTS
+======================================================== */
+
+const careerContent =
+    document.getElementById("careerContent");
+
+const notFound =
+    document.getElementById("notFound");
+
+const errorBox =
+    document.getElementById("errorBox");
+
+
+/* ========================================================
+   IMPORTANT FIX
+
+   The old version had:
+
+       if (...) {
+       }
+       else {
+
+   without a valid matching condition.
+
+   This version explicitly checks whether
+   the career exists.
+======================================================== */
+
+if (!career) {
+
+    careerContent.style.display = "none";
+
+    notFound.style.display = "block";
+
+    errorBox.style.display = "block";
+
+    errorBox.textContent =
+        "Career information could not be found. Please return to Recommendations and select a career again.";
+
+} else {
+
+    /* ====================================================
+       SAVE SELECTED CAREER
+    ==================================================== */
+
+    localStorage.setItem(
+        "careerbotSelectedCareer",
+        selectedCareer
+    );
+
+
+    /* ====================================================
+       BASIC CAREER INFORMATION
+    ==================================================== */
+
+    document.getElementById(
+        "careerName"
+    ).textContent =
+        career.name;
+
+
+    document.getElementById(
+        "careerIcon"
+    ).textContent =
+        career.icon;
+
+
+    document.getElementById(
+        "careerDescription"
+    ).textContent =
+        career.description;
+
+
+    document.getElementById(
+        "careerAbout"
+    ).textContent =
+        career.about;
+
+
+    document.getElementById(
+        "education"
+    ).textContent =
+        career.education;
+
+
+    document.getElementById(
+        "coreSkills"
+    ).textContent =
+        career.coreSkills;
+
+
+    document.getElementById(
+        "workAreas"
+    ).textContent =
+        career.workAreas;
+
+
+    document.getElementById(
+        "growth"
+    ).textContent =
+        career.growth;
+
+
+    document.getElementById(
+        "suitText"
+    ).textContent =
+        career.suit;
+
+
+    document.getElementById(
+        "environment"
+    ).textContent =
+        career.environment;
+
+
+    /* ====================================================
+       SKILLS
+    ==================================================== */
+
+    const skillsGrid =
+        document.getElementById(
+            "skillsGrid"
+        );
+
+    skillsGrid.innerHTML = "";
+
+
+    career.skills.forEach(
+        function(skill) {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "skill-card";
+
+            card.textContent =
+                skill;
+
+            skillsGrid.appendChild(card);
+        }
+    );
+
+
+    /* ====================================================
+       ROADMAP
+    ==================================================== */
+
+    const roadmap =
+        document.getElementById(
+            "roadmap"
+        );
+
+    roadmap.innerHTML = "";
+
+
+    career.roadmap.forEach(
+        function(step) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "roadmap-item";
+
+            item.innerHTML = `
+
+                <div class="roadmap-number">
+                    ${step[0]}
+                </div>
+
+                <div>
+
+                    <h3>
+                        ${step[1]}
+                    </h3>
+
+                    <p>
+                        ${step[2]}
+                    </p>
+
+                </div>
+            `;
+
+            roadmap.appendChild(item);
+        }
+    );
+
+
+    /* ====================================================
+       LEARNING AREAS
+    ==================================================== */
+
+    const learnGrid =
+        document.getElementById(
+            "learnGrid"
+        );
+
+    learnGrid.innerHTML = "";
+
+
+    career.learn.forEach(
+        function(item) {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "learn-card";
+
+            card.textContent =
+                item;
+
+            learnGrid.appendChild(card);
+        }
+    );
+
+
+    /* ====================================================
+       SKILL GAP LINK
+    ==================================================== */
+
+    const skillGapLink =
+        document.getElementById(
+            "skillGapLink"
+        );
+
+
+    if (skillGapLink) {
+
+        skillGapLink.href =
+            "skill-gap.html?career=" +
+            encodeURIComponent(
+                selectedCareer
+            );
+    }
+
+
+    /* ====================================================
+       UPDATE PAGE TITLE
+    ==================================================== */
+
+    document.title =
+        "CareerBot — " +
+        career.name;
+
+
+    console.log(
+        "CareerBot career loaded:",
+        career.name
+    );
+
+}
+
+</script>
+
+
+<!-- =====================================================
+     AUTHENTICATION CHECK
+===================================================== -->
+
+<script>
+
+(async function () {
+
+    /*
+       This check only runs if supabaseClient
+       exists in supabase.js.
+    */
+
+    try {
+
+        if (
+            typeof supabaseClient === "undefined"
+        ) {
+
+            console.warn(
+                "CareerBot: supabaseClient was not found. Authentication check skipped."
+            );
+
+            return;
+        }
+
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        if (
+            error ||
+            !data ||
+            !data.session
+        ) {
+
+            const next =
+                encodeURIComponent(
+                    window.location.pathname
+                        .split("/")
+                        .pop()
+                    +
+                    window.location.search
+                );
+
+            window.location.replace(
+                "login.html?next=" +
+                next
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "CareerBot session check failed:",
+            error
+        );
+
+    }
+
+})();
+
+</script>
+
+</body>
+</html>

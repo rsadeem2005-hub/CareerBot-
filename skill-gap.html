@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerBot — Skill Gap</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --dark:#17231f;
+            --text:#5d6b65;
+            --muted:#89948f;
+            --mint:#69c7a3;
+            --mint-dark:#438e70;
+            --lavender:#9182e8;
+            --blue:#79b7df;
+            --cream:#fbfcf9;
+            --white:#ffffff;
+            --border:rgba(35,55,45,.09);
+            --shadow:0 25px 70px rgba(40,60,50,.08);
+        }
+
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+
+        body{
+            font-family:"Inter",sans-serif;
+            background:
+                radial-gradient(circle at 10% 0%,rgba(105,199,163,.13),transparent 30%),
+                radial-gradient(circle at 90% 10%,rgba(145,130,232,.13),transparent 30%),
+                var(--cream);
+            color:var(--dark);
+            min-height:100vh;
+        }
+
+        a{
+            text-decoration:none;
+            color:inherit;
+        }
+
+        .header{
+            width:100%;
+            padding:22px 7%;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            border-bottom:1px solid var(--border);
+            background:rgba(255,255,255,.82);
+            backdrop-filter:blur(12px);
+            position:sticky;
+            top:0;
+            z-index:20;
+        }
+
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-weight:800;
+            font-size:21px;
+        }
+
+        .logo img{
+            width:44px;
+            height:44px;
+            object-fit:contain;
+        }
+
+        .back-btn{
+            color:var(--mint-dark);
+            font-weight:700;
+            font-size:14px;
+        }
+
+        .page{
+            width:min(1120px,90%);
+            margin:auto;
+            padding:45px 0 80px;
+        }
+
+        .step{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .step-number{
+            color:var(--mint-dark);
+            font-size:13px;
+            font-weight:800;
+            letter-spacing:.08em;
+            text-transform:uppercase;
+        }
+
+        .step-title{
+            color:var(--muted);
+            font-size:14px;
+            margin-top:5px;
+        }
+
+        .progress{
+            width:min(600px,100%);
+            height:8px;
+            background:#e9eee9;
+            border-radius:20px;
+            margin:16px auto 0;
+            overflow:hidden;
+        }
+
+        .progress span{
+            display:block;
+            width:100%;
+            height:100%;
+            background:linear-gradient(135deg,var(--mint),var(--lavender));
+            border-radius:inherit;
+        }
+
+        .hero{
+            background:var(--white);
+            border:1px solid var(--border);
+            border-radius:30px;
+            padding:40px;
+            box-shadow:var(--shadow);
+            margin-bottom:25px;
+        }
+
+        .career-label{
+            display:inline-flex;
+            padding:8px 13px;
+            border-radius:30px;
+            background:rgba(105,199,163,.12);
+            color:var(--mint-dark);
+            font-size:12px;
+            font-weight:800;
+            text-transform:uppercase;
+            letter-spacing:.06em;
+            margin-bottom:15px;
+        }
+
+        .hero h1{
+            font-size:clamp(32px,5vw,48px);
+            margin-bottom:12px;
+        }
+
+        .hero p{
+            color:var(--text);
+            line-height:1.75;
+            max-width:760px;
+        }
+
+        .overall{
+            margin-top:28px;
+            display:flex;
+            align-items:center;
+            gap:18px;
+            padding:20px;
+            border-radius:20px;
+            background:linear-gradient(135deg,#effbf6,#f4f1ff);
+        }
+
+        .overall-number{
+            font-size:32px;
+            font-weight:800;
+            color:var(--mint-dark);
+        }
+
+        .overall-text strong{
+            display:block;
+            margin-bottom:4px;
+        }
+
+        .overall-text span{
+            color:var(--text);
+            font-size:13px;
+        }
+
+        .section{
+            background:var(--white);
+            border:1px solid var(--border);
+            border-radius:26px;
+            padding:32px;
+            box-shadow:0 15px 45px rgba(40,60,50,.05);
+            margin-bottom:24px;
+        }
+
+        .section h2{
+            font-size:24px;
+            margin-bottom:8px;
+        }
+
+        .section-intro{
+            color:var(--text);
+            line-height:1.7;
+            margin-bottom:24px;
+        }
+
+        .skills-grid{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:15px;
+        }
+
+        .skill-card{
+            padding:22px;
+            border:1px solid var(--border);
+            border-radius:20px;
+            background:#fbfdfb;
+        }
+
+        .skill-top{
+            display:flex;
+            justify-content:space-between;
+            gap:15px;
+            margin-bottom:13px;
+        }
+
+        .skill-name{
+            font-weight:800;
+        }
+
+        .level{
+            font-size:12px;
+            font-weight:800;
+            color:var(--mint-dark);
+        }
+
+        .bar{
+            width:100%;
+            height:9px;
+            border-radius:20px;
+            background:#e8eee9;
+            overflow:hidden;
+            margin-bottom:13px;
+        }
+
+        .bar span{
+            display:block;
+            height:100%;
+            border-radius:inherit;
+            background:linear-gradient(135deg,var(--mint),var(--lavender));
+        }
+
+        .skill-bottom{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px;
+        }
+
+        .gap-text{
+            color:var(--text);
+            font-size:13px;
+        }
+
+        .priority{
+            padding:6px 9px;
+            border-radius:20px;
+            font-size:11px;
+            font-weight:800;
+            background:rgba(145,130,232,.11);
+            color:#6c5ed0;
+        }
+
+        .priority.medium{
+            background:rgba(121,183,223,.13);
+            color:#4c86ac;
+        }
+
+        .priority.low{
+            background:rgba(105,199,163,.13);
+            color:var(--mint-dark);
+        }
+
+        .path{
+            display:grid;
+            gap:14px;
+        }
+
+        .path-item{
+            display:grid;
+            grid-template-columns:46px 1fr;
+            gap:15px;
+            padding:18px;
+            border-radius:18px;
+            background:#f8faf8;
+            border:1px solid var(--border);
+        }
+
+        .path-number{
+            width:40px;
+            height:40px;
+            border-radius:50%;
+            display:grid;
+            place-items:center;
+            color:white;
+            font-weight:800;
+            background:linear-gradient(135deg,var(--mint),var(--lavender));
+        }
+
+        .path-item h3{
+            font-size:16px;
+            margin-bottom:5px;
+        }
+
+        .path-item p{
+            color:var(--text);
+            line-height:1.6;
+            font-size:14px;
+        }
+
+        .cta{
+            text-align:center;
+            padding:38px;
+            border-radius:26px;
+            background:linear-gradient(135deg,#e9faf3,#f1efff);
+            border:1px solid var(--border);
+        }
+
+        .cta h2{
+            margin-bottom:9px;
+        }
+
+        .cta p{
+            color:var(--text);
+            margin-bottom:22px;
+        }
+
+        .primary-btn,
+        .secondary-btn{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            padding:14px 22px;
+            border-radius:13px;
+            font-weight:800;
+            margin:5px;
+            transition:.2s ease;
+        }
+
+        .primary-btn{
+            color:white;
+            background:linear-gradient(135deg,var(--mint),var(--lavender));
+            box-shadow:0 12px 25px rgba(105,199,163,.2);
+        }
+
+        .secondary-btn{
+            background:white;
+            color:var(--mint-dark);
+            border:1px solid var(--border);
+        }
+
+        .primary-btn:hover,
+        .secondary-btn:hover{
+            transform:translateY(-2px);
+        }
+
+        .not-found{
+            display:none;
+            text-align:center;
+            background:white;
+            border:1px solid var(--border);
+            border-radius:25px;
+            padding:55px 25px;
+            box-shadow:var(--shadow);
+        }
+
+        .not-found h1{
+            margin-bottom:12px;
+        }
+
+        .not-found p{
+            color:var(--text);
+            margin-bottom:22px;
+        }
+
+        @media(max-width:700px){
+            .skills-grid{
+                grid-template-columns:1fr;
+            }
+
+            .hero,
+            .section{
+                padding:25px;
+            }
+        }
+
+        @media(max-width:520px){
+            .header{
+                padding:16px 5%;
+            }
+
+            .logo span{
+                display:none;
+            }
+
+            .back-btn{
+                font-size:12px;
+            }
+
+            .page{
+                width:92%;
+                padding-top:30px;
+            }
+
+            .hero,
+            .section{
+                border-radius:21px;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+<script>
+/* CareerBot authenticated-page guard */
+(async function () {
+    try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error || !data.session) {
+            const next = encodeURIComponent(window.location.pathname.split("/").pop() + window.location.search);
+            window.location.replace("login.html?next=" + next);
+        }
+    } catch (error) {
+        console.error("CareerBot session check failed:", error);
+        window.location.replace("login.html");
+    }
+})();
+</script>
+
+    <script src="script.js"></script>
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+    <a href="index.html" class="logo">
+        <img src="CareerBot Growth Mascot Logo(1).png" alt="CareerBot Logo">
+        <span>CareerBot</span>
+    </a>
+
+    <a href="career-details.html" id="backCareerLink" class="back-btn">
+        ← Back to Career Details
+    </a>
+
+</header>
+
+
+<main class="page">
+
+    <div class="step">
+
+        <div class="step-number">Personalized Career Analysis</div>
+
+        <div class="step-title" id="stepTitle">
+            Skill Gap Analysis
+        </div>
+
+        <div class="progress">
+            <span></span>
+        </div>
+
+    </div>
+
+
+    <div id="skillContent">
+
+        <section class="hero">
+
+            <span class="career-label">
+                Your Selected Career
+            </span>
+
+            <h1 id="careerName">
+                Skill Gap Analysis
+            </h1>
+
+            <p id="careerDescription"></p>
+
+            <div class="overall">
+
+                <div class="overall-number" id="overallMatch">
+                    0%
+                </div>
+
+                <div class="overall-text">
+                    <strong>Career Skill Match</strong>
+                    <span>
+                        Your current estimated skill level compared with the skills commonly used in this career.
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <h2>Your Skill Gaps</h2>
+
+            <p class="section-intro">
+                These skills are connected to your selected career. Use the gap levels to decide what to learn and practice next.
+            </p>
+
+            <div class="skills-grid" id="skillsGrid"></div>
+
+        </section>
+
+
+        <section class="section">
+
+            <h2>Recommended Learning Path</h2>
+
+            <p class="section-intro">
+                Follow these steps to gradually improve the skills needed for your selected career.
+            </p>
+
+            <div class="path" id="learningPath"></div>
+
+        </section>
+
+
+        <section class="cta">
+
+            <h2>Ready for the next step?</h2>
+
+            <p>
+                Use your skill gaps to choose practical projects and build experience.
+            </p>
+
+            <a href="learning-guide.html" id="learningGuideLink" class="primary-btn">
+                Continue to Learning Guide →
+            </a>
+
+            <a href="career-details.html" id="careerDetailsLink" class="secondary-btn">
+                ← Career Details
+            </a>
+
+        </section>
+
+    </div>
+
+
+    <section class="not-found" id="notFound">
+
+        <h1>Skill Gap Not Found</h1>
+
+        <p>
+            Please select a career from your recommendations first.
+        </p>
+
+        <a href="recommendations.html" class="primary-btn">
+            Back to Recommendations →
+        </a>
+
+    </section>
+
+</main>
+
+
+<!-- Personalized skill gaps are rendered by the shared authenticated Supabase integration. -->
+<script type="text/plain">
+
+/*
+========================================================
+CAREERBOT — PERSONALIZED SKILL GAP
+========================================================
+
+This page receives the selected career from:
+
+career-details.html?career=software-developer
+
+It also supports the localStorage value:
+
+careerbotSelectedCareer
+
+The same career is therefore maintained through:
+
+Assessment
+   ↓
+Recommendations
+   ↓
+Career Details
+   ↓
+Skill Gap
+========================================================
+*/
+
+
+const careerData = {
+
+    "software-developer": {
+        name: "Software Developer",
+        icon: "💻",
+        description:
+            "Your skill gap is based on the skills commonly used to design, build, test and maintain software applications.",
+
+        skills: [
+            { name:"Programming", level:72, target:90, priority:"High" },
+            { name:"Problem Solving", level:68, target:90, priority:"High" },
+            { name:"Data Structures", level:45, target:80, priority:"High" },
+            { name:"Git & GitHub", level:55, target:80, priority:"Medium" },
+            { name:"Databases", level:48, target:80, priority:"Medium" },
+            { name:"APIs", level:40, target:75, priority:"High" }
+        ],
+
+        path: [
+            ["1","Strengthen Programming","Practice one programming language consistently and build small applications."],
+            ["2","Practice Problem Solving","Work through coding problems and improve logical thinking."],
+            ["3","Learn Data Structures","Study arrays, objects, stacks, queues, trees and other fundamentals."],
+            ["4","Learn Databases & APIs","Practice SQL and connect applications to APIs."],
+            ["5","Build Projects","Create complete projects and document them in your portfolio."]
+        ]
+    },
+
+
+    "ai-ml-engineer": {
+        name: "AI / ML Engineer",
+        icon: "🤖",
+        description:
+            "Your skill gap is based on programming, mathematics, data and machine learning skills used in AI and ML work.",
+
+        skills: [
+            { name:"Python", level:65, target:90, priority:"High" },
+            { name:"Statistics", level:42, target:80, priority:"High" },
+            { name:"Machine Learning", level:35, target:80, priority:"High" },
+            { name:"Data Processing", level:48, target:80, priority:"Medium" },
+            { name:"Model Evaluation", level:30, target:75, priority:"High" },
+            { name:"Problem Solving", level:62, target:90, priority:"Medium" }
+        ],
+
+        path: [
+            ["1","Strengthen Python","Practice Python through data and automation projects."],
+            ["2","Learn Statistics","Study probability, statistics and how to interpret data."],
+            ["3","Learn Machine Learning","Understand common machine learning algorithms and workflows."],
+            ["4","Practice Model Evaluation","Learn how to evaluate models and understand their limitations."],
+            ["5","Build AI Projects","Create practical projects using datasets and machine learning."]
+        ]
+    },
+
+
+    "data-analyst": {
+        name: "Data Analyst",
+        icon: "📊",
+        description:
+            "Your skill gap is based on the data, analytical and communication skills commonly used in data analysis.",
+
+        skills: [
+            { name:"Excel", level:70, target:85, priority:"Medium" },
+            { name:"SQL", level:48, target:85, priority:"High" },
+            { name:"Statistics", level:45, target:80, priority:"High" },
+            { name:"Data Visualization", level:52, target:80, priority:"Medium" },
+            { name:"Data Cleaning", level:50, target:80, priority:"Medium" },
+            { name:"Communication", level:68, target:85, priority:"Low" }
+        ],
+
+        path: [
+            ["1","Improve Excel","Practice formulas, pivot tables, charts and data cleaning."],
+            ["2","Learn SQL","Practice querying and transforming datasets."],
+            ["3","Strengthen Statistics","Learn descriptive statistics and basic analytical methods."],
+            ["4","Build Dashboards","Practice creating clear and useful visualizations."],
+            ["5","Create Case Studies","Analyze datasets and explain the insights clearly."]
+        ]
+    },
+
+
+    "ui-ux-designer": {
+        name: "UI / UX Designer",
+        icon: "🎨",
+        description:
+            "Your skill gap is based on user research, interface design, prototyping and communication skills.",
+
+        skills: [
+            { name:"UX Research", level:52, target:85, priority:"High" },
+            { name:"Wireframing", level:65, target:85, priority:"Medium" },
+            { name:"UI Design", level:62, target:90, priority:"High" },
+            { name:"Prototyping", level:50, target:85, priority:"High" },
+            { name:"Typography", level:58, target:80, priority:"Medium" },
+            { name:"Communication", level:70, target:85, priority:"Low" }
+        ],
+
+        path: [
+            ["1","Learn Design Fundamentals","Practice layout, hierarchy, typography and visual consistency."],
+            ["2","Practice UX Research","Learn how to understand users and identify their needs."],
+            ["3","Create Wireframes","Turn ideas into clear interface structures."],
+            ["4","Build Prototypes","Create interactive designs and test user flows."],
+            ["5","Build a Portfolio","Show your design process, decisions and final results."]
+        ]
+    },
+
+
+    "product-manager": {
+        name: "Product Manager",
+        icon: "🚀",
+        description:
+            "Your skill gap is based on product strategy, user understanding, prioritization, analytics and communication.",
+
+        skills: [
+            { name:"Product Strategy", level:48, target:85, priority:"High" },
+            { name:"Communication", level:72, target:90, priority:"Low" },
+            { name:"User Research", level:50, target:80, priority:"High" },
+            { name:"Prioritization", level:55, target:85, priority:"Medium" },
+            { name:"Analytics", level:45, target:75, priority:"Medium" },
+            { name:"Leadership", level:52, target:80, priority:"Medium" }
+        ],
+
+        path: [
+            ["1","Understand Product Thinking","Learn how products solve user and business problems."],
+            ["2","Practice User Research","Study user needs and convert them into product opportunities."],
+            ["3","Learn Prioritization","Practice deciding what should be built first."],
+            ["4","Study Product Analytics","Learn how metrics can be used to understand product performance."],
+            ["5","Build Product Case Studies","Analyze existing products and propose improvements."]
+        ]
+    },
+
+
+    "hr-specialist": {
+        name: "HR Specialist",
+        icon: "👥",
+        description:
+            "Your skill gap is based on communication, recruitment, organization and people-management skills.",
+
+        skills: [
+            { name:"Communication", level:72, target:90, priority:"Low" },
+            { name:"Recruitment", level:45, target:80, priority:"High" },
+            { name:"Organization", level:65, target:85, priority:"Medium" },
+            { name:"Conflict Resolution", level:42, target:75, priority:"High" },
+            { name:"People Management", level:50, target:80, priority:"Medium" },
+            { name:"HR Processes", level:40, target:80, priority:"High" }
+        ],
+
+        path: [
+            ["1","Learn HR Fundamentals","Understand recruitment, onboarding and employee processes."],
+            ["2","Improve Communication","Practice professional communication and active listening."],
+            ["3","Learn Recruitment","Study sourcing, screening and interview processes."],
+            ["4","Practice People Skills","Develop conflict resolution and workplace communication skills."],
+            ["5","Gain Practical Experience","Work on HR projects, internships or organizational activities."]
+        ]
+    },
+
+
+    "mobile-app-developer": {
+        name: "Mobile App Developer",
+        icon: "📱",
+        description:
+            "Your skill gap is based on programming, mobile interfaces, APIs, databases and app development.",
+
+        skills: [
+            { name:"Programming", level:68, target:90, priority:"High" },
+            { name:"Mobile UI", level:55, target:85, priority:"Medium" },
+            { name:"APIs", level:42, target:80, priority:"High" },
+            { name:"Databases", level:48, target:80, priority:"Medium" },
+            { name:"Debugging", level:52, target:80, priority:"Medium" },
+            { name:"App Deployment", level:30, target:70, priority:"High" }
+        ],
+
+        path: [
+            ["1","Strengthen Programming","Practice a language used in your chosen mobile stack."],
+            ["2","Learn Mobile Development","Build basic screens and navigation."],
+            ["3","Connect APIs","Learn how mobile apps communicate with services."],
+            ["4","Use Databases","Practice storing and retrieving application data."],
+            ["5","Build & Deploy Apps","Create complete applications and practice deployment."]
+        ]
+    },
+
+
+    "digital-marketing": {
+        name: "Digital Marketing Specialist",
+        icon: "📣",
+        description:
+            "Your skill gap is based on content, SEO, social media, analytics and communication skills.",
+
+        skills: [
+            { name:"Content Marketing", level:62, target:85, priority:"Medium" },
+            { name:"SEO", level:45, target:80, priority:"High" },
+            { name:"Social Media", level:68, target:85, priority:"Medium" },
+            { name:"Analytics", level:42, target:75, priority:"High" },
+            { name:"Copywriting", level:58, target:85, priority:"Medium" },
+            { name:"Communication", level:75, target:90, priority:"Low" }
+        ],
+
+        path: [
+            ["1","Learn Digital Marketing","Understand audiences, channels and digital campaigns."],
+            ["2","Practice Content Creation","Create useful written and visual content."],
+            ["3","Learn SEO","Understand search intent, keywords and content optimization."],
+            ["4","Learn Analytics","Practice measuring traffic, engagement and campaign results."],
+            ["5","Create Campaign Case Studies","Build sample campaigns and document their results."]
+        ]
+    }
+};
+
+
+/* ========================================================
+   GET SELECTED CAREER
+======================================================== */
+
+const params = new URLSearchParams(window.location.search);
+
+const selectedCareer =
+    params.get("career") ||
+    localStorage.getItem("careerbotSelectedCareer");
+
+
+/* ========================================================
+   CHECK CAREER
+======================================================== */
+
+if (!selectedCareer || !careerData[selectedCareer]) {
+
+    document.getElementById("skillContent").style.display = "none";
+    document.getElementById("notFound").style.display = "block";
+
+} else {
+
+    const career = careerData[selectedCareer];
+
+    /*
+    Keep the selected career available for the next page.
+    */
+    localStorage.setItem(
+        "careerbotSelectedCareer",
+        selectedCareer
+    );
+
+
+    /* ====================================================
+       BASIC INFORMATION
+    ==================================================== */
+
+    document.getElementById("careerName").textContent =
+        career.icon + " " + career.name;
+
+    document.getElementById("careerDescription").textContent =
+        career.description;
+
+
+    /* ====================================================
+       CALCULATE OVERALL MATCH
+    ==================================================== */
+
+    let totalCurrent = 0;
+    let totalTarget = 0;
+
+    career.skills.forEach(skill => {
+        totalCurrent += skill.level;
+        totalTarget += skill.target;
+    });
+
+    const match =
+        Math.round((totalCurrent / totalTarget) * 100);
+
+    document.getElementById("overallMatch").textContent =
+        match + "%";
+
+
+    /* ====================================================
+       SKILL CARDS
+    ==================================================== */
+
+    const skillsGrid =
+        document.getElementById("skillsGrid");
+
+    skillsGrid.innerHTML = "";
+
+    career.skills.forEach(skill => {
+
+        const gap =
+            Math.max(skill.target - skill.level, 0);
+
+        let priorityClass = "";
+
+        if (skill.priority === "Medium") {
+            priorityClass = "medium";
+        }
+
+        if (skill.priority === "Low") {
+            priorityClass = "low";
+        }
+
+        const card = document.createElement("div");
+
+        card.className = "skill-card";
+
+        card.innerHTML = `
+            <div class="skill-top">
+                <span class="skill-name">
+                    ${skill.name}
+                </span>
+
+                <span class="level">
+                    ${skill.level}% current
+                </span>
+            </div>
+
+            <div class="bar">
+                <span style="width:${skill.level}%"></span>
+            </div>
+
+            <div class="skill-bottom">
+
+                <span class="gap-text">
+                    ${gap}% skill gap
+                </span>
+
+                <span class="priority ${priorityClass}">
+                    ${skill.priority} Priority
+                </span>
+
+            </div>
+        `;
+
+        skillsGrid.appendChild(card);
+    });
+
+
+    /* ====================================================
+       LEARNING PATH
+    ==================================================== */
+
+    const learningPath =
+        document.getElementById("learningPath");
+
+    learningPath.innerHTML = "";
+
+    career.path.forEach(step => {
+
+        const item = document.createElement("div");
+
+        item.className = "path-item";
+
+        item.innerHTML = `
+            <div class="path-number">
+                ${step[0]}
+            </div>
+
+            <div>
+                <h3>${step[1]}</h3>
+                <p>${step[2]}</p>
+            </div>
+        `;
+
+        learningPath.appendChild(item);
+    });
+
+
+    /* ====================================================
+       KEEP THE SAME CAREER IN ALL LINKS
+    ==================================================== */
+
+    const careerDetailsLink =
+        document.getElementById("careerDetailsLink");
+
+    const backCareerLink =
+        document.getElementById("backCareerLink");
+
+    const learningGuideLink =
+        document.getElementById("learningGuideLink");
+
+
+    const careerURL =
+        "career-details.html?career=" +
+        encodeURIComponent(selectedCareer);
+
+
+    if (careerDetailsLink) {
+        careerDetailsLink.href = careerURL;
+    }
+
+    if (backCareerLink) {
+        backCareerLink.href = careerURL;
+    }
+
+    /*
+    Continue to the Learning Guide while preserving
+    the selected career.
+    */
+    if (learningGuideLink) {
+        learningGuideLink.href =
+            "learning-guide.html?career=" +
+            encodeURIComponent(selectedCareer);
+    }
+}
+
+</script>
+
+</body>
+</html>

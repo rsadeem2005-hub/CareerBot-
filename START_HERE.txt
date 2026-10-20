@@ -1,0 +1,111 @@
+CAREERBOT — CLEANED DEPLOYMENT BUILD
+====================================
+
+This build is the corrected frontend/backend-compatible package prepared from the
+CareerBot deployment candidate. Only the lowercase page filenames used by the
+application flow are retained.
+
+MAIN FLOW
+---------
+Landing -> Login/Sign Up -> Dashboard -> Profile -> Assessment -> Assessment Form
+-> Supabase assessment processing -> Recommendations -> Career Details / Skill Gap
+/ Learning Guide / Project Ideas / Project Workspace -> Job Recommendations /
+Job Details -> CareerBot Agent
+
+FIXES INCLUDED
+--------------
+1. Removed duplicate Assessment.html; kept assessment.html.
+2. Removed duplicate Recommendation.html; kept recommendations.html.
+3. Fixed Skill Gap to read the authenticated user's skill_gaps record instead of
+   rebuilding a skill gap from career_recommendations.
+4. Fixed Learning Guide to follow skill_gaps.id -> learning_resources.skill_gap_id.
+   learning_resources does not have a career_title column.
+5. Fixed Recommendations page initialization so the legacy inline fallback cannot
+   hide the page before the shared Supabase integration loads the saved result.
+6. Recommendations page now explicitly becomes visible after a saved result loads.
+7. Added a live Supabase uniqueness constraint for project_workspace so one user
+   cannot accidentally create duplicate workspace rows for the same project idea.
+
+SUPABASE VERIFIED
+-----------------
+Project ref: cogldzqlarovmedkqwoe
+Status: ACTIVE_HEALTHY
+
+Verified public tables:
+profiles
+assessments
+career_recommendations
+skill_gaps
+learning_resources
+project_ideas
+project_workspace
+saved_jobs
+job_activity
+agent_conversations
+agent_messages
+user_dashboard_stats
+
+RLS is enabled on all listed user-data tables.
+
+Verified Edge Functions:
+careerbot-assessment (ACTIVE, JWT required)
+careerbot-jobs (ACTIVE, JWT required)
+careerbot-agent (ACTIVE, JWT required)
+
+The assessment Edge Function creates career recommendations, skill gaps, learning
+resources, project ideas, and dashboard statistics. The frontend now reads those
+records using the matching database relationships.
+
+TESTS RUN
+---------
+- JavaScript syntax checks passed for script.js, auth.js, and supabase.js.
+- Inline JavaScript syntax checks passed for all HTML pages.
+- All remaining HTML pages returned HTTP 200 from a local static HTTP server.
+- Local HTML/CSS/JS/image references were checked; no missing local references.
+- Duplicate HTML IDs were checked; no duplicate IDs were found.
+- Duplicate page filenames were removed.
+- Live Supabase table schema, RLS policies, RPC definitions, Edge Functions,
+  indexes, and security/performance advisors were inspected.
+
+IMPORTANT AUTH SETTING
+----------------------
+If you want Sign Up to create an immediate session for a college/demo flow,
+Supabase Dashboard -> Authentication -> Sign In / Providers -> Email ->
+Confirm email should be OFF.
+
+This is an Auth dashboard setting and is not changed by the frontend ZIP.
+
+SECURITY NOTES
+--------------
+Only the Supabase publishable client key belongs in supabase.js. No service-role
+key is included in this frontend package.
+
+Supabase currently reports two advisory items that are not frontend build errors:
+- Leaked Password Protection is disabled. Enable it in Supabase Auth for a more
+  production-hardened password policy.
+- Six authenticated SECURITY DEFINER RPCs are flagged for review. These RPCs are
+  intentionally used by the application and currently validate auth.uid() and,
+  for row updates, the authenticated user's ownership. Do not remove SECURITY
+  DEFINER blindly because that can break the intended RPC design.
+
+DEPLOYMENT
+----------
+Upload the contents of this folder to a static host. Keep the files in one folder
+so the existing relative links continue to work.
+
+Before the live demo, perform one real browser test with a fresh account:
+1. Sign Up / Login
+2. Profile save
+3. Complete all assessment questions
+4. Confirm Recommendations load
+5. Open Career Details, Skill Gap, Learning Guide, and Project Ideas
+6. Open a Project Workspace and save progress/links
+7. Open Job Recommendations and save/view a job
+8. Open CareerBot Agent and send a message
+9. Logout and log back in
+10. Refresh protected pages and confirm the user's saved data remains
+
+The code/package has been statically validated and the connected Supabase schema
+has been inspected. A real authenticated browser session still requires a real
+user account in the deployed environment; this package does not create or embed
+a test user's credentials.

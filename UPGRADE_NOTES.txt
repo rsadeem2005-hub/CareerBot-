@@ -1,0 +1,17 @@
+CareerBot upgraded source bundle
+
+Included:
+- The updated static CareerBot website files.
+- The corrected careerbot-agent Supabase Edge Function source.
+
+Chat fix:
+- The website now sends only the user's typed question.
+- The Edge Function checks specific intents before career-match keywords, so job preparation, learning, projects, progress, and career-match questions take separate response paths.
+
+Mobile navigation:
+- Agent shows My Profile and Dashboard in its mobile header.
+- Job Recommendations shows Dashboard in its mobile header.
+
+Deployment note:
+- This ZIP is source only. Publish the website through its hosting workflow and deploy supabase/functions/careerbot-agent/index.ts separately to the linked Supabase project for the live chat response fix to take effect.
+- No live Supabase function was changed by creating this archive.
