@@ -1,0 +1,3256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CareerBot — Career Assessment</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =====================================================
+           CAREERBOT ASSESSMENT FORM
+           SAME THEME AS YOUR PROVIDED SCREENSHOT
+        ===================================================== */
+
+        :root {
+            --dark: #17231f;
+            --text: #5d6b65;
+            --muted: #89948f;
+
+            --mint: #69c7a3;
+            --mint-dark: #438e70;
+
+            --lavender: #9182e8;
+            --blue: #79b7df;
+
+            --cream: #fbfcf9;
+            --white: #ffffff;
+
+            --light-green: #e0f6eb;
+            --light-lavender: #ece8ff;
+
+            --border: rgba(35, 55, 45, 0.09);
+
+            --gradient:
+                linear-gradient(
+                    135deg,
+                    #69c7a3,
+                    #9182e8
+                );
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            font-family: "DM Sans", sans-serif;
+
+            color: var(--dark);
+
+            min-height: 100vh;
+
+            overflow-x: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 85% 8%,
+                    rgba(198, 239, 221, 0.55),
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 8% 40%,
+                    rgba(230, 224, 255, 0.45),
+                    transparent 25%
+                ),
+                var(--cream);
+        }
+
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+
+        button {
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .assessment-page {
+            min-height: 100vh;
+
+            padding-bottom: 70px;
+
+            background:
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(198, 239, 221, 0.48),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 8% 78%,
+                    rgba(230, 224, 255, 0.42),
+                    transparent 28%
+                ),
+                #fbfcf9;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .assessment-header {
+            width: min(1100px, 92%);
+
+            height: 85px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+
+        .assessment-logo {
+            display: inline-block;
+
+            text-decoration: none;
+        }
+
+
+        .assessment-logo img {
+            width: 145px;
+
+            height: auto;
+
+            display: block;
+        }
+
+
+        .assessment-step {
+            text-align: right;
+        }
+
+
+        .assessment-step span {
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #89948f;
+
+            font-size: 11px;
+        }
+
+
+        .assessment-step strong {
+            display: block;
+
+            color: #17231f;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .question-count {
+            margin-top: 20px;
+
+            color: #89948f;
+
+            font-size: 10px;
+        }
+
+
+        /* =====================================================
+           PROGRESS
+        ===================================================== */
+
+        .assessment-progress {
+            width: min(1100px, 92%);
+
+            margin: 4px auto 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .assessment-progress-bar {
+            flex: 1;
+
+            height: 7px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background: #e7ede9;
+        }
+
+
+        #progressFill {
+            width: 10%;
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #69c7a3,
+                    #9182e8
+                );
+
+            transition:
+                width 0.4s ease;
+        }
+
+
+        #progressText {
+            min-width: 105px;
+
+            color: #7d8883;
+
+            font-size: 11px;
+
+            text-align: right;
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .assessment-container {
+            width: min(850px, 92%);
+
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .assessment-card {
+            padding: 55px;
+
+            background:
+                rgba(255, 255, 255, 0.88);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.95);
+
+            border-radius: 32px;
+
+            box-shadow:
+                0 30px 80px
+                rgba(40, 60, 50, 0.10);
+
+            backdrop-filter: blur(20px);
+        }
+
+
+        /* =====================================================
+           QUESTION
+        ===================================================== */
+
+        .question {
+            display: none;
+        }
+
+
+        .question.active {
+            display: block;
+
+            animation:
+                questionFade
+                0.35s
+                ease;
+        }
+
+
+        @keyframes questionFade {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateX(15px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateX(0);
+            }
+        }
+
+
+        .question-number {
+            margin-bottom: 15px;
+
+            color: #559477;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        .question h2 {
+            margin-bottom: 12px;
+
+            color: #17231f;
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size:
+                clamp(
+                    28px,
+                    4vw,
+                    38px
+                );
+
+            line-height: 1.2;
+
+            letter-spacing: -1.2px;
+        }
+
+
+        .question h2 span {
+            background:
+                linear-gradient(
+                    100deg,
+                    #4da77e,
+                    #827cde
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+        }
+
+
+        .question-description {
+            margin-bottom: 30px;
+
+            color: #5d6b65;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           OPTIONS
+        ===================================================== */
+
+        .options {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    1fr
+                );
+
+            gap: 14px;
+        }
+
+
+        .option {
+            position: relative;
+
+            min-height: 90px;
+
+            padding: 17px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            border:
+                1px solid
+                #e3e9e5;
+
+            border-radius: 18px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.80
+                );
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .option:hover {
+            transform:
+                translateY(-2px);
+
+            border-color:
+                #a8d8c1;
+
+            background:
+                rgba(
+                    248,
+                    253,
+                    250,
+                    0.95
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(
+                    40,
+                    60,
+                    50,
+                    0.07
+                );
+        }
+
+
+        .option input {
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        /* Selected answer */
+
+        .option:has(
+            input:checked
+        ) {
+            border-color:
+                #69c7a3;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #effaf4,
+                    #f4f1ff
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(
+                    105,
+                    199,
+                    163,
+                    0.13
+                );
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =====================================================
+           OPTION ICON
+        ===================================================== */
+
+        .option-icon {
+            width: 45px;
+
+            height: 45px;
+
+            flex-shrink: 0;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 14px;
+
+            background:
+                #e0f6eb;
+
+            color:
+                #4da67d;
+
+            font-size: 18px;
+
+            font-weight: 700;
+        }
+
+
+        .option:nth-child(2)
+        .option-icon {
+            background:
+                #ece8ff;
+
+            color:
+                #7b6fd5;
+        }
+
+
+        .option:nth-child(3)
+        .option-icon {
+            background:
+                #e6f2fb;
+
+            color:
+                #5794c2;
+        }
+
+
+        .option:nth-child(4)
+        .option-icon {
+            background:
+                #fff0e9;
+
+            color:
+                #df9676;
+        }
+
+
+        /* =====================================================
+           OPTION TEXT
+        ===================================================== */
+
+        .option-content {
+            flex: 1;
+        }
+
+
+        .option strong {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color:
+                #17231f;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .option small {
+            display: block;
+
+            color:
+                #89948f;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           CHECK MARK
+        ===================================================== */
+
+        .option-check {
+            width: 20px;
+
+            height: 20px;
+
+            flex-shrink: 0;
+
+            display: grid;
+
+            place-items: center;
+
+            border:
+                1px solid
+                #d9e2dd;
+
+            border-radius: 50%;
+
+            color: white;
+
+            font-size: 10px;
+
+            transition: 0.2s ease;
+        }
+
+
+        .option:has(
+            input:checked
+        )
+        .option-check {
+            border-color:
+                #69c7a3;
+
+            background:
+                #69c7a3;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .assessment-navigation {
+            display: flex;
+
+            align-items: center;
+
+            justify-content:
+                space-between;
+
+            margin-top: 35px;
+
+            padding-top: 25px;
+
+            border-top:
+                1px solid
+                #e8ece9;
+        }
+
+
+        .assessment-back {
+            border: none;
+
+            background:
+                transparent;
+
+            color:
+                #718079;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .assessment-back:hover {
+            color:
+                #438e70;
+        }
+
+
+        .assessment-next {
+            margin-left: auto;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            padding:
+                15px 25px;
+
+            border: none;
+
+            border-radius: 50px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #57ad83,
+                    #807cdc
+                );
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 15px 35px
+                rgba(
+                    83,
+                    145,
+                    117,
+                    0.20
+                );
+
+            transition:
+                0.25s ease;
+        }
+
+
+        .assessment-next:hover {
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(
+                    83,
+                    145,
+                    117,
+                    0.25
+                );
+        }
+
+
+        .assessment-next:disabled {
+            opacity: 0.6;
+
+            cursor:
+                not-allowed;
+
+            transform:
+                none;
+        }
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        .assessment-error {
+            display: none;
+
+            margin-top: 15px;
+
+            padding:
+                10px 14px;
+
+            border-radius: 10px;
+
+            background:
+                #fff3f0;
+
+            color:
+                #c77a68;
+
+            font-size: 11px;
+
+            text-align: center;
+        }
+
+
+        .assessment-error.show {
+            display: block;
+        }
+
+
+        /* =====================================================
+           QUESTION DOTS
+        ===================================================== */
+
+        .assessment-dots {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            margin-top: 25px;
+        }
+
+
+        .assessment-dot {
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background:
+                #dce4df;
+
+            transition:
+                0.25s ease;
+        }
+
+
+        .assessment-dot.active {
+            width: 22px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #69c7a3,
+                    #9182e8
+                );
+        }
+
+
+        .assessment-dot.completed {
+            background:
+                #69c7a3;
+        }
+
+
+        /* =====================================================
+           RESULT SCREEN
+        ===================================================== */
+
+        .result-screen {
+            display: none;
+
+            padding:
+                50px 20px;
+
+            text-align: center;
+        }
+
+
+        .result-loader {
+            width: 75px;
+
+            height: 75px;
+
+            margin:
+                0 auto 25px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e0f6eb,
+                    #ece8ff
+                );
+
+            color:
+                #438e70;
+
+            font-size: 30px;
+
+            animation:
+                assessmentPulse
+                1.5s
+                infinite;
+        }
+
+
+        @keyframes assessmentPulse {
+
+            0%,
+            100% {
+                transform:
+                    scale(1);
+            }
+
+            50% {
+                transform:
+                    scale(1.08);
+            }
+        }
+
+
+        .result-screen h2 {
+            margin-bottom: 15px;
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size: 30px;
+
+            line-height: 1.3;
+        }
+
+
+        .result-screen h2 span {
+            background:
+                linear-gradient(
+                    100deg,
+                    #4da77e,
+                    #827cde
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+        }
+
+
+        .result-screen p {
+            max-width: 500px;
+
+            margin:
+                auto;
+
+            color:
+                #5d6b65;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        .result-loading-bar {
+            width:
+                min(
+                    400px,
+                    90%
+                );
+
+            height: 7px;
+
+            margin:
+                30px auto 0;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background:
+                #e7ede9;
+        }
+
+
+        .result-loading-bar div {
+            width: 0%;
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #69c7a3,
+                    #9182e8
+                );
+
+            animation:
+                resultLoading
+                2.2s
+                ease
+                forwards;
+        }
+
+
+        @keyframes resultLoading {
+
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .assessment-header {
+                height: 75px;
+            }
+
+
+            .assessment-logo img {
+                width: 125px;
+            }
+
+
+            .assessment-step span {
+                font-size: 9px;
+            }
+
+
+            .assessment-step strong {
+                font-size: 11px;
+            }
+
+
+            .assessment-progress {
+                margin-bottom: 25px;
+            }
+
+
+            .assessment-card {
+                padding:
+                    30px 20px;
+
+                border-radius:
+                    24px;
+            }
+
+
+            .question h2 {
+                font-size:
+                    27px;
+            }
+
+
+            .options {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .option {
+                min-height:
+                    80px;
+            }
+
+
+            #progressText {
+                min-width:
+                    90px;
+            }
+
+
+            .assessment-navigation {
+                margin-top:
+                    25px;
+            }
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 450px) {
+
+            .assessment-header {
+                width: 90%;
+            }
+
+
+            .assessment-progress {
+                width: 90%;
+            }
+
+
+            .assessment-container {
+                width: 90%;
+            }
+
+
+            .assessment-card {
+                padding:
+                    25px 17px;
+            }
+
+
+            .question h2 {
+                font-size:
+                    24px;
+            }
+
+
+            .option {
+                padding:
+                    14px;
+            }
+
+
+            .option-icon {
+                width: 40px;
+
+                height: 40px;
+            }
+
+
+            .assessment-next {
+                padding:
+                    13px 20px;
+            }
+        }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+<script>
+/* CareerBot authenticated-page guard */
+(async function () {
+    try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error || !data.session) {
+            const next = encodeURIComponent(window.location.pathname.split("/").pop() + window.location.search);
+            window.location.replace("login.html?next=" + next);
+        }
+    } catch (error) {
+        console.error("CareerBot session check failed:", error);
+        window.location.replace("login.html");
+    }
+})();
+</script>
+
+    <script src="script.js"></script>
+
+</head>
+
+
+<body>
+
+
+<div class="assessment-page">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="assessment-header">
+
+        <a
+            href="index.html"
+            class="assessment-logo"
+        >
+            <img
+                src="CareerBot Growth Mascot Logo(1).png"
+                alt="CareerBot Logo"
+            >
+        </a>
+
+
+        <div class="assessment-step">
+
+            <span>
+                Step 3 of 4
+            </span>
+
+            <strong>
+                Career Assessment
+            </strong>
+
+            <div
+                class="question-count"
+                id="headerQuestionCount"
+            >
+                Question 1 of 10
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         PROGRESS
+    ====================================================== -->
+
+    <div class="assessment-progress">
+
+        <div class="assessment-progress-bar">
+
+            <div
+                id="progressFill"
+            ></div>
+
+        </div>
+
+
+        <div id="progressText">
+            1 of 10
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="assessment-container">
+
+        <div class="assessment-card">
+
+
+            <!-- =================================================
+                 QUESTION FORM
+            ================================================== -->
+
+            <div
+                class="assessment-form"
+                id="assessmentForm"
+            >
+
+
+                <!-- =================================================
+                     QUESTION 1
+                ================================================== -->
+
+                <div
+                    class="question active"
+                    data-question="1"
+                >
+
+                    <div class="question-number">
+                        Question 01
+                    </div>
+
+                    <h2>
+                        What activities do you
+                        <span>enjoy</span>
+                        the most?
+                    </h2>
+
+                    <p class="question-description">
+                        Think about activities that naturally
+                        keep you interested and motivated.
+                    </p>
+
+
+                    <div class="options">
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q1"
+                                value="technology"
+                            >
+
+                            <div class="option-icon">
+                                💻
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Technology & Computers
+                                </strong>
+
+                                <small>
+                                    Building, coding and exploring technology
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q1"
+                                value="creative"
+                            >
+
+                            <div class="option-icon">
+                                🎨
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Creative Activities
+                                </strong>
+
+                                <small>
+                                    Designing, drawing and creating ideas
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q1"
+                                value="people"
+                            >
+
+                            <div class="option-icon">
+                                🤝
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Helping People
+                                </strong>
+
+                                <small>
+                                    Supporting, teaching and working with others
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q1"
+                                value="business"
+                            >
+
+                            <div class="option-icon">
+                                📈
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Business & Strategy
+                                </strong>
+
+                                <small>
+                                    Planning, leading and making decisions
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUESTION 2
+                ================================================== -->
+
+                <div
+                    class="question"
+                    data-question="2"
+                >
+
+                    <div class="question-number">
+                        Question 02
+                    </div>
+
+                    <h2>
+                        What type of tasks do you
+                        <span>enjoy solving?</span>
+                    </h2>
+
+                    <p class="question-description">
+                        Choose the type of problem that feels
+                        most interesting to you.
+                    </p>
+
+
+                    <div class="options">
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q2"
+                                value="technical"
+                            >
+
+                            <div class="option-icon">
+                                🧩
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Technical Problems
+                                </strong>
+
+                                <small>
+                                    Logic, code and complex systems
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q2"
+                                value="creative"
+                            >
+
+                            <div class="option-icon">
+                                ✨
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Creative Problems
+                                </strong>
+
+                                <small>
+                                    New ideas, designs and creative solutions
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q2"
+                                value="people"
+                            >
+
+                            <div class="option-icon">
+                                💬
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    People Problems
+                                </strong>
+
+                                <small>
+                                    Communication and helping people
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q2"
+                                value="business"
+                            >
+
+                            <div class="option-icon">
+                                📊
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Business Problems
+                                </strong>
+
+                                <small>
+                                    Strategy, planning and decision making
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUESTION 3
+                ================================================== -->
+
+                <div
+                    class="question"
+                    data-question="3"
+                >
+
+                    <div class="question-number">
+                        Question 03
+                    </div>
+
+                    <h2>
+                        Which skill set describes
+                        <span>you best?</span>
+                    </h2>
+
+                    <p class="question-description">
+                        Choose the skill area you feel most
+                        comfortable developing.
+                    </p>
+
+
+                    <div class="options">
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q3"
+                                value="analytical"
+                            >
+
+                            <div class="option-icon">
+                                🔍
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Analytical
+                                </strong>
+
+                                <small>
+                                    Logic, research and problem solving
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q3"
+                                value="creative"
+                            >
+
+                            <div class="option-icon">
+                                🎨
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Creative
+                                </strong>
+
+                                <small>
+                                    Design, imagination and innovation
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q3"
+                                value="communication"
+                            >
+
+                            <div class="option-icon">
+                                🗣️
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Communication
+                                </strong>
+
+                                <small>
+                                    Speaking, writing and collaboration
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q3"
+                                value="leadership"
+                            >
+
+                            <div class="option-icon">
+                                🌟
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Leadership
+                                </strong>
+
+                                <small>
+                                    Organizing, guiding and decision making
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUESTION 4
+                ================================================== -->
+
+                <div
+                    class="question"
+                    data-question="4"
+                >
+
+                    <div class="question-number">
+                        Question 04
+                    </div>
+
+                    <h2>
+                        How do you prefer
+                        <span>to work?</span>
+                    </h2>
+
+                    <p class="question-description">
+                        Think about the working style where
+                        you feel most productive.
+                    </p>
+
+
+                    <div class="options">
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q4"
+                                value="independent"
+                            >
+
+                            <div class="option-icon">
+                                🧠
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Independently
+                                </strong>
+
+                                <small>
+                                    I like working independently
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q4"
+                                value="team"
+                            >
+
+                            <div class="option-icon">
+                                👥
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    In a Team
+                                </strong>
+
+                                <small>
+                                    I enjoy collaborating with others
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q4"
+                                value="leadership"
+                            >
+
+                            <div class="option-icon">
+                                🚀
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Leading Others
+                                </strong>
+
+                                <small>
+                                    I enjoy guiding and motivating people
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q4"
+                                value="flexible"
+                            >
+
+                            <div class="option-icon">
+                                🔄
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Flexible
+                                </strong>
+
+                                <small>
+                                    I like adapting to different situations
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUESTION 5
+                ================================================== -->
+
+                <div
+                    class="question"
+                    data-question="5"
+                >
+
+                    <div class="question-number">
+                        Question 05
+                    </div>
+
+                    <h2>
+                        Which career area interests
+                        <span>you the most?</span>
+                    </h2>
+
+                    <p class="question-description">
+                        Choose the field you would like to explore.
+                    </p>
+
+
+                    <div class="options">
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q5"
+                                value="technology"
+                            >
+
+                            <div class="option-icon">
+                                💻
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Technology
+                                </strong>
+
+                                <small>
+                                    Software, AI, data and cybersecurity
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q5"
+                                value="design"
+                            >
+
+                            <div class="option-icon">
+                                🎨
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Design
+                                </strong>
+
+                                <small>
+                                    UI/UX, graphics and creative design
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q5"
+                                value="business"
+                            >
+
+                            <div class="option-icon">
+                                💼
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Business
+                                </strong>
+
+                                <small>
+                                    Management, marketing and entrepreneurship
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q5"
+                                value="social"
+                            >
+
+                            <div class="option-icon">
+                                ❤️
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    People & Social
+                                </strong>
+
+                                <small>
+                                    HR, education and community focused careers
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUESTION 6
+                ================================================== -->
+
+                <div
+                    class="question"
+                    data-question="6"
+                >
+
+                    <div class="question-number">
+                        Question 06
+                    </div>
+
+                    <h2>
+                        Which word best describes
+                        <span>your personality?</span>
+                    </h2>
+
+                    <p class="question-description">
+                        Choose the description that feels most
+                        natural to you.
+                    </p>
+
+
+                    <div class="options">
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q6"
+                                value="curious"
+                            >
+
+                            <div class="option-icon">
+                                🔎
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Curious
+                                </strong>
+
+                                <small>
+                                    I love learning and discovering new things
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q6"
+                                value="creative"
+                            >
+
+                            <div class="option-icon">
+                                💡
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Creative
+                                </strong>
+
+                                <small>
+                                    I naturally think of new possibilities
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q6"
+                                value="helpful"
+                            >
+
+                            <div class="option-icon">
+                                🤝
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Helpful
+                                </strong>
+
+                                <small>
+                                    I enjoy supporting and understanding others
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q6"
+                                value="ambitious"
+                            >
+
+                            <div class="option-icon">
+                                🏆
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Ambitious
+                                </strong>
+
+                                <small>
+                                    I like achieving goals and taking initiative
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUESTION 7
+                ================================================== -->
+
+                <div
+                    class="question"
+                    data-question="7"
+                >
+
+                    <div class="question-number">
+                        Question 07
+                    </div>
+
+                    <h2>
+                        What type of work environment
+                        <span>do you prefer?</span>
+                    </h2>
+
+                    <p class="question-description">
+                        Imagine the environment where you would
+                        enjoy working every day.
+                    </p>
+
+
+                    <div class="options">
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q7"
+                                value="startup"
+                            >
+
+                            <div class="option-icon">
+                                🚀
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Startup
+                                </strong>
+
+                                <small>
+                                    Fast-paced, flexible and innovative
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q7"
+                                value="corporate"
+                            >
+
+                            <div class="option-icon">
+                                🏢
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Corporate
+                                </strong>
+
+                                <small>
+                                    Structured, professional and organized
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q7"
+                                value="remote"
+                            >
+
+                            <div class="option-icon">
+                                🏠
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Remote
+                                </strong>
+
+                                <small>
+                                    Flexible work from different locations
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q7"
+                                value="social"
+                            >
+
+                            <div class="option-icon">
+                                🌱
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Collaborative
+                                </strong>
+
+                                <small>
+                                    A friendly environment with people around
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUESTION 8
+                ================================================== -->
+
+                <div
+                    class="question"
+                    data-question="8"
+                >
+
+                    <div class="question-number">
+                        Question 08
+                    </div>
+
+                    <h2>
+                        What kind of challenges do
+                        <span>you enjoy?</span>
+                    </h2>
+
+                    <p class="question-description">
+                        Choose the type of challenge that motivates you.
+                    </p>
+
+
+                    <div class="options">
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q8"
+                                value="logic"
+                            >
+
+                            <div class="option-icon">
+                                🧠
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Logical Challenges
+                                </strong>
+
+                                <small>
+                                    Finding patterns and solving complex problems
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q8"
+                                value="creative"
+                            >
+
+                            <div class="option-icon">
+                                🎯
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Creative Challenges
+                                </strong>
+
+                                <small>
+                                    Creating something original and meaningful
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q8"
+                                value="people"
+                            >
+
+                            <div class="option-icon">
+                                💬
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    People Challenges
+                                </strong>
+
+                                <small>
+                                    Understanding and solving people's needs
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q8"
+                                value="business"
+                            >
+
+                            <div class="option-icon">
+                                📈
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Business Challenges
+                                </strong>
+
+                                <small>
+                                    Growing ideas and making strategic decisions
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUESTION 9
+                ================================================== -->
+
+                <div
+                    class="question"
+                    data-question="9"
+                >
+
+                    <div class="question-number">
+                        Question 09
+                    </div>
+
+                    <h2>
+                        Where do you see yourself
+                        <span>in five years?</span>
+                    </h2>
+
+                    <p class="question-description">
+                        Think about what you would like your career
+                        to look like in the future.
+                    </p>
+
+
+                    <div class="options">
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q9"
+                                value="expert"
+                            >
+
+                            <div class="option-icon">
+                                🧑‍💻
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Technical Expert
+                                </strong>
+
+                                <small>
+                                    Becoming highly skilled in my field
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q9"
+                                value="creator"
+                            >
+
+                            <div class="option-icon">
+                                🎨
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Creative Professional
+                                </strong>
+
+                                <small>
+                                    Creating innovative products and experiences
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q9"
+                                value="leader"
+                            >
+
+                            <div class="option-icon">
+                                👑
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Team Leader
+                                </strong>
+
+                                <small>
+                                    Managing teams and leading projects
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q9"
+                                value="entrepreneur"
+                            >
+
+                            <div class="option-icon">
+                                🚀
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Entrepreneur
+                                </strong>
+
+                                <small>
+                                    Building my own business or venture
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUESTION 10
+                ================================================== -->
+
+                <div
+                    class="question"
+                    data-question="10"
+                >
+
+                    <div class="question-number">
+                        Question 10
+                    </div>
+
+                    <h2>
+                        What describes your
+                        <span>dream career?</span>
+                    </h2>
+
+                    <p class="question-description">
+                        Choose the description that comes closest
+                        to your ideal career.
+                    </p>
+
+
+                    <div class="options">
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q10"
+                                value="technology"
+                            >
+
+                            <div class="option-icon">
+                                💻
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Build Technology
+                                </strong>
+
+                                <small>
+                                    Create software, AI or digital products
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q10"
+                                value="creative"
+                            >
+
+                            <div class="option-icon">
+                                🎨
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Create & Design
+                                </strong>
+
+                                <small>
+                                    Design experiences, products and ideas
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q10"
+                                value="people"
+                            >
+
+                            <div class="option-icon">
+                                🤝
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Help & Inspire
+                                </strong>
+
+                                <small>
+                                    Help people grow, learn and succeed
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q10"
+                                value="business"
+                            >
+
+                            <div class="option-icon">
+                                📊
+                            </div>
+
+                            <div class="option-content">
+                                <strong>
+                                    Lead & Build
+                                </strong>
+
+                                <small>
+                                    Lead organizations and build businesses
+                                </small>
+                            </div>
+
+                            <div class="option-check">
+                                ✓
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ERROR
+                ================================================== -->
+
+                <div
+                    class="assessment-error"
+                    id="assessmentError"
+                >
+                    Please select an answer before continuing.
+                </div>
+
+
+                <!-- =================================================
+                     NAVIGATION
+                ================================================== -->
+
+                <div class="assessment-navigation">
+
+                    <button
+                        type="button"
+                        class="assessment-back"
+                        id="backBtn"
+                    >
+                        ← Back
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="assessment-next"
+                        id="nextBtn"
+                    >
+                        Next
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+
+                <!-- =================================================
+                     DOTS
+                ================================================== -->
+
+                <div
+                    class="assessment-dots"
+                    id="assessmentDots"
+                >
+
+                    <span
+                        class="assessment-dot active"
+                    ></span>
+
+                    <span
+                        class="assessment-dot"
+                    ></span>
+
+                    <span
+                        class="assessment-dot"
+                    ></span>
+
+                    <span
+                        class="assessment-dot"
+                    ></span>
+
+                    <span
+                        class="assessment-dot"
+                    ></span>
+
+                    <span
+                        class="assessment-dot"
+                    ></span>
+
+                    <span
+                        class="assessment-dot"
+                    ></span>
+
+                    <span
+                        class="assessment-dot"
+                    ></span>
+
+                    <span
+                        class="assessment-dot"
+                    ></span>
+
+                    <span
+                        class="assessment-dot"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RESULT SCREEN
+            ================================================== -->
+
+            <div
+                class="result-screen"
+                id="resultScreen"
+            >
+
+                <div class="result-loader">
+                    ✦
+                </div>
+
+                <h2>
+                    Analyzing your
+                    <span>career profile.</span>
+                </h2>
+
+                <p>
+                    CareerBot is analyzing your interests,
+                    strengths, work style and goals to prepare
+                    your personalized career recommendations.
+                </p>
+
+
+                <div class="result-loading-bar">
+
+                    <div></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    /* =========================================================
+       CAREERBOT ASSESSMENT
+    ========================================================= */
+
+
+    const questions =
+        document.querySelectorAll(".question");
+
+    const progressFill =
+        document.getElementById("progressFill");
+
+    const progressText =
+        document.getElementById("progressText");
+
+    const headerQuestionCount =
+        document.getElementById(
+            "headerQuestionCount"
+        );
+
+    const nextBtn =
+        document.getElementById("nextBtn");
+
+    const backBtn =
+        document.getElementById("backBtn");
+
+    const errorMessage =
+        document.getElementById(
+            "assessmentError"
+        );
+
+    const dots =
+        document.querySelectorAll(
+            ".assessment-dot"
+        );
+
+    const assessmentForm =
+        document.getElementById(
+            "assessmentForm"
+        );
+
+    const resultScreen =
+        document.getElementById(
+            "resultScreen"
+        );
+
+
+    let currentQuestion = 0;
+
+
+    const answers = {};
+
+
+    /* =========================================================
+       SHOW QUESTION
+    ========================================================= */
+
+    function showQuestion(index) {
+
+        questions.forEach(
+            (question, i) => {
+
+                question.classList.toggle(
+                    "active",
+                    i === index
+                );
+
+            }
+        );
+
+
+        const questionNumber =
+            index + 1;
+
+
+        const progress =
+            (questionNumber / questions.length)
+            * 100;
+
+
+        progressFill.style.width =
+            progress + "%";
+
+
+        progressText.textContent =
+            questionNumber +
+            " of " +
+            questions.length;
+
+
+        headerQuestionCount.textContent =
+            "Question " +
+            questionNumber +
+            " of " +
+            questions.length;
+
+
+        dots.forEach(
+            (dot, i) => {
+
+                dot.classList.remove(
+                    "active"
+                );
+
+                dot.classList.remove(
+                    "completed"
+                );
+
+
+                if (i === index) {
+
+                    dot.classList.add(
+                        "active"
+                    );
+
+                }
+
+
+                if (i < index) {
+
+                    dot.classList.add(
+                        "completed"
+                    );
+
+                }
+
+            }
+        );
+
+
+        if (index === 0) {
+
+            backBtn.style.visibility =
+                "hidden";
+
+        } else {
+
+            backBtn.style.visibility =
+                "visible";
+
+        }
+
+
+        if (
+            index ===
+            questions.length - 1
+        ) {
+
+            nextBtn.innerHTML =
+                'See My Results <span>→</span>';
+
+        } else {
+
+            nextBtn.innerHTML =
+                'Next <span>→</span>';
+
+        }
+
+
+        errorMessage.classList.remove(
+            "show"
+        );
+    }
+
+
+    /* =========================================================
+       GET SELECTED ANSWER
+    ========================================================= */
+
+    function getSelectedAnswer() {
+
+        const current =
+            questions[currentQuestion];
+
+
+        const selected =
+            current.querySelector(
+                'input[type="radio"]:checked'
+            );
+
+
+        if (!selected) {
+
+            return null;
+
+        }
+
+
+        return selected.value;
+    }
+
+
+    /* =========================================================
+       NEXT BUTTON
+    ========================================================= */
+
+    nextBtn.addEventListener(
+        "click",
+        function () {
+
+            const answer =
+                getSelectedAnswer();
+
+
+            if (!answer) {
+
+                errorMessage.classList.add(
+                    "show"
+                );
+
+                return;
+
+            }
+
+
+            const questionNumber =
+                currentQuestion + 1;
+
+
+            answers[
+                "q" + questionNumber
+            ] = answer;
+
+
+            errorMessage.classList.remove(
+                "show"
+            );
+
+
+            /* Last question */
+
+            if (
+                currentQuestion ===
+                questions.length - 1
+            ) {
+
+                finishAssessment();
+
+                return;
+
+            }
+
+
+            currentQuestion++;
+
+            showQuestion(
+                currentQuestion
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       BACK BUTTON
+    ========================================================= */
+
+    backBtn.addEventListener(
+        "click",
+        function () {
+
+            if (
+                currentQuestion === 0
+            ) {
+
+                window.location.href =
+                    "assessment.html";
+
+                return;
+
+            }
+
+
+            currentQuestion--;
+
+            showQuestion(
+                currentQuestion
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       SAVE ANSWER IMMEDIATELY
+    ========================================================= */
+
+    questions.forEach(
+        (question, index) => {
+
+            const radios =
+                question.querySelectorAll(
+                    'input[type="radio"]'
+                );
+
+
+            radios.forEach(
+                radio => {
+
+                    radio.addEventListener(
+                        "change",
+                        function () {
+
+                            answers[
+                                "q" +
+                                (index + 1)
+                            ] =
+                                this.value;
+
+
+                            errorMessage.classList.remove(
+                                "show"
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       FINISH ASSESSMENT
+    ========================================================= */
+
+    async function finishAssessment() {
+        const questionCount = document.querySelectorAll(".question").length || 10;
+        if (Object.keys(answers).length < questionCount) {
+            errorMessage.textContent = "Please answer every question before finishing your assessment.";
+            errorMessage.classList.add("show");
+            return;
+        }
+
+        const finishButton = document.querySelector('button[onclick*="finishAssessment"]');
+        if (finishButton) finishButton.disabled = true;
+
+        errorMessage.classList.remove("show");
+
+        const waitMessageTimeoutId = window.setTimeout(() => {
+            errorMessage.textContent = "Your personalized match is still loading. Keep this page open; it will not be replaced with a sample result.";
+            errorMessage.classList.add("show");
+        }, 3500);
+
+        try {
+            const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+            if (sessionError) throw sessionError;
+            if (!sessionData?.session) {
+                window.clearTimeout(waitMessageTimeoutId);
+                window.location.href = "login.html";
+                return;
+            }
+
+            const { data, error } = await supabaseClient.functions.invoke("careerbot-assessment", {
+                body: { answers }
+            });
+            window.clearTimeout(waitMessageTimeoutId);
+            if (error) throw error;
+
+            errorMessage.classList.remove("show");
+
+            const recommendations = data?.recommendations || data?.data?.recommendations || [];
+            if (recommendations[0]?.career_title) {
+                const latest = recommendations[0];
+                const slug = window.CareerBotIntegration?.slugifyCareer(latest.career_title) ||
+                    String(latest.career_title).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+                localStorage.setItem("careerbotSelectedCareer", slug);
+                localStorage.setItem("careerbotRecommendedCareer", slug);
+                localStorage.setItem("careerbotLatestRecommendation", JSON.stringify({
+                    user_id: sessionData.session.user.id,
+                    career_title: latest.career_title,
+                    match_score: latest.match_score ?? null,
+                    description: latest.description ?? "",
+                    reason: latest.reason ?? "",
+                    skills: Array.isArray(latest.skills) ? latest.skills : [],
+                    required_skills: Array.isArray(latest.required_skills) ? latest.required_skills : [],
+                    growth_info: latest.growth_info ?? null
+                }));
+            } else {
+                localStorage.removeItem("careerbotRecommendedCareer");
+                localStorage.removeItem("careerbotLatestRecommendation");
+            }
+
+            assessmentForm.style.display = "none";
+            resultScreen.style.display = "block";
+            progressFill.style.width = "100%";
+            progressText.textContent = "Completed";
+            headerQuestionCount.textContent = "Assessment Complete";
+            dots.forEach(dot => {
+                dot.classList.remove("active");
+                dot.classList.add("completed");
+            });
+
+            setTimeout(() => { window.location.href = "recommendations.html"; }, 1200);
+        } catch (error) {
+            window.clearTimeout(waitMessageTimeoutId);
+            console.error("Assessment submission failed:", error);
+            if (finishButton) finishButton.disabled = false;
+            errorMessage.textContent = "The career match could not be completed. Your answers are still on this page; check your connection and try again.";
+            errorMessage.classList.add("show");
+        }
+    }
+    /* =========================================================
+       INITIALIZE
+    ========================================================= */
+
+    showQuestion(0);
+
+</script>
+
+</body>
+</html>
